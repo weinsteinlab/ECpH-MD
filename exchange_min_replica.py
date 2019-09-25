@@ -320,5 +320,5 @@ else:
 
 pH_system.addForce(MonteCarloBarostat(1.01325*bar, 276*kelvin))
 pH_system.getForces()
-parallel_tempering = pHRex(pH_system=pH_system, pH_list=pH_list)
+parallel_tempering = pHrex(pH_system=pH_system, pH_list=pH_list)
 parallel_tempering.run(n_iter = 1000, nsteps = 1000)

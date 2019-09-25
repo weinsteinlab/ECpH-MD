@@ -1,4 +1,6 @@
 from imports import *
+from definitions import *
+from pHrex import pHrex
 
 def _get_pme_direct_space_unique_expression(reference_force):
     # Determine PME parameters.

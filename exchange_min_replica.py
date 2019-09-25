@@ -1,9 +1,13 @@
 from imports import *
+from pHrex import *
+from pH_exchange_functions import *
+from definitions import *
+from buildSystem import *
 
 system = buildSystem()
 pH_system = copy.deepcopy(system)
 
-t = md.load('../fep-45-i01-1-wb-i.pdb')
+t = md.load('./inputFiles/fep-45-i01-1-wb-i.pdb')
 top = t.topology
 
 # Define alchemical protons

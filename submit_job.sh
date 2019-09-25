@@ -8,11 +8,12 @@
 ##SBATCH --mail-user=CWID@med.cornell.edu
 ##SBATCH --mail-type=END
 
+source ~/.bashrc
+
 spack load -r cuda@9.2.88
 spack load -r /omvpd5u # fftw@3.3.8
 
-source ~/.bashrc
-#source activate python
+conda activate openmm_7_4_beta 
 
 python -u exchange_min_replica.py
 

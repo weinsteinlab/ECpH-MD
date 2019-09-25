@@ -1,3 +1,5 @@
+from imports import *
+
 class pHrex:
     def __init__(self, pH_system, pH_list):
         self._pH_system = pH_system

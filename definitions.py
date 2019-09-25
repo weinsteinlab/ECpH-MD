@@ -1,3 +1,7 @@
+from simtk import openmm, unit
+from math import pi
+import numpy as np
+
 # Define VdW softcore parameters
 switch_width=1*unit.angstroms
 softcore_alpha = 0.5

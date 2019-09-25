@@ -1,4 +1,4 @@
-import imports
+from imports import *
 
 system = buildSystem()
 pH_system = copy.deepcopy(system)

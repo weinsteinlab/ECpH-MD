@@ -1,4 +1,4 @@
-import imports
+from simtk import openmm, unit
 
 def _get_pme_direct_space_unique_expression(reference_force):
     # Determine PME parameters.

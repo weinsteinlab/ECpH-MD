@@ -251,7 +251,7 @@ class pHrex:
             simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
 
             if iteration < 0:
-                dcdReporter = DCDReporter('test-'+str(pH)+'.dcd', 5000)
+                dcdReporter = DCDReporter('test-'+str(pH)+'.dcd', 1000)
                 dataReporter = StateDataReporter('test-'+str(pH)+'.log', 100, totalSteps=steps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
                 simulation.context.setPositions(positions_init)
                 simulation.context.setVelocitiesToTemperature(temperature)
@@ -283,7 +283,7 @@ class pHrex:
                     i = int(i)
                     print(i, ' parameters ', f.getParticleParameters(i))
 
-                dcdReporter = DCDReporter('test-'+str(pH)+'.dcd', 5000, append = True)
+                dcdReporter = DCDReporter('test-'+str(pH)+'.dcd', 1000, append = True)
                 dataReporter = StateDataReporter('test-'+str(pH)+'.log', 100, totalSteps=steps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
                 simulation.reporters.append(dcdReporter)
                 simulation.reporters.append(dataReporter)

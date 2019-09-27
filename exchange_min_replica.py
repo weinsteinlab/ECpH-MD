@@ -1,6 +1,6 @@
 from imports import *
 from pHrex import pHrex
-from pH_exchange_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, add_global_parameters, calc_system_charge, create_force_particle, create_force_bond)
+from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, add_global_parameters, calc_system_charge, create_force_particle, create_force_bond)
 from definitions import *
 from buildSystem import buildSystem
 from alchemical_protons import *

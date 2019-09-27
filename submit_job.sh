@@ -16,5 +16,3 @@ spack load -r /omvpd5u # fftw@3.3.8
 conda activate openmm_7_4_beta 
 
 python -u exchange_min_replica.py
-
-

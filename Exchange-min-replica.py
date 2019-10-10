@@ -1,77 +1,6 @@
 
 from imports import *
-
-# In[2]:
-
-def _get_pme_direct_space_unique_expression(reference_force):
-    # Determine PME parameters.
-    [alpha_ewald, nx, ny, nz] = reference_force.getPMEParameters()
-    if (alpha_ewald/alpha_ewald.unit) == 0.0:
-        # If alpha is 0.0, alpha_ewald is computed by OpenMM from from the error tolerance.
-        tol = reference_force.getEwaldErrorTolerance()
-        alpha_ewald = (1.0/reference_force.getCutoffDistance()) * np.sqrt(-np.log(2.0*tol))
-    alpha_ewald = alpha_ewald.value_in_unit_system(unit.md_unit_system)
-    pme_expression = ("*erfc(alpha_ewald*reff_electrostatics)/reff_electrostatics;"
-                      "alpha_ewald = {};").format(alpha_ewald)
-    return pme_expression
-
-def _get_electrostatics_energy_expressions(reference_force):
-    # The final expression will be prefix + method + suffix.
-    electrostatics_prefix = ('U_electrostatics;'
-                             'U_electrostatics=(lambda_electrostatics^softcore_d)*ONE_4PI_EPS0*chargeprod')
-    # Effective softcore distance for electrostatics (common to all methods).
-    electrostatics_suffix = ('reff_electrostatics = sigma*((softcore_beta*(1.0-lambda_electrostatics)^softcore_e + (r/sigma)^softcore_f))^(1/softcore_f);'
-                             'ONE_4PI_EPS0 = {};').format(ONE_4PI_EPS0)  # Already in OpenMM units.
-    # Define mixing rules.
-    electrostatics_mixing_rules = ('chargeprod = charge1*charge2;'  # Mixing rule for charges.
-                                   'sigma = 0.5*(sigma1 + sigma2);')  # Mixing rule for sigma.
-    # Standard Coulomb expression with softened core. This is used
-    coulomb_expression = '/reff_electrostatics;'
-    # Select electrostatics functional form based on nonbonded method.
-    nonbonded_method = reference_force.getNonbondedMethod()
-    # Soft-core Coulomb.
-    if nonbonded_method in [openmm.NonbondedForce.NoCutoff]:
-        electrostatics_method_expression = coulomb_expression
-    # Reaction-field electrostatics.
-    elif nonbonded_method in [openmm.NonbondedForce.CutoffPeriodic, openmm.NonbondedForce.CutoffNonPeriodic]:
-        electrostatics_method_expression = self._get_reaction_field_unique_expression(reference_force)
-    # PME electrostatics.
-    elif nonbonded_method in [openmm.NonbondedForce.PME, openmm.NonbondedForce.Ewald]:
-        # Ewald direct-space electrostatics.
-        electrostatics_method_expression = _get_pme_direct_space_unique_expression(reference_force)
-    else:
-        raise ValueError("Nonbonded method {} not supported yet.".format(nonbonded_method))
-        # Define energy expression for 1,4 electrostatic exceptions.
-    exceptions_electrostatics_energy_expression = electrostatics_prefix
-     #    exceptions_electrostatics_energy_expression += electrostatics_method_expression
-    exceptions_electrostatics_energy_expression += coulomb_expression
-    exceptions_electrostatics_energy_expression += electrostatics_suffix
-    # Define energy expression for electrostatics.
-    electrostatics_energy_expression = (electrostatics_prefix + electrostatics_method_expression +
-                                        electrostatics_suffix + electrostatics_mixing_rules)
-    return electrostatics_energy_expression, exceptions_electrostatics_energy_expression
-
-def add_global_parameters(force):
-    force.addGlobalParameter('softcore_alpha', softcore_alpha)
-    force.addGlobalParameter('softcore_beta', softcore_beta)
-    force.addGlobalParameter('softcore_a', softcore_a)
-    force.addGlobalParameter('softcore_b', softcore_b)
-    force.addGlobalParameter('softcore_c', softcore_c)
-    force.addGlobalParameter('softcore_d', softcore_d)
-    force.addGlobalParameter('softcore_e', softcore_e)
-    force.addGlobalParameter('softcore_f', softcore_f)
-def calc_system_charge(force):
-    c = 0
-    for i in range(force.getNumParticles()):
-        [laas, charge, epsilon] = force.getParticleParameters(i)
-        c+=round(charge, 3)
-    c = round(c, 3)
-    print('Net charge: ', c)
-    return c
-
-
-# In[3]:
-
+from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, add_global_parameters, calc_system_charge, create_force_particle, create_force_bond)
 
 print('Building system...')
 psf = CharmmPsfFile('./inputFiles/fep-40-i01-1-wb-i.psf')
@@ -336,26 +265,6 @@ if len(list_alchem_residues) !=0:
     # Create a copy of the NonbondedForce to handle particle interactions and
     # 1,4 exceptions between non-alchemical/non-alchemical atoms (nn).
     nonbonded_force = copy.deepcopy(NB)
-    def create_force_particle(force_cls, energy_expression, lambda_variable_name, is_lambda_controlled):
-        """Shortcut to create a lambda-controlled custom forces."""
-        if is_lambda_controlled:
-            energy_expression_add = energy_expression + lambda_variable_name + '=1.0;'
-            force = force_cls(energy_expression_add)
-            #force.addPerParticleParameter(lambda_variable_name)
-        else:  # fix lambda variable to 1.0
-            energy_expression_add = energy_expression + lambda_variable_name + '=1.0;'
-            force = force_cls(energy_expression_add)
-        return force
-    def create_force_bond(force_cls, energy_expression, lambda_variable_name, is_lambda_controlled):
-        """Shortcut to create a lambda-controlled custom forces."""
-        if is_lambda_controlled:
-            energy_expression_add = energy_expression + lambda_variable_name + '=1.0;'
-            force = force_cls(energy_expression_add)
-
-        else:  # fix lambda variable to 1.0
-            energy_expression_add = energy_expression + lambda_variable_name + '=1.0;'
-            force = force_cls(energy_expression_add)
-        return force
 
     # Create CustomNonbondedForces to handle sterics particle interactions between
     # non-alchemical/alchemical atoms (na) and alchemical/alchemical atoms (aa). Fix lambda

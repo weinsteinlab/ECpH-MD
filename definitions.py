@@ -1,22 +1,5 @@
 from imports import *
 
-# Build system options
-temperature = 276*kelvin
-dt = 0.002*picoseconds
-friction = 1.0/picosecond
-constraintTolerance = 0.000001
-platform = Platform.getPlatformByName('CUDA')
-platformProperties = {'DeviceIndex': '0', 'Precision': 'mixed'}
-
-psf = CharmmPsfFile('./inputFiles/fep-40-i01-1-wb-i.psf')
-pdb = PDBFile('./inputFiles/fep-45-i01-1-wb-i.pdb')
-topology = psf.topology
-positions_init = pdb.positions
-params = CharmmParameterSet('./inputFiles/all_top.rtf', './inputFiles/parameters.prm')
-
-
-
-
 # Define VdW softcore parameters
 switch_width=1*unit.angstroms
 softcore_alpha = 0.5

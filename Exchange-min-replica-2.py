@@ -1,35 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
-import sys
-import glob
-from simtk.openmm import *
-from simtk.openmm.app import *
-from simtk.unit import *
-from sys import stdout
-#from openmmtools import alchemy
-#from openmmtools.alchemy import *
-#from openmmtools.alchemy import AbsoluteAlchemicalFactory
-import math
-from math import pi
-from openmmtools import testsystems, alchemy
-from simtk import openmm, unit
-from openmmtools.states import *
-#from openmmtools import testsystems, states, mcmc
-import simtk.openmm.app.dcdfile
-#from openmmtools import testsystems, alchemy
-from simtk import openmm, unit
-import pandas as pd
-import mdtraj as md
-import numpy as np
-import random
-from random import randint
-from openmmtools import cache
-from openmmtools.constants import ONE_4PI_EPS0
-
+from imports import *
 
 # In[2]:
 

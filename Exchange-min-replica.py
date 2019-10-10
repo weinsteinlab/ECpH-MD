@@ -105,11 +105,11 @@ def calc_system_charge(force):
 
 
 print('Building system...')
-psf = CharmmPsfFile('../fep-40-i01-1-wb-i.psf')
-pdb = PDBFile('../fep-45-i01-1-wb-i.pdb')
+psf = CharmmPsfFile('./inputFiles/fep-40-i01-1-wb-i.psf')
+pdb = PDBFile('./inputFiles/fep-45-i01-1-wb-i.pdb')
 topology = psf.topology
 positions_init = pdb.positions
-params = CharmmParameterSet('../all_top.rtf', '../parameters.prm')
+params = CharmmParameterSet('./inputFiles/all_top.rtf', './inputFiles/parameters.prm')
 nonbondedMethod = PME
 nonbondedCutoff = 12*angstroms
 switchDistance=10*angstroms
@@ -143,7 +143,7 @@ platformProperties = {'DeviceIndex': '0', 'Precision': 'mixed'}
 # In[8]:
 
 
-t = md.load('../fep-45-i01-1-wb-i.pdb')
+t = md.load('./inputFiles/fep-45-i01-1-wb-i.pdb')
 top = t.topology
 # Define alchemical protons
 lys_atoms = top.select('resname LYS and name HZ3')
@@ -1908,5 +1908,6 @@ parallel_tempering = pHRex(pH_system=pH_system, pH_list=pH_list)
 # In[10]:
 
 
-parallel_tempering.run(n_iter = 1000, nsteps = 50000)
+#parallel_tempering.run(n_iter = 1000, nsteps = 50000)
+parallel_tempering.run(n_iter = 2, nsteps = 1000)
 

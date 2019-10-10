@@ -1,6 +1,7 @@
 from imports import *
 from definitions import *
 from alchemical_protons import *
+from fep_functions import *
 
 class pHrex:
     def __init__(self, pH_system, pH_list):
@@ -250,7 +251,7 @@ class pHrex:
             integrator.setConstraintTolerance(constraintTolerance)
             simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
 
-            if iteration < 0:
+            if iteration == 0:
                 dcdReporter = DCDReporter('test-'+str(pH)+'.dcd', 1000)
                 dataReporter = StateDataReporter('test-'+str(pH)+'.log', 100, totalSteps=steps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
                 simulation.context.setPositions(positions_init)

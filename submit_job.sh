@@ -13,6 +13,7 @@ source ~/.bashrc
 spack load -r cuda@9.2.88
 spack load -r /omvpd5u # fftw@3.3.8
 
-conda activate openmm_7_4_beta 
+conda activate pHreplicaExchange 
 
-python -u exchange_min_replica.py
+#python -u exchange_min_replica.py
+python -u new_ex_4.py 

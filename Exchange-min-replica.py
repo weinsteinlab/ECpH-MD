@@ -301,63 +301,10 @@ if len(list_alchem_residues) !=0:
         [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(particle_index)
         # Set sterics parameters in CustomNonbondedForces.
         for force in all_sterics_custom_nonbonded_forces:            
-            #if particle_index in lys_atoms:
-            #    force.addParticle([llys, sigma, epsilon])
-            #elif particle_index in his_atoms:
-            #    force.addParticle([lhis, sigma, epsilon])
-            #elif particle_index in glu_atoms:
-            #    force.addParticle([lglu, sigma, epsilon])
-            #elif particle_index in cys_atoms:
-            #    force.addParticle([lcys, sigma, epsilon])
-            #elif particle_index in asp_atoms:
-            #    force.addParticle([lasp, sigma, epsilon])                
-            #else:
             force.addParticle([1.0, sigma, epsilon])
             # Set electrostatics parameters in CustomNonbondedForces.
         for force in all_electrostatics_custom_nonbonded_forces:
-            #if particle_index in lys_atoms:
-            #    force.addParticle([llys, charge, sigma])
-            #elif particle_index in his_atoms:
-            #    force.addParticle([lhis, charge, sigma])
-            #elif particle_index in glu_atoms:
-            #    force.addParticle([lglu, charge, sigma]) 
-            #elif particle_index in cys_atoms:
-            #    force.addParticle([lcys, charge, sigma])
-            #elif particle_index in asp_atoms:
-            #    force.addParticle([lasp, charge, sigma])                
-            #else: 
             force.addParticle([1.0, charge, sigma])
-                #if 'LYS'in str(psf.atom_list[particle_index]):
-                #    for i in lys_char:
-                #        if i in str(psf.atom_list[particle_index]):
-                #            #print(str(psf.atom_list[particle_index]))
-                #            npch = charge._value - (1-llys)*lys_char[i]
-                #            force.setParticleParameters(particle_index, [1.0, npch, sigma])                           
-                #elif 'HSP'in str(psf.atom_list[particle_index]):
-                #    for i in his_char:
-                #        if i in str(psf.atom_list[particle_index]):
-                #            #print(str(psf.atom_list[particle_index]))
-                #            npch = charge._value - (1-lhis)*his_char[i]
-                #            force.setParticleParameters(particle_index, [1.0, npch, sigma])
-                #elif 'GLU'in str(psf.atom_list[particle_index]):
-                #    for i in glu_char:
-                #        if i in str(psf.atom_list[particle_index]):
-                #            #print(str(psf.atom_list[particle_index]))
-                #            npch = charge._value - (1 - lglu)*glu_char[i]
-                #            force.setParticleParameters(particle_index, [1.0, npch, sigma])     
-                #elif 'CYS'in str(psf.atom_list[particle_index]):
-                #    for i in cys_char:
-                #        if i in str(psf.atom_list[particle_index]):
-                #            #print(str(psf.atom_list[particle_index]))
-                #            npch = charge._value - (1 - lcys)*cys_char[i]
-                #            force.setParticleParameters(particle_index, [1.0, npch, sigma]) 
-                #elif 'ASP2'in str(psf.atom_list[particle_index]):
-                #    for i in asp_char:
-                #        if i in str(psf.atom_list[particle_index]):
-                #            #print(str(psf.atom_list[particle_index])
-                #            npch = charge._value - (1-lasp)*asp_char[i]
-                #            force.setParticleParameters(particle_index, [1.0, npch, sigma])                             
-        # Turn off interactions contribution from alchemically-modified particles in unmodified
     # NonbondedForce that will be handled by all other forces
     for particle_index in range(nonbonded_force.getNumParticles()):
         # Retrieve parameters.
@@ -366,31 +313,6 @@ if len(list_alchem_residues) !=0:
         # the NonbondedForce charge which is modeled by the offset parameter.
         if particle_index in alchemical_atomset:
             nonbonded_force.setParticleParameters(particle_index, abs(0.0*charge), sigma, abs(0*epsilon))
-        #if 'LYS'in str(psf.atom_list[particle_index]):
-        #    for i in lys_char:
-        #        if i in str(psf.atom_list[particle_index]):
-        #            npch = charge._value - (1-llys)*lys_char[i]
-        #            nonbonded_force.setParticleParameters(particle_index, npch, sigma, epsilon)
-        #if 'HSP'in str(psf.atom_list[particle_index]):
-        #    for i in his_char:
-        #        if i in str(psf.atom_list[particle_index]):
-        #            npch = charge._value - (1-lhis)*his_char[i]
-        #            nonbonded_force.setParticleParameters(particle_index, npch, sigma, epsilon)                    
-        #if 'GLU2'in str(psf.atom_list[particle_index]):
-        #    for i in glu_char:
-        #        if i in str(psf.atom_list[particle_index]):
-        #            npch = charge._value - (1-lglu)*glu_char[i]
-        #            nonbonded_force.setParticleParameters(particle_index, npch, sigma, epsilon)
-        #if 'CYS'in str(psf.atom_list[particle_index]):
-        #    for i in cys_char:
-        #        if i in str(psf.atom_list[particle_index]):
-        #            npch = charge._value - (1-lcys)*cys_char[i]
-        #            nonbonded_force.setParticleParameters(particle_index, npch, sigma, epsilon)
-        #if 'ASP2'in str(psf.atom_list[particle_index]):
-        #    for i in asp_char:
-        #        if i in str(psf.atom_list[particle_index]):
-        #            npch = charge._value - (1-lasp)*asp_char[i]
-        #            nonbonded_force.setParticleParameters(particle_index, npch, sigma, epsilon)                    
     # Restrict interaction evaluation of CustomNonbondedForces to their respective atom groups.
     na_sterics_custom_nonbonded_force.addInteractionGroup(nonalchemical_atomset, alchemical_atomset)
     aa_sterics_custom_nonbonded_force.addInteractionGroup(alchemical_atomset, alchemical_atomset)
@@ -430,28 +352,9 @@ if len(list_alchem_residues) !=0:
 
         if only_one_alchemical:
             if is_exception_epsilon:
-                #if iatom or jatom in lys_atoms:    
-                #    na_sterics_custom_bond_force.addBond(iatom, jatom, [llys, sigma, epsilon])
-                #elif iatom or jatom in his_atoms:
-                #    na_sterics_custom_bond_force.addBond(iatom, jatom, [lhis, sigma, epsilon])
-                #elif iatom or jatom in glu_atoms:
-                #    na_sterics_custom_bond_force.addBond(iatom, jatom, [lglu, sigma, epsilon])
-                #elif iatom or jatom in cys_atoms:
-                #    na_sterics_custom_bond_force.addBond(iatom, jatom, [lcys, sigma, epsilon])
-                #elif iatom or jatom in asp_atoms:
                 na_sterics_custom_bond_force.addBond(iatom, jatom, [1.0, sigma, epsilon])                     
             if is_exception_chargeprod:
-                #if iatom or jatom in lys_atoms:    
-                #    na_electrostatics_custom_bond_force.addBond(iatom, jatom, [llys, chargeprod, sigma])
-                #elif iatom or jatom in his_atoms:
-                #    na_electrostatics_custom_bond_force.addBond(iatom, jatom, [lhis, chargeprod, sigma])
-                #elif iatom or jatom in glu_atoms:
-                #    na_electrostatics_custom_bond_force.addBond(iatom, jatom, [lglu, chargeprod, sigma])
-                #elif iatom or jatom in cys_atoms:
-                #    na_electrostatics_custom_bond_force.addBond(iatom, jatom, [lcys, chargeprod, sigma])
-                #elif iatom or jatom in asp_atoms:
                 na_electrostatics_custom_bond_force.addBond(iatom, jatom, [1.0, chargeprod, sigma])                    
-        # else: both particles are non-alchemical, leave them in the unmodified NonbondedForce
 
         # Turn off all exception contributions from alchemical atoms in the NonbondedForce
         # modelling non-alchemical atoms only
@@ -468,6 +371,8 @@ if len(list_alchem_residues) !=0:
         add_global_parameters(force)
 
 
+#Check if number of particles in all NB interections is the same
+
 if na_electrostatics_custom_nonbonded_force.getNumParticles() == aa_electrostatics_custom_nonbonded_force.getNumParticles() == nonbonded_force.getNumParticles():
     for force_index, reference_force in list(enumerate(pH_system.getForces())):
         reference_force_name = reference_force.__class__.__name__
@@ -482,10 +387,8 @@ else:
 
 pH_system.addForce(MonteCarloBarostat(1.01325*bar, 276*kelvin))
 
-pH_system.getForces()
-
-
-# In[22]:
+# Show all the forces in the system
+#print(pH_system.getForces())
 
 
 class pHRex:
@@ -511,6 +414,9 @@ class pHRex:
             pH_system_temp = copy.deepcopy(self._pH_system)
             lambda_list = pd.read_csv('lambda_list-'+str(pH)+'.csv', index_col=0)
             nonbonded_force = pH_system_temp.getForces()[8]
+
+            # Assign the transition charges to atoms neighboring to alchemical protons according to current pH value for non-alchemical interactions
+
             for side_atom in side_atoms:
                 side_atom = int(side_atom)
                 [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(side_atom)
@@ -520,13 +426,11 @@ class pHRex:
                     for charge_delta in lys_char:
                         if atom_name in charge_delta:
                             n_ch = charge._value - lys_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                            print(charge, ' ', n_ch)
                             nonbonded_force.setParticleParameters(side_atom, n_ch, sigma, epsilon)               
                 if 'GLU' in residue:
                     for charge_delta in glu_char:
                         if atom_name in charge_delta:
                             n_ch = charge._value - glu_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                            print(charge, ' ', n_ch)
                             nonbonded_force.setParticleParameters(side_atom, n_ch, sigma, epsilon)      
                 if 'HIS' in residue:
                     if float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 1.0:
@@ -541,18 +445,18 @@ class pHRex:
                     for charge_delta in asp_char:
                         if atom_name in charge_delta:
                             n_ch = charge._value - asp_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                            print(charge, ' ', n_ch)
                             nonbonded_force.setParticleParameters(side_atom, n_ch, sigma, epsilon)      
                 if 'CYS' in residue:
                     for charge_delta in cys_char:
                         if atom_name in charge_delta:
                             n_ch = charge._value - cys_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                            print(charge, ' ', n_ch)
                             nonbonded_force.setParticleParameters(side_atom, n_ch, sigma, epsilon)       
             for f in range(9, 17):
                 force = pH_system_temp.getForces()[f]
                 if force.__class__.__name__ == 'CustomNonbondedForce':
-                    # Assign labmdas to alchemical protons
+
+                    # Assign lambdas to alchemical protons
+
                     for proton in (all_atoms):
                         proton = int(proton)
                         residue = str(top.atom(proton)).split('-')[0]
@@ -574,7 +478,8 @@ class pHRex:
 
                         force.setParticleParameters(proton, [a, b, c])
 
-                    # Assign transition charge to neighboring alchemical atoms
+                    # Assign the transition charges to atoms neighboring to alchemical protons according to current pH value for alchemical interactions
+
                     if force.getPerParticleParameterName(1) == 'charge':
                         for side_atom in (side_atoms):
                             side_atom = int(side_atom)
@@ -585,13 +490,11 @@ class pHRex:
                                 for charge_delta in lys_char:
                                     if atom_name in charge_delta:
                                         n_ch = charge - lys_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                        print(charge, ' ', n_ch)
                                         force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma])                        
                             elif 'GLU' in residue:
                                 for charge_delta in glu_char:
                                     if atom_name in charge_delta:
                                         n_ch = charge - glu_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                        print(charge, ' ', n_ch)
                                         force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma]) 
                             elif 'HIS' in residue:
                                 if float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 1.0:
@@ -601,22 +504,21 @@ class pHRex:
                                 for charge_delta in his_char:
                                     if atom_name in charge_delta:
                                         n_ch = charge - his_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                        print(charge, ' ', n_ch)
                                         force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma]) 
                             elif 'ASP' in residue:
                                 for charge_delta in asp_char:
                                     if atom_name in charge_delta:
                                         n_ch = charge - asp_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                        print(charge, ' ', n_ch)
                                         force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma]) 
                             elif 'CYS' in residue:
                                 for charge_delta in cys_char:
                                     if atom_name in charge_delta:
                                         n_ch = charge - cys_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                        print(charge, ' ', n_ch)
                                         force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma])                             
                 if force.__class__.__name__ == 'CustomBondForce':
-                    # Assign labmdas to alchemical protons                                               
+
+                    # Assign lambdas to alchemical protons 
+
                     for bond in range(force.getNumBonds()):
                         [q, r, (a, b, c)] = force.getBondParameters(bond)
                         if q in all_atoms:
@@ -641,11 +543,11 @@ class pHRex:
   
                         force.setBondParameters(bond, q, r, [a, b, c])                                               
 
-                    # Assign transition charge to neighboring alchemical atoms
+                    # Assign the transition charges to atoms neighboring to alchemical protons according to current pH value for alchemical interactions
+
                     if force.getPerBondParameterName(1) == 'chargeprod':
                         for bond in range(force.getNumBonds()):
                             [q, r, (a, b, c)] = force.getBondParameters(bond)
-                            #b = round(b, 5)
                             if q in side_atoms:
                                 side_atom = q
                                 residue = str(top.atom(side_atom)).split('-')[0]
@@ -654,13 +556,11 @@ class pHRex:
                                     for charge_delta in lys_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - lys_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c])                                              
                                 if 'GLU' in residue:
                                     for charge_delta in glu_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - glu_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c])
                                 if 'HIS' in residue:
                                     if float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 1.0:
@@ -670,19 +570,16 @@ class pHRex:
                                     for charge_delta in his_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - his_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c])
                                 if 'ASP' in residue:
                                     for charge_delta in asp_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - asp_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c])
                                 if 'CYS' in residue:
                                     for charge_delta in cys_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - cys_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c]) 
                             elif r in side_atoms:
                                 side_atom = r
@@ -692,13 +589,11 @@ class pHRex:
                                     for charge_delta in lys_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - lys_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c])
                                 if 'GLU' in residue:
                                     for charge_delta in glu_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - glu_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c])
                                 if 'HIS' in residue:
                                     if float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 1.0:
@@ -708,26 +603,27 @@ class pHRex:
                                     for charge_delta in his_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - his_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c])
                                 if 'ASP' in residue:
                                     for charge_delta in asp_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - asp_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c])
                                 if 'CYS' in residue:
                                     for charge_delta in cys_char:
                                         if atom_name in charge_delta:
                                             n_ch = b - cys_char[charge_delta]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-#                                            print(b, ' ', n_ch)
                                             force.setBondParameters(bond, q, r, [a, n_ch, c])
+
+            # Calculate the net charge of the system
 
             el_nb = [pH_system_temp.getForces()[11], pH_system_temp.getForces()[12]]
             net_charge = calc_system_charge(el_nb[0])
+            # If the net chatge is higher than a given value alter the partial charges of random water oxygens by 0.001 e
             if abs(net_charge) > 0.001:
                 n_waters = int(abs(net_charge)/0.001)
                 print('Number of modified water oxygens ', n_waters)
+                # if the charge of the water oxygen has been changed previously restore it 
                 for w in waters:
                     [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(int(w))
                     if charge._value != -0.834:
@@ -756,35 +652,11 @@ class pHRex:
                         nonbonded_force.setParticleParameters(i, wc*unit.elementary_charge, sigma, epsilon)
                         for force in el_nb:
                             [l, charge, sigma] = force.getParticleParameters(i)
-                            force.setParticleParameters(i, l, wc*unit.elementary_charge, sigma)               
+                            force.setParticleParameters(i, l, wc*unit.elementary_charge, siigma)               
+
             integrator = LangevinIntegrator(temperature, friction, dt)
             integrator.setConstraintTolerance(constraintTolerance)
             simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
-#            if abs(net_charge) > 0.0001:
-#                n_waters = int(abs(net_charge)/0.001)
-#                print('Number of modified water oxygens ', n_waters)
-#
-#                r_waters = list(np.random.choice(waters, n_waters))
-#                if net_charge < 0:
-#                    for i in r_waters:
-#                        i = int(i)            
-#                        [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(i)
-#                        wc = charge._value + 0.001
-#                        nonbonded_force.setParticleParameters(i, wc*unit.elementary_charge, sigma, epsilon)
-#                        for force in el_nb:
-#                            [l, charge, sigma] = force.getParticleParameters(i)
-#                            force.setParticleParameters(i, [l, wc*unit.elementary_charge, sigma])
-#                if net_charge > 0:
-#                    for i in r_waters:
-#                        i = int(i)            
-#                        [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(i)
-#                        wc = charge._value - 0.001        
-#                        nonbonded_force.setParticleParameters(i, wc*unit.elementary_charge, sigma, epsilon)
-#                        for force in el_nb:
-#                            [l, charge, sigma] = force.getParticleParameters(i)
-#                            force.setParticleParameters(i, l, wc*unit.elementary_charge, sigma)                    
-#            simulation.context.reinitialize()
-
 
             if iteration == 0:
                 dcdReporter = DCDReporter('test-'+str(pH)+'.dcd', 1000)
@@ -814,6 +686,8 @@ class pHRex:
                 positions = simulation.context.getState(getPositions=True).getPositions()
                 system_temp = simulation.context.getSystem()
              
+                # For dubugging mode print all the parameters of all alchemical protons
+               
                 f = system_temp.getForces()[9]
                 for i in all_atoms:
                     i = int(i)
@@ -865,7 +739,9 @@ class pHRex:
             else:
                 j = i-1
             rep_ex = [i, j]
+
             #Select 25% of alchemical proton for an exchange attempt
+
             number_atoms_change = round(len(list_alchem_residues)*0.25)
             residues_change = random.sample(range(0, len(list_alchem_residues)-1), number_atoms_change)
             proton_change = [None]*number_atoms_change
@@ -1017,13 +893,11 @@ class pHRex:
                                     for charge_delta in lys_char:
                                         if atom_name in charge_delta:
                                             n_ch = charge - lys_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                        print(charge, ' ', n_ch)
                                             force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma])                        
                                 elif 'GLU' in residue:
                                     for charge_delta in glu_char:
                                         if atom_name in charge_delta:
                                             n_ch = charge - glu_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                        print(charge, ' ', n_ch)
                                             force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma]) 
                                 elif 'HIS' in residue:
                                     if float(lambda_list.at[residue+'_sw', new_name]) == 1.0:
@@ -1033,19 +907,16 @@ class pHRex:
                                     for charge_delta in his_char:
                                         if atom_name in charge_delta:
                                             n_ch = charge - his_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                        print(charge, ' ', n_ch)
                                             force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma]) 
                                 elif 'ASP' in residue:
                                     for charge_delta in asp_char:
                                         if atom_name in charge_delta:
                                             n_ch = charge - asp_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                        print(charge, ' ', n_ch)
                                             force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma]) 
                                 elif 'CYS' in residue:
                                     for charge_delta in cys_char:
                                         if atom_name in charge_delta:
                                             n_ch = charge - cys_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                        print(charge, ' ', n_ch)
                                             force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma])                             
                     if force.__class__.__name__ == 'CustomBondForce':
                         # Assign labmdas to alchemical protons                                               
@@ -1114,13 +985,11 @@ class pHRex:
                                         for charge_delta in lys_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - lys_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c])                                              
                                     if 'GLU' in residue:
                                         for charge_delta in glu_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - glu_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c])
                                     if 'HIS' in residue:
                                         if float(lambda_list.at[residue+'_sw', new_name]) == 1.0:
@@ -1130,19 +999,16 @@ class pHRex:
                                         for charge_delta in his_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - his_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c])
                                     if 'ASP' in residue:
                                         for charge_delta in asp_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - asp_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c])
                                     if 'CYS' in residue:
                                         for charge_delta in cys_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - cys_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c]) 
                                 elif r in side_atoms:
                                     side_atom = r
@@ -1167,13 +1033,11 @@ class pHRex:
                                         for charge_delta in lys_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - lys_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c])
                                     if 'GLU' in residue:
                                         for charge_delta in glu_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - glu_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c])
                                     if 'HIS' in residue:
                                         if float(lambda_list.at[residue+'_sw', new_name]) == 1.0:
@@ -1183,19 +1047,16 @@ class pHRex:
                                         for charge_delta in his_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - his_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c])
                                     if 'ASP' in residue:
                                         for charge_delta in asp_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - asp_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c])
                                     if 'CYS' in residue:
                                         for charge_delta in cys_char:
                                             if atom_name in charge_delta:
                                                 n_ch = b - cys_char[charge_delta]*(1 - float(lambda_list.at[residue, new_name]))
-    #                                            print(b, ' ', n_ch)
                                                 force.setBondParameters(bond, q, r, [a, n_ch, c])
 
                 el_nb = [pH_system_temp.getForces()[11], pH_system_temp.getForces()[12]]

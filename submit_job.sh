@@ -16,4 +16,4 @@ spack load -r /omvpd5u # fftw@3.3.8
 conda activate pHreplicaExchange 
 
 #python -u exchange_min_replica.py
-python -u Exchange-min-replica_test.py 
+python -u Exchange-min-replica.py 

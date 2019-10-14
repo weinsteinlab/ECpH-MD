@@ -35,6 +35,7 @@ his_char_E = {}
 his_char_D = {}
 asp_char = {}
 cys_char = {}
+res_list = {}
 # GLU difference charges
 glu_char["CG:"] = 0.07
 glu_char["CD:"] = 0.13
@@ -77,6 +78,12 @@ asp_char["CB:"] = 0.07
 asp_char["CG:"] = 0.13
 asp_char["OD1:"] = 0.21
 asp_char["OD2:"] = 0.15
+res_list["LYS"] = lys_char
+res_list["HSE"] = his_char_E
+res_list["HSD"] = his_char_D
+res_list["CYS"] = cys_char
+res_list["ASP"] = asp_char
+res_list["GLU"] = glu_char
 
 for i in range(pH_low*10, pH_high*10, 5):
     p = 1-1/(1+10**(EpKa-i/10))

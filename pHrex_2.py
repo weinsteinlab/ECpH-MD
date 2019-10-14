@@ -48,6 +48,7 @@ def manage_waters(pH_system_temp):
                 for force in el_nb:
                     [l, charge, sigma] = force.getParticleParameters(w)
                     force.setParticleParameters(w, l, wc*unit.elementary_charge, sigma)          
+
 def pick_charges(res_list, residue):
     for resname in res_list:
         if str(resname) in residue:
@@ -60,6 +61,7 @@ def pick_charges(res_list, residue):
     return charge_list
 
 def create_cpH_system(pH_system_temp, lambda_list):
+    nonbonded_force = pH_system_temp.getForces()[8]
     for side_atom in side_atoms:
         side_atom = int(side_atom)
         [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(side_atom)
@@ -76,23 +78,23 @@ def create_cpH_system(pH_system_temp, lambda_list):
             for proton in (all_atoms):
                 proton = int(proton)
                 residue = str(top.atom(proton)).split('-')[0]
-                [a, b, c] = force.getParticleParameters(proton)
+                [lambda_sterics, sigma, epsilon] = force.getParticleParameters(proton)
                 if 'HIS' in residue:
                     atom_name = str(top.atom(proton)).split('-')[1]
                     if float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 0.0:
                         if 'HE2' in atom_name:
-                            a = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
+                            lambda_sterics = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
                         elif 'HD1' in atom_name:
-                            a = 1.0
+                            lambda_sterics = 1.0
                     elif float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 1.0:
                         if 'HE2' in atom_name:
-                            a = 1.0
+                            lambda_sterics = 1.0
                         elif 'HD1' in atom_name: 
-                            a = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
+                            lambda_sterics = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
                 else:        
-                    a = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
+                    lambda_sterics = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
 
-                force.setParticleParameters(proton, [a, b, c])
+                force.setParticleParameters(proton, [lambda_sterics, sigma, epsilon])
 
             # Assign transition charge to neighboring alchemical atoms
             if force.getPerParticleParameterName(1) == 'charge':
@@ -109,11 +111,11 @@ def create_cpH_system(pH_system_temp, lambda_list):
         if force.__class__.__name__ == 'CustomBondForce':
             # Assign labmdas to alchemical protons                                               
             for bond in range(force.getNumBonds()):
-                [q, r, (a, b, c)] = force.getBondParameters(bond)
-                if q in all_atoms:
-                    proton = q
-                elif r in all_atoms:
-                    proton = r
+                [atom_i, atom_j, (lambda_electrostatics, chargeprod, sigma)] = force.getBondParameters(bond)
+                if atom_i in all_atoms:
+                    proton = atom_i
+                elif atom_j in all_atoms:
+                    proton = atom_j
                 residue = str(top.atom(proton)).split('-')[0]
                 atom_name = str(top.atom(proton)).split('-')[1]
                 if 'HIS' in residue:
@@ -135,35 +137,26 @@ def create_cpH_system(pH_system_temp, lambda_list):
             # Assign transition charge to neighboring alchemical atoms
             if force.getPerBondParameterName(1) == 'chargeprod':
                 for bond in range(force.getNumBonds()):
-                    [q, r, (a, b, c)] = force.getBondParameters(bond)
-                    if q in side_atoms:
-                        side_atom = q
-                        residue = str(top.atom(side_atom)).split('-')[0]
-                        atom_name = str(top.atom(side_atom)).split('-')[1]
-                        for resname in res_list:
-                            if str(resname) in residue:
-                                charge_list = res_list[resname]
-                            elif 'HIS' in residue:
-                                if float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 1.0:
-                                    charge_list = res_list['HSE']
-                                else:
-                                    charge_list = res_list['HSD']
-                            for atom in charge_list:
-                                if atom_name in atom:
-                                    n_ch = b - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-                                    force.setBondParameters(bond, q, r, [a, n_ch, c]) 
-                    elif r in side_atoms:
-                        side_atom = r
+                    [atom_i, atom_j, (lambda_electrostatics, chargeprod, sigma)] = force.getBondParameters(bond)
+                    if atom_i in side_atoms:
+                        side_atom = atom_i
                         residue = str(top.atom(side_atom)).split('-')[0]
                         atom_name = str(top.atom(side_atom)).split('-')[1]
                         pick_charges(res_list, residue)
                         for atom in charge_list:
                             if atom_name in atom:
                                 n_ch = b - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
-                                force.setBondParameters(bond, q, r, [a, n_ch, c])
+                                force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma]) 
+                    elif atom_j in side_atoms:
+                        side_atom = atom_j
+                        residue = str(top.atom(side_atom)).split('-')[0]
+                        atom_name = str(top.atom(side_atom)).split('-')[1]
+                        pick_charges(res_list, residue)
+                        for atom in charge_list:
+                            if atom_name in atom:
+                                n_ch = b - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
+                                force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma])
 
-
-# In[22]:
 
 
 class pHrex:

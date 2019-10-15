@@ -1,0 +1,337 @@
+[ 2.   2.5  3.   3.5  4.   4.5  5.   5.5  6.   6.5  7.   7.5  8.   8.5
+  9.   9.5 10.  10.5 11.  11.5]
+{'LYS2': 0.0736, 'GLU23': 0.0, 'LYS8': 0.0736, 'GLU210': 0.0, 'HIS13': 0.0, 'HIS13_sw': 0}
+{'LYS2': 0.0736, 'GLU23': 0.0, 'LYS8': 0.0736, 'GLU210': 0.0, 'HIS13': 0.0, 'HIS13_sw': 0}
+Building system...
+Exchange between replicas  4  and  3  protons  ['GLU23']
+lambdas of replica i                 1
+LYS2      1.0000
+GLU23     0.7153
+LYS8      1.0000
+GLU210    0.7153
+HIS13     0.9968
+HIS13_sw  1.0000
+lambdas of replica j                 1
+LYS2      1.0000
+GLU23     0.8882
+LYS8      1.0000
+GLU210    0.8882
+HIS13     0.9990
+HIS13_sw  1.0000
+replica  4  residue  LYS2
+No
+LYS parameters  15 0.21  old charge:  0.21
+replica  4  residue  LYS2
+No
+replica  4  residue  LYS2
+No
+LYS parameters  17 0.05  old charge:  0.05
+replica  4  residue  LYS2
+No
+LYS parameters  18 -0.3  old charge:  -0.3
+replica  4  residue  LYS2
+No
+LYS parameters  19 0.33  old charge:  0.33
+replica  4  residue  LYS2
+No
+LYS parameters  20 0.33  old charge:  0.33
+replica  4  residue  GLU23
+Yes
+GLU parameters  31 -0.217826  old charge:  -0.21
+replica  4  residue  GLU23
+Yes
+GLU parameters  34 0.735466  old charge:  0.75
+replica  4  residue  GLU23
+Yes
+GLU parameters  35 -0.573478  old charge:  -0.55
+replica  4  residue  GLU23
+Yes
+GLU parameters  36 -0.6267699999999999  old charge:  -0.61
+replica  4  residue  LYS8
+No
+LYS parameters  97 0.21  old charge:  0.21
+replica  4  residue  LYS8
+No
+replica  4  residue  LYS8
+No
+LYS parameters  99 0.05  old charge:  0.05
+replica  4  residue  LYS8
+No
+LYS parameters  100 -0.3  old charge:  -0.3
+replica  4  residue  LYS8
+No
+LYS parameters  101 0.33  old charge:  0.33
+replica  4  residue  LYS8
+No
+LYS parameters  102 0.33  old charge:  0.33
+replica  4  residue  GLU210
+No
+GLU parameters  133 -0.229929  old charge:  -0.21
+replica  4  residue  GLU210
+No
+GLU parameters  136 0.712989  old charge:  0.75
+replica  4  residue  GLU210
+No
+GLU parameters  137 -0.6097870000000001  old charge:  -0.55
+replica  4  residue  GLU210
+No
+GLU parameters  138 -0.652705  old charge:  -0.61
+replica  4  residue  HIS13
+No
+HIS parameters  177 -0.050096  old charge:  -0.05
+replica  4  residue  HIS13
+No
+HIS parameters  180 0.189232  old charge:  0.19
+replica  4  residue  HIS13
+No
+HIS parameters  181 0.12987200000000002  old charge:  0.13
+replica  4  residue  HIS13
+No
+HIS parameters  182 0.19009600000000001  old charge:  0.19
+replica  4  residue  HIS13
+No
+HIS parameters  183 -0.50952  old charge:  -0.51
+replica  4  residue  HIS13
+No
+HIS parameters  184 -0.0003839999999999977  old charge:  0.0
+replica  4  residue  HIS13
+No
+HIS parameters  185 -0.510608  old charge:  -0.51
+replica  4  residue  HIS13
+No
+replica  4  residue  HIS13
+No
+HIS parameters  187 0.319776  old charge:  0.32
+replica  4  residue  HIS13
+No
+HIS parameters  188 0.17984  old charge:  0.18
+Net charge:  -0.225
+Number of modified water oxygens  225
+replica  3  residue  LYS2
+No
+LYS parameters  15 0.21  old charge:  0.21
+replica  3  residue  LYS2
+No
+replica  3  residue  LYS2
+No
+LYS parameters  17 0.05  old charge:  0.05
+replica  3  residue  LYS2
+No
+LYS parameters  18 -0.3  old charge:  -0.3
+replica  3  residue  LYS2
+No
+LYS parameters  19 0.33  old charge:  0.33
+replica  3  residue  LYS2
+No
+LYS parameters  20 0.33  old charge:  0.33
+replica  3  residue  GLU23
+Yes
+GLU parameters  31 -0.229929  old charge:  -0.21
+replica  3  residue  GLU23
+Yes
+GLU parameters  34 0.712989  old charge:  0.75
+replica  3  residue  GLU23
+Yes
+GLU parameters  35 -0.6097870000000001  old charge:  -0.55
+replica  3  residue  GLU23
+Yes
+GLU parameters  36 -0.652705  old charge:  -0.61
+replica  3  residue  LYS8
+No
+LYS parameters  97 0.21  old charge:  0.21
+replica  3  residue  LYS8
+No
+replica  3  residue  LYS8
+No
+LYS parameters  99 0.05  old charge:  0.05
+replica  3  residue  LYS8
+No
+LYS parameters  100 -0.3  old charge:  -0.3
+replica  3  residue  LYS8
+No
+LYS parameters  101 0.33  old charge:  0.33
+replica  3  residue  LYS8
+No
+LYS parameters  102 0.33  old charge:  0.33
+replica  3  residue  GLU210
+No
+GLU parameters  133 -0.217826  old charge:  -0.21
+replica  3  residue  GLU210
+No
+GLU parameters  136 0.735466  old charge:  0.75
+replica  3  residue  GLU210
+No
+GLU parameters  137 -0.573478  old charge:  -0.55
+replica  3  residue  GLU210
+No
+GLU parameters  138 -0.6267699999999999  old charge:  -0.61
+replica  3  residue  HIS13
+No
+HIS parameters  177 -0.05003  old charge:  -0.05
+replica  3  residue  HIS13
+No
+HIS parameters  180 0.18976000000000004  old charge:  0.19
+replica  3  residue  HIS13
+No
+HIS parameters  181 0.12996000000000002  old charge:  0.13
+replica  3  residue  HIS13
+No
+HIS parameters  182 0.19003  old charge:  0.19
+replica  3  residue  HIS13
+No
+HIS parameters  183 -0.50985  old charge:  -0.51
+replica  3  residue  HIS13
+No
+HIS parameters  184 -0.00011999999999998678  old charge:  0.0
+replica  3  residue  HIS13
+No
+HIS parameters  185 -0.51019  old charge:  -0.51
+replica  3  residue  HIS13
+No
+replica  3  residue  HIS13
+No
+HIS parameters  187 0.31993  old charge:  0.32
+replica  3  residue  HIS13
+No
+HIS parameters  188 0.17995  old charge:  0.18
+Net charge:  -0.223
+Number of modified water oxygens  223
+Lambdas exchange energy  -188640.05150024217 -188529.68331469054 -188225.11404355202 -188139.91294340245
+-804.7078279782145
+Lambda_exchange_rejected
+Exchange between replicas  15  and  1
+lambdas of replica i                 1
+LYS2      0.8882
+GLU23     0.0000
+LYS8      0.8882
+GLU210    0.0000
+HIS13     0.0010
+HIS13_sw  0.0000
+lambdas of replica j                 1
+LYS2      1.0000
+GLU23     0.9876
+LYS8      1.0000
+GLU210    0.9876
+HIS13     0.9999
+HIS13_sw  1.0000
+replica  15  residue  LYS2
+LYS parameters  15 0.20105599999999998  old charge:  0.21
+replica  15  residue  LYS2
+replica  15  residue  LYS2
+LYS parameters  17 0.052795  old charge:  0.05
+replica  15  residue  LYS2
+LYS parameters  18 -0.373788  old charge:  -0.3
+replica  15  residue  LYS2
+LYS parameters  19 0.331118  old charge:  0.33
+replica  15  residue  LYS2
+LYS parameters  20 0.331118  old charge:  0.33
+replica  15  residue  GLU23
+GLU parameters  31 -0.28  old charge:  -0.21
+replica  15  residue  GLU23
+GLU parameters  34 0.62  old charge:  0.75
+replica  15  residue  GLU23
+GLU parameters  35 -0.76  old charge:  -0.55
+replica  15  residue  GLU23
+GLU parameters  36 -0.76  old charge:  -0.61
+replica  15  residue  LYS8
+LYS parameters  97 0.20105599999999998  old charge:  0.21
+replica  15  residue  LYS8
+replica  15  residue  LYS8
+LYS parameters  99 0.052795  old charge:  0.05
+replica  15  residue  LYS8
+LYS parameters  100 -0.373788  old charge:  -0.3
+replica  15  residue  LYS8
+LYS parameters  101 0.331118  old charge:  0.33
+replica  15  residue  LYS8
+LYS parameters  102 0.331118  old charge:  0.33
+replica  15  residue  GLU210
+GLU parameters  133 -0.28  old charge:  -0.21
+replica  15  residue  GLU210
+GLU parameters  136 0.62  old charge:  0.75
+replica  15  residue  GLU210
+GLU parameters  137 -0.76  old charge:  -0.55
+replica  15  residue  GLU210
+GLU parameters  138 -0.76  old charge:  -0.61
+replica  15  residue  HIS13
+HIS parameters  177 -0.08996000000000001  old charge:  -0.05
+replica  15  residue  HIS13
+HIS parameters  180 0.21997  old charge:  0.19
+replica  15  residue  HIS13
+HIS parameters  181 0.10003000000000001  old charge:  0.13
+replica  15  residue  HIS13
+HIS parameters  182 -0.04976  old charge:  0.19
+replica  15  residue  HIS13
+HIS parameters  183 -0.69981  old charge:  -0.51
+replica  15  residue  HIS13
+replica  15  residue  HIS13
+HIS parameters  185 -0.36015  old charge:  -0.51
+replica  15  residue  HIS13
+HIS parameters  186 -0.11988  old charge:  0.0
+replica  15  residue  HIS13
+HIS parameters  187 0.25007  old charge:  0.32
+replica  15  residue  HIS13
+HIS parameters  188 0.13005  old charge:  0.18
+Net charge:  -1.836
+Number of modified water oxygens  1836
+replica  1  residue  LYS2
+LYS parameters  15 0.21  old charge:  0.21
+replica  1  residue  LYS2
+replica  1  residue  LYS2
+LYS parameters  17 0.05  old charge:  0.05
+replica  1  residue  LYS2
+LYS parameters  18 -0.3  old charge:  -0.3
+replica  1  residue  LYS2
+LYS parameters  19 0.33  old charge:  0.33
+replica  1  residue  LYS2
+LYS parameters  20 0.33  old charge:  0.33
+replica  1  residue  GLU23
+GLU parameters  31 -0.210868  old charge:  -0.21
+replica  1  residue  GLU23
+GLU parameters  34 0.748388  old charge:  0.75
+replica  1  residue  GLU23
+GLU parameters  35 -0.552604  old charge:  -0.55
+replica  1  residue  GLU23
+GLU parameters  36 -0.61186  old charge:  -0.61
+replica  1  residue  LYS8
+LYS parameters  97 0.21  old charge:  0.21
+replica  1  residue  LYS8
+replica  1  residue  LYS8
+LYS parameters  99 0.05  old charge:  0.05
+replica  1  residue  LYS8
+LYS parameters  100 -0.3  old charge:  -0.3
+replica  1  residue  LYS8
+LYS parameters  101 0.33  old charge:  0.33
+replica  1  residue  LYS8
+LYS parameters  102 0.33  old charge:  0.33
+replica  1  residue  GLU210
+GLU parameters  133 -0.210868  old charge:  -0.21
+replica  1  residue  GLU210
+GLU parameters  136 0.748388  old charge:  0.75
+replica  1  residue  GLU210
+GLU parameters  137 -0.552604  old charge:  -0.55
+replica  1  residue  GLU210
+GLU parameters  138 -0.61186  old charge:  -0.61
+replica  1  residue  HIS13
+HIS parameters  177 -0.050003000000000006  old charge:  -0.05
+replica  1  residue  HIS13
+HIS parameters  180 0.189976  old charge:  0.19
+replica  1  residue  HIS13
+HIS parameters  181 0.129996  old charge:  0.13
+replica  1  residue  HIS13
+HIS parameters  182 0.190003  old charge:  0.19
+replica  1  residue  HIS13
+HIS parameters  183 -0.509985  old charge:  -0.51
+replica  1  residue  HIS13
+HIS parameters  184 -1.1999999999998677e-05  old charge:  0.0
+replica  1  residue  HIS13
+HIS parameters  185 -0.510019  old charge:  -0.51
+replica  1  residue  HIS13
+replica  1  residue  HIS13
+HIS parameters  187 0.319993  old charge:  0.32
+replica  1  residue  HIS13
+HIS parameters  188 0.179995  old charge:  0.18
+Net charge:  -0.016
+Number of modified water oxygens  16
+Replica exchange energy  -165824.7964112976 -165042.06958293755 -165110.77609785838 -164112.71121250524
+-1643.3786838715314
+Replica_exchange_rejected

@@ -11,10 +11,8 @@ from fep_functions import *
 
 
 def manage_waters(pH_system_temp):
-    nonbonded_force = pH_system_temp.getForces()[8]
     el_nb = [pH_system_temp.getForces()[11], pH_system_temp.getForces()[12]]
     net_charge = calc_system_charge(el_nb[0])
-    print(net_charge)
     if abs(net_charge) > 0.001:
         n_waters = int(abs(net_charge)/0.001)
         print('Number of modified water oxygens ', n_waters)
@@ -48,7 +46,7 @@ def manage_waters(pH_system_temp):
                     [l, charge, sigma] = force.getParticleParameters(w)
                     force.setParticleParameters(w, l, wc*unit.elementary_charge, sigma)          
 
-def pick_charges(res_list, residue, lambda_list):
+def pick_charges(res_list, residue):
     for resname in res_list:
         if str(resname) in residue:
             charge_list = res_list[resname]
@@ -66,8 +64,7 @@ def create_cpH_system(pH_system_temp, lambda_list):
         [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(side_atom)
         residue = str(top.atom(side_atom)).split('-')[0]
         atom_name = str(top.atom(side_atom)).split('-')[1]
-        print('atom ', residue, ' ', atom_name, ' ', charge)
-        charge_list = pick_charges(res_list, residue, lambda_list)
+        charge_list = pick_charges(res_list, residue)
         for atom in charge_list:
             if atom_name in atom:
                 n_ch = charge._value - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
@@ -103,7 +100,7 @@ def create_cpH_system(pH_system_temp, lambda_list):
                     [lambda_electrostatics, charge, sigma] = force.getParticleParameters(side_atom)
                     residue = str(top.atom(side_atom)).split('-')[0]
                     atom_name = str(top.atom(side_atom)).split('-')[1]
-                    charge_list = pick_charges(res_list, residue, lambda_list)
+                    charge_list = pick_charges(res_list, residue)
                     for atom in charge_list:
                         if atom_name in atom:
                             n_ch = charge - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
@@ -121,18 +118,18 @@ def create_cpH_system(pH_system_temp, lambda_list):
                 if 'HIS' in residue:
                     if float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 0.0:
                         if 'HE2' in atom_name:
-                            lambda_electrostatics = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
+                            a = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
                         elif 'HD1' in atom_name:
-                            lambda_electrostatics = 1.0
+                            a = 1.0
                     elif float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 1.0:
                         if 'HE2' in atom_name:
-                            lambda_electrostatics = 1.0
+                            a = 1.0
                         elif 'HD1' in atom_name:
-                            lambda_electrostatics = lambda_list.at[residue, str(lambda_list.shape[1]-1)]                            
+                            a = lambda_list.at[residue, str(lambda_list.shape[1]-1)]                            
                 else:
-                    lambda_electrostatics = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
+                    a = lambda_list.at[residue, str(lambda_list.shape[1]-1)]
 
-                force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, chargeprod, sigma])                                               
+                force.setBondParameters(bond, q, r, [a, b, c])                                               
 
             # Assign transition charge to neighboring alchemical atoms
             if force.getPerBondParameterName(1) == 'chargeprod':
@@ -142,25 +139,19 @@ def create_cpH_system(pH_system_temp, lambda_list):
                         side_atom = atom_i
                         residue = str(top.atom(side_atom)).split('-')[0]
                         atom_name = str(top.atom(side_atom)).split('-')[1]
-                        charge_list = pick_charges(res_list, residue, lambda_list)
+                        charge_list = pick_charges(res_list, residue)
                         for atom in charge_list:
                             if atom_name in atom:
-                                charge_i = pH_system_temp.getForces()[8].getParticleParameters(atom_i)[0]._value
-                                charge_j = pH_system_temp.getForces()[8].getParticleParameters(atom_j)[0]._value
-                                print('atom ', atom_name, ' ', charge_i)
-                                n_ch = charge_j*(charge_i - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)])))
+                                n_ch = b - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
                                 force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma]) 
                     elif atom_j in side_atoms:
                         side_atom = atom_j
                         residue = str(top.atom(side_atom)).split('-')[0]
                         atom_name = str(top.atom(side_atom)).split('-')[1]
-                        charge_list = pick_charges(res_list, residue, lambda_list)
+                        charge_list = pick_charges(res_list, residue)
                         for atom in charge_list:
                             if atom_name in atom:
-                                charge_i = pH_system_temp.getForces()[8].getParticleParameters(atom_i)[0]._value
-                                charge_j = pH_system_temp.getForces()[8].getParticleParameters(atom_j)[0]._value
-                                print('atom ', atom_name, ' ', charge_j)
-                                n_ch = charge_i*(charge_j - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)])))
+                                n_ch = b - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)]))
                                 force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma])
 
                                 
@@ -196,7 +187,7 @@ def create_cpH_exchange_system(pH_system, i, j, liex, ljex, new_name_i, new_name
                 print("Error")
 
             atom_name = str(top.atom(side_atom)).split('-')[1]
-            charge_list = pick_charges(res_list, residue, lambda_list)
+            charge_list = pick_charges(res_list, residue)
             for atom in charge_list:
                 if atom_name in atom:
                     n_ch = charge._value - lambda_list[atom]*(1 - float(lambda_list.at[residue, new_name]))
@@ -262,7 +253,7 @@ def create_cpH_exchange_system(pH_system, i, j, liex, ljex, new_name_i, new_name
                             elif residue not in proton_change:
                                 lambda_list = ljex
                                 new_name = new_name_j
-                        charge_list = pick_charges(res_list, residue, lambda_list)
+                        charge_list = pick_charges(res_list, residue)
                         for atom in charge_list:
                             if atom_name in atom:
                                 n_ch = charge - charge_list[atom]*(1 - float(lambda_list.at[residue, new_name]))
@@ -310,9 +301,9 @@ def create_cpH_exchange_system(pH_system, i, j, liex, ljex, new_name_i, new_name
                 # Assign transition charge to neighboring alchemical atoms
                 if force.getPerBondParameterName(1) == 'chargeprod':
                     for bond in range(force.getNumBonds()):
-                        [atom_i, atom_j, (lambda_electrostatics, chargeprod, sigma)] = force.getBondParameters(bond)
-                        if atom_i in side_atoms:
-                            side_atom = atom_i
+                        [q, r, (a, b, c)] = force.getBondParameters(bond)
+                        if q in side_atoms:
+                            side_atom = q
                             residue = str(top.atom(side_atom)).split('-')[0]
                             atom_name = str(top.atom(side_atom)).split('-')[1]
                             if replica == i: 
@@ -329,15 +320,13 @@ def create_cpH_exchange_system(pH_system, i, j, liex, ljex, new_name_i, new_name
                                 elif residue not in proton_change:
                                     lambda_list = ljex
                                     new_name = new_name_j
-                            charge_list = pick_charges(res_list, residue, lambda_list)
+                            charge_list = pick_charges(res_list, residue)
                             for atom in charge_list:
                                 if atom_name in atom:            
-                                    charge_i = pH_system_temp.getForces()[8].getParticleParameters(atom_i)._value
-                                    charge_j = pH_system_temp.getForces()[8].getParticleParameters(atom_j)._value
-                                    n_ch = charge_j*(charge_i - charge_list[atom]*(1 - float(lambda_list.at[residue, new_name])))
-                                    force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma]) 
-                        elif atom_j in side_atoms:
-                            side_atom = atom_j
+                                    n_ch = b - charge_list[atom]*(1 - float(lambda_list.at[residue, new_name]))
+                                    force.setBondParameters(bond, q, r, [a, n_ch, c]) 
+                        elif r in side_atoms:
+                            side_atom = r
                             residue = str(top.atom(side_atom)).split('-')[0]
                             atom_name = str(top.atom(side_atom)).split('-')[1]
                             if replica == i:
@@ -355,13 +344,11 @@ def create_cpH_exchange_system(pH_system, i, j, liex, ljex, new_name_i, new_name
                                     lambda_list = ljex
                                     new_name = new_name_j
 
-                            charge_list = pick_charges(res_list, residue, lambda_list)
+                            charge_list = pick_charges(res_list, residue)
                             for atom in charge_list:
                                 if atom_name in atom:
-                                    charge_i = pH_system_temp.getForces()[8].getParticleParameters(atom_i)._value
-                                    charge_j = pH_system_temp.getForces()[8].getParticleParameters(atom_j)._value
-                                    n_ch = charge_i(charge_j - charge_list[atom]*(1 - float(lambda_list.at[residue, new_name])))
-                                    force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma])  
+                                    n_ch = b - charge_list[atom]*(1 - float(lambda_list.at[residue, new_name]))
+                                    force.setBondParameters(bond, q, r, [a, n_ch, c])  
         if replica == i:
             pH_system_temp_i = pH_system_temp
         elif replica == j:

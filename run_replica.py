@@ -18,8 +18,10 @@ manage_waters(pH_system_temp)
 integrator = LangevinIntegrator(temperature, friction, dt)
 integrator.setConstraintTolerance(constraintTolerance)
 simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
+#simulation = Simulation(topology, pH_system_temp, integrator)
 
 if iteration == 0:
+    print('akjsfkajghskfjghk')
     dcdReporter = DCDReporter('test-'+str(pH)+'.dcd', 1000)
     dataReporter = StateDataReporter('test-'+str(pH)+'.log', 100, totalSteps=steps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
     simulation.context.setPositions(positions_init)
@@ -42,6 +44,7 @@ if iteration == 0:
     energy_min = pd.DataFrame(np.array([energy_min]))
     energy_min.to_csv('energy-min-'+str(pH)+'.csv')
 else:
+    print('oiujsfhkmnxbv,asjhd')
     print('Iteration ', iteration, ' pH ', pH)  
     simulation.loadState('test-'+str(pH)+'.xml')           
     positions = simulation.context.getState(getPositions=True).getPositions()
@@ -83,3 +86,4 @@ else:
     energy_min_current = energy_min_last.rename(columns={name_i:name_j})
     output = pd.concat([energy_min_input, energy_min_current], axis = 1, sort=False)
     output.to_csv('energy-min-'+str(pH)+'.csv')               
+

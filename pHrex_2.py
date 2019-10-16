@@ -1,52 +1,49 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[8]:
-
-
 from imports import *
 from definitions import *
 from alchemical_protons import *
 from fep_functions import *
+from setup_pH_system import *
+import subprocess
 
+# Set the net charge to zero by altering the water oxygen partial charges"
 
 def manage_waters(pH_system_temp):
     nonbonded_force = pH_system_temp.getForces()[8]
-    el_nb = [pH_system_temp.getForces()[11], pH_system_temp.getForces()[12]]
-    net_charge = calc_system_charge(el_nb[0])
-    print(net_charge)
+    custom_electrostatics = [pH_system_temp.getForces()[11], pH_system_temp.getForces()[12]]
+    net_charge = calc_system_charge(custom_electrostatics[0])
     if abs(net_charge) > 0.001:
         n_waters = int(abs(net_charge)/0.001)
         print('Number of modified water oxygens ', n_waters)
         for w in waters:
-            [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(int(w))
+            w = int(w)
+            [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(w)
             if charge._value != -0.834:
                 charge._value = -0.834
-                nonbonded_force.setParticleParameters(i, charge, sigma, epsilon)
-            for force in el_nb:
-                [l, charge, sigma] = force.getParticleParameters(int(w))
+                nonbonded_force.setParticleParameters(w, charge, sigma, epsilon)
+            for force in custom_electrostatics:
+                [lambda_electrostatics, charge, sigma] = force.getParticleParameters(w)
                 if charge != -0.834:
                     charge = -0.834
-                    force.setParticleParameters(i, [l, charge, sigma])
+                    force.setParticleParameters(w, [lambda_electrostatics, charge, sigma])
         r_waters = list(np.random.choice(waters, n_waters))
         if net_charge < 0:
             for w in r_waters:
                 w = int(w)            
                 [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(w)
                 wc = charge._value + 0.001
-                nonbonded_force.setParticleParameters(i, wc*unit.elementary_charge, sigma, epsilon)
-                for force in el_nb:
-                    [l, charge, sigma] = force.getParticleParameters(w)
-                    force.setParticleParameters(w, [l, wc*unit.elementary_charge, sigma])
+                nonbonded_force.setParticleParameters(w, wc*unit.elementary_charge, sigma, epsilon)
+                for force in custom_electrostatics:
+                    [lambda_electrostatics, charge, sigma] = force.getParticleParameters(w)
+                    force.setParticleParameters(w, [lambda_electrostatics, wc*unit.elementary_charge, sigma])
         if net_charge > 0:
             for w in r_waters:
                 w = int(w)            
                 [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(w)
                 wc = charge._value - 0.001        
                 nonbonded_force.setParticleParameters(w, wc*unit.elementary_charge, sigma, epsilon)
-                for force in el_nb:
-                    [l, charge, sigma] = force.getParticleParameters(w)
-                    force.setParticleParameters(w, l, wc*unit.elementary_charge, sigma)          
+                for force in custom_electrostatics:
+                    [lambda_electrostatics, charge, sigma] = force.getParticleParameters(w)
+                    force.setParticleParameters(w, lambda_electrostatics, wc*unit.elementary_charge, sigma)          
 
 def pick_charges(res_list, residue, lambda_list):
     for resname in res_list:
@@ -54,9 +51,9 @@ def pick_charges(res_list, residue, lambda_list):
             charge_list = res_list[resname]
         elif 'HIS' in residue:
             if float(lambda_list.at[residue+'_sw', str(lambda_list.shape[1]-1)]) == 1.0:
-                charge_list = res_list['HSE']
+                charge_list = res_list["HSE"]
             else:
-                charge_list = res_list['HSD']
+                charge_list = res_list["HSD"]
     return charge_list
 
 def create_cpH_system(pH_system_temp, lambda_list):
@@ -66,7 +63,6 @@ def create_cpH_system(pH_system_temp, lambda_list):
         [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(side_atom)
         residue = str(top.atom(side_atom)).split('-')[0]
         atom_name = str(top.atom(side_atom)).split('-')[1]
-        print('atom ', residue, ' ', atom_name, ' ', charge)
         charge_list = pick_charges(res_list, residue, lambda_list)
         for atom in charge_list:
             if atom_name in atom:
@@ -139,32 +135,15 @@ def create_cpH_system(pH_system_temp, lambda_list):
                 for bond in range(force.getNumBonds()):
                     [atom_i, atom_j, (lambda_electrostatics, chargeprod, sigma)] = force.getBondParameters(bond)
                     if atom_i in side_atoms:
-                        side_atom = atom_i
-                        residue = str(top.atom(side_atom)).split('-')[0]
-                        atom_name = str(top.atom(side_atom)).split('-')[1]
-                        charge_list = pick_charges(res_list, residue, lambda_list)
-                        for atom in charge_list:
-                            if atom_name in atom:
-                                charge_i = pH_system_temp.getForces()[8].getParticleParameters(atom_i)[0]._value
-                                charge_j = pH_system_temp.getForces()[8].getParticleParameters(atom_j)[0]._value
-                                print('atom ', atom_name, ' ', charge_i)
-                                n_ch = charge_j*(charge_i - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)])))
-                                force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma]) 
+                        charge_i = nonbonded_force.getParticleParameters(atom_i)[0]
+                        charge_j = nonbonded_force.getParticleParameters(atom_j)[0]._value
+                        force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, charge_i*charge_j, sigma])
                     elif atom_j in side_atoms:
-                        side_atom = atom_j
-                        residue = str(top.atom(side_atom)).split('-')[0]
-                        atom_name = str(top.atom(side_atom)).split('-')[1]
-                        charge_list = pick_charges(res_list, residue, lambda_list)
-                        for atom in charge_list:
-                            if atom_name in atom:
-                                charge_i = pH_system_temp.getForces()[8].getParticleParameters(atom_i)[0]._value
-                                charge_j = pH_system_temp.getForces()[8].getParticleParameters(atom_j)[0]._value
-                                print('atom ', atom_name, ' ', charge_j)
-                                n_ch = charge_i*(charge_j - charge_list[atom]*(1 - float(lambda_list.at[residue, str(lambda_list.shape[1]-1)])))
-                                force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma])
-
+                        charge_i = nonbonded_force.getParticleParameters(atom_i)[0]._value
+                        charge_j = nonbonded_force.getParticleParameters(atom_j)[0]
+                        force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, charge_i*charge_j, sigma])
                                 
-def create_cpH_exchange_system(pH_system, i, j, liex, ljex, new_name_i, new_name_j):
+def create_cpH_exchange_system(pH_system, i, j, liex, lambda_list_i, ljex, lambda_list_j, new_name_i, new_name_j, proton_change):
     pH_system_temp = copy.deepcopy(pH_system)
     rep_ex = [i, j]
     for replica in rep_ex:
@@ -173,35 +152,33 @@ def create_cpH_exchange_system(pH_system, i, j, liex, ljex, new_name_i, new_name
             side_atom = int(side_atom)
             [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(side_atom)
             residue = str(top.atom(side_atom)).split('-')[0]
-            print('replica ', replica, ' residue ', residue)
             if replica == i:
                 if residue in proton_change:
-                    print ('Yes')
+                    print ('Lambda swap will be attempted for ', str(residue), ' protonation state')
                     lambda_list = ljex
+                    extended_lambda_list = lambda_list_j
                     new_name = new_name_j
                 elif residue not in proton_change:
-                    print ('No')
                     lambda_list = liex
+                    extended_lambda_list = lambda_list_i
                     new_name = new_name_i
             elif replica == j:
                 if residue in proton_change:
-                    print('Yes')
+                    print ('Lambda swap will be attempted for ', str(residue), ' protonation state')
                     lambda_list = liex
+                    extended_lambda_list = lambda_list_i
                     new_name = new_name_i
                 elif residue not in proton_change:
-                    print('No')
                     lambda_list = ljex
+                    extended_lambda_list = lambda_list_j
                     new_name = new_name_j
-            else:
-                print("Error")
 
             atom_name = str(top.atom(side_atom)).split('-')[1]
-            charge_list = pick_charges(res_list, residue, lambda_list)
+            charge_list = pick_charges(res_list, residue, extended_lambda_list)
             for atom in charge_list:
                 if atom_name in atom:
-                    n_ch = charge._value - lambda_list[atom]*(1 - float(lambda_list.at[residue, new_name]))
+                    n_ch = charge._value - charge_list[atom]*(1 - float(lambda_list.at[residue, new_name]))
                     nonbonded_force.setParticleParameters(side_atom, n_ch, sigma, epsilon)       
-                    print(str(resname), ' parameters ', side_atom, n_ch, ' old charge: ', charge._value) 
         for f in range(9, 17):
             force = pH_system_temp.getForces()[f]
             if force.__class__.__name__ == 'CustomNonbondedForce':
@@ -251,18 +228,22 @@ def create_cpH_exchange_system(pH_system, i, j, liex, ljex, new_name_i, new_name
                         if replica == i:
                             if residue in proton_change:
                                 lambda_list = ljex
+                                extended_lambda_list = lambda_list_j
                                 new_name = new_name_j
                             elif residue not in proton_change:
                                 lambda_list = liex                            
+                                extended_lambda_list = lambda_list_i
                                 new_name = new_name_i
                         elif replica == j:
                             if residue in proton_change:
                                 lambda_list = liex
+                                extended_lambda_list = lambda_list_i
                                 new_name = new_name_i
                             elif residue not in proton_change:
                                 lambda_list = ljex
+                                extended_lambda_list = lambda_list_j
                                 new_name = new_name_j
-                        charge_list = pick_charges(res_list, residue, lambda_list)
+                        charge_list = pick_charges(res_list, residue, extended_lambda_list)
                         for atom in charge_list:
                             if atom_name in atom:
                                 n_ch = charge - charge_list[atom]*(1 - float(lambda_list.at[residue, new_name]))
@@ -270,98 +251,59 @@ def create_cpH_exchange_system(pH_system, i, j, liex, ljex, new_name_i, new_name
             if force.__class__.__name__ == 'CustomBondForce':
                 # Assign labmdas to alchemical protons                                               
                 for bond in range(force.getNumBonds()):
-                    [q, r, (a, b, c)] = force.getBondParameters(bond)
-                    if q in all_atoms:
-                        proton = q
-                    elif r in all_atoms:
-                        proton = r
+                    [atom_i, atom_j, (lambda_electrostatics, chargeprod, sigma)] = force.getBondParameters(bond)
+                    if atom_i in all_atoms:
+                        proton = atom_i
+                    elif atom_j in all_atoms:
+                        proton = atom_j
                     residue = str(top.atom(proton)).split('-')[0]
                     atom_name = str(top.atom(proton)).split('-')[1]
                     if replica == i:
                         if residue in proton_change:
                             lambda_list = ljex
+                            extended_lambda_list = lambda_list_j
                             new_name = new_name_j
                         elif residue not in proton_change:
                             lambda_list = liex
+                            extended_lambda_list = lambda_list_i
                             new_name = new_name_i
                     elif replica == j:
                         if residue in proton_change:
                             lambda_list = liex
+                            extended_lambda_list = lambda_list_i
                             new_name = new_name_i
                         elif residue not in proton_change:
                             lambda_list = ljex
+                            extended_lambda_list = lambda_list_j
                             new_name = new_name_j
                     if 'HIS' in residue:
                         if float(lambda_list.at[residue+'_sw', new_name]) == 0.0:
                             if 'HE2' in atom_name:
-                                a = lambda_list.at[residue, new_name]
+                                lambda_electrostatics = lambda_list.at[residue, new_name]
                             elif 'HD1' in atom_name:
-                                a = 1.0
+                                lambda_electrostatics = 1.0
                         elif float(lambda_list.at[residue+'_sw', new_name]) == 1.0:
                             if 'HE2' in atom_name:
-                                a = 1.0
+                                lambda_electrostatics = 1.0
                             elif 'HD1' in atom_name:
-                                a = lambda_list.at[residue, new_name]                          
+                                lambda_electrostatics = lambda_list.at[residue, new_name]                          
                     else:
-                        a = lambda_list.at[residue, new_name]
+                        lambda_electrostatics = lambda_list.at[residue, new_name]
 
-                    force.setBondParameters(bond, q, r, [a, b, c])                                               
+                    force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, chargeprod, sigma])                                               
 
                 # Assign transition charge to neighboring alchemical atoms
                 if force.getPerBondParameterName(1) == 'chargeprod':
                     for bond in range(force.getNumBonds()):
                         [atom_i, atom_j, (lambda_electrostatics, chargeprod, sigma)] = force.getBondParameters(bond)
                         if atom_i in side_atoms:
-                            side_atom = atom_i
-                            residue = str(top.atom(side_atom)).split('-')[0]
-                            atom_name = str(top.atom(side_atom)).split('-')[1]
-                            if replica == i: 
-                                if residue in proton_change:
-                                    lambda_list = ljex
-                                    new_name = new_name_j
-                                elif residue not in proton_change:
-                                    lambda_list = liex                              
-                                    new_name = new_name_i
-                            elif replica == j:
-                                if residue in proton_change:
-                                    lambda_list = liex
-                                    new_name = new_name_i
-                                elif residue not in proton_change:
-                                    lambda_list = ljex
-                                    new_name = new_name_j
-                            charge_list = pick_charges(res_list, residue, lambda_list)
-                            for atom in charge_list:
-                                if atom_name in atom:            
-                                    charge_i = pH_system_temp.getForces()[8].getParticleParameters(atom_i)._value
-                                    charge_j = pH_system_temp.getForces()[8].getParticleParameters(atom_j)._value
-                                    n_ch = charge_j*(charge_i - charge_list[atom]*(1 - float(lambda_list.at[residue, new_name])))
-                                    force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma]) 
+                            charge_i = nonbonded_force.getParticleParameters(atom_i)[0]
+                            charge_j = nonbonded_force.getParticleParameters(atom_j)[0]._value
+                            force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, charge_i*charge_j, sigma])
                         elif atom_j in side_atoms:
-                            side_atom = atom_j
-                            residue = str(top.atom(side_atom)).split('-')[0]
-                            atom_name = str(top.atom(side_atom)).split('-')[1]
-                            if replica == i:
-                                if residue in proton_change:
-                                    lambda_list = ljex
-                                    new_name = new_name_j
-                                elif residue not in proton_change:
-                                    lambda_list = liex
-                                    new_name = new_name_i
-                            elif replica == j:
-                                if residue in proton_change:
-                                    lambda_list = liex
-                                    new_name = new_name_i
-                                elif residue not in proton_change:
-                                    lambda_list = ljex
-                                    new_name = new_name_j
-
-                            charge_list = pick_charges(res_list, residue, lambda_list)
-                            for atom in charge_list:
-                                if atom_name in atom:
-                                    charge_i = pH_system_temp.getForces()[8].getParticleParameters(atom_i)._value
-                                    charge_j = pH_system_temp.getForces()[8].getParticleParameters(atom_j)._value
-                                    n_ch = charge_i(charge_j - charge_list[atom]*(1 - float(lambda_list.at[residue, new_name])))
-                                    force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, n_ch, sigma])  
+                            charge_i = nonbonded_force.getParticleParameters(atom_i)[0]._value
+                            charge_j = nonbonded_force.getParticleParameters(atom_j)[0]
+                            force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, charge_i*charge_j, sigma])
         if replica == i:
             pH_system_temp_i = pH_system_temp
         elif replica == j:
@@ -387,81 +329,14 @@ class pHrex:
     def _propagate_replicas(self, iteration, nsteps):
 
         for pH in self._pH_list:
-            #c = np.argwhere(self._pH_list==pH)[0][0]
-            pH_system_temp = copy.deepcopy(self._pH_system)
-            lambda_list = pd.read_csv('lambda_list-'+str(pH)+'.csv', index_col=0)
-            create_cpH_system(pH_system_temp, lambda_list)
-            manage_waters(pH_system_temp)
+#            pH_system_temp = copy.deepcopy(self._pH_system)
+#            lambda_list = pd.read_csv('lambda_list-'+str(pH)+'.csv', index_col=0)
+#            create_cpH_system(pH_system_temp, lambda_list)
+#            manage_waters(pH_system_temp)
+            myCmd="python run_replica.py " + str(pH) + " " + str(iteration) + " " + str(nsteps)
+            process = subprocess.Popen(myCmd, shell=True, stdout=subprocess.PIPE)
+            process.wait()                                         
                                          
-                                         
-            integrator = LangevinIntegrator(temperature, friction, dt)
-            integrator.setConstraintTolerance(constraintTolerance)
-            simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
-
-            if iteration == 0:
-                dcdReporter = DCDReporter('test-'+str(pH)+'.dcd', 1000)
-                dataReporter = StateDataReporter('test-'+str(pH)+'.log', 100, totalSteps=steps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
-                simulation.context.setPositions(positions_init)
-                simulation.context.setVelocitiesToTemperature(temperature)
-                simulation.currentStep = 0
-                simulation.minimizeEnergy(maxIterations=1000)
-                simulation.reporters.append(dcdReporter)
-                simulation.reporters.append(dataReporter)
-                simulation.step(nsteps)
-                simulation.saveState('test-'+str(pH)+'.xml')
-                state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, 
-                                                    getEnergy=True, getParameters=False, getParameterDerivatives=False)
-                energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
-                energy = pd.DataFrame(np.array([energy]))
-                energy.to_csv('energy-'+str(pH)+'.csv')
-                simulation.minimizeEnergy(maxIterations = 1000)
-                state_min = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False,
-                                                    getEnergy=True, getParameters=False, getParameterDerivatives=False)
-                energy_min = state_min.getKineticEnergy()._value + state_min.getPotentialEnergy()._value
-                energy_min = pd.DataFrame(np.array([energy_min]))
-                energy_min.to_csv('energy-min-'+str(pH)+'.csv')
-            else:
-                print('Iteration ', iteration, ' pH ', pH)  
-                simulation.loadState('test-'+str(pH)+'.xml')           
-                positions = simulation.context.getState(getPositions=True).getPositions()
-                system_temp = simulation.context.getSystem()
-             
-                f = system_temp.getForces()[9]
-                for i in all_atoms:
-                    i = int(i)
-                    print(i, ' parameters ', f.getParticleParameters(i))
-
-                dcdReporter = DCDReporter('test-'+str(pH)+'.dcd', 1000, append = True)
-                dataReporter = StateDataReporter('test-'+str(pH)+'.log', 100, totalSteps=steps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
-                simulation.reporters.append(dcdReporter)
-                simulation.reporters.append(dataReporter)
-                simulation.step(nsteps)
-                simulation.saveState('test-'+str(pH)+'.xml')
-                state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, 
-                                                    getEnergy=True, getParameters=False, getParameterDerivatives=False)
-                energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
-                energy_input = pd.read_csv('energy-'+str(pH)+'.csv', index_col = 0)
-                energy_last = pd.DataFrame(np.array([energy]))
-                name_i = str(energy_last.columns.tolist()[0])
-                name_j = str(energy_input.shape[1])
-                
-                energy_current = energy_last.rename(columns={name_i:name_j})
-                output = pd.concat([energy_input, energy_current], axis = 1, sort=False)
-                output.to_csv('energy-'+str(pH)+'.csv')
-                simulation.minimizeEnergy(maxIterations = 1000)
-                state_min = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False,
-                                                    getEnergy=True, getParameters=False, getParameterDerivatives=False)
-                energy_min = state_min.getKineticEnergy()._value + state_min.getPotentialEnergy()._value
-                energy_min_input = pd.read_csv('energy-min-'+str(pH)+'.csv', index_col = 0)
-                energy_min_last = pd.DataFrame(np.array([energy_min]))
-                name_i = str(energy_min_last.columns.tolist()[0])
-                name_j = str(energy_min_input.shape[1])
-
-                energy_min_current = energy_min_last.rename(columns={name_i:name_j})
-                output = pd.concat([energy_min_input, energy_min_current], axis = 1, sort=False)
-                output.to_csv('energy-min-'+str(pH)+'.csv')               
-
-
 
     def _mix_lambdas(self, n_attempts=1):
         # Attempt to switch two replicas at random. 
@@ -497,26 +372,23 @@ class pHrex:
             print('lambdas of replica j ', ljex)
 
             #pH_system_temp = copy.deepcopy(self._pH_system)            
-            create_cpH_exchange_system(self._pH_system, i, j, liex, ljex, new_name_i, new_name_j)
+            pH_system_temp_i, pH_system_temp_j = create_cpH_exchange_system(self._pH_system, i, j, liex, lambda_list_i, ljex, lambda_list_j, new_name_i, new_name_j, proton_change)
             manage_waters(pH_system_temp)
 
             #Calculate total energy for selected replicas
             
-            if replica == i:
+            integrator_i = LangevinIntegrator(temperature, friction, dt)
+            integrator_i.setConstraintTolerance(constraintTolerance)
+            simulation_i = Simulation(topology, pH_system_temp_i, integrator_i, platform, platformProperties)
+            simulation_i.loadState('test-'+str(self._pH_list[i])+'.xml')
+            simulation_i.minimizeEnergy(maxIterations = 1000)
 
-                integrator_i = LangevinIntegrator(temperature, friction, dt)
-                integrator_i.setConstraintTolerance(constraintTolerance)
-                simulation_i = Simulation(topology, pH_system_temp_i, integrator_i, platform, platformProperties)
-                simulation_i.loadState('test-'+str(self._pH_list[i])+'.xml')
-                simulation_i.minimizeEnergy(maxIterations = 1000)
 
-            elif replica == j:
-
-                integrator_j = LangevinIntegrator(temperature, friction, dt)
-                integrator_j.setConstraintTolerance(constraintTolerance)
-                simulation_j = Simulation(topology, pH_system_temp_j, integrator_j, platform, platformProperties)
-                simulation_j.loadState('test-'+str(self._pH_list[j])+'.xml')
-                simulation_j.minimizeEnergy(maxIterations=1000)
+            integrator_j = LangevinIntegrator(temperature, friction, dt)
+            integrator_j.setConstraintTolerance(constraintTolerance)
+            simulation_j = Simulation(topology, pH_system_temp_j, integrator_j, platform, platformProperties)
+            simulation_j.loadState('test-'+str(self._pH_list[j])+'.xml')
+            simulation_j.minimizeEnergy(maxIterations=1000)
             state_ji_lambda = simulation_j.context.getState(getPositions=True, getVelocities=True, getForces=True,getEnergy=True, getParameters=True, getParameterDerivatives=True)
             state_ij_lambda = simulation_i.context.getState(getPositions=True, getVelocities=True, getForces=True,getEnergy=True, getParameters=True, getParameterDerivatives=True)
             energy_ji_lambda = state_ji_lambda.getKineticEnergy()._value + state_ji_lambda.getPotentialEnergy()._value
@@ -578,10 +450,10 @@ class pHrex:
             for replica in rep_ex:
                 pH_system_temp = copy.deepcopy(self._pH_system)
                 if replica == i:
-                    lambda_list = liex
+                    lambda_list = lambda_list_i
                     new_name = new_name_i
                 elif replica == j:
-                    lambda_list = ljex
+                    lambda_list = lambda_list_j
                     new_name = new_name_j
                 else:
                     print("Error")
@@ -636,16 +508,4 @@ class pHrex:
                 simulation_j.saveState('test-'+str(self._pH_list[j])+'.xml')
             else:
                 print('Replica_exchange_rejected')
-
-
-# In[3]:
-
-
-
-
-
-# In[ ]:
-
-
-
 

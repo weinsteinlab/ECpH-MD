@@ -327,15 +327,30 @@ class pHrex:
             self._mix_replicas()
 
     def _propagate_replicas(self, iteration, nsteps):
+        slurmID = []
 
         for pH in self._pH_list:
             myCmd="sbatch submit_individual_replica.sh " + str(pH) + " " + str(iteration) + " " + str(nsteps)
-            process = subprocess.Popen(myCmd, shell=True, stdout=subprocess.PIPE)
-            print(process)
+            #process = subprocess.Popen(myCmd, shell=True, stdout=subprocess.PIPE)
+            process = subprocess.run(myCmd, shell=True, stdout=subprocess.PIPE)
+            print(process.stdout)
+            jobID = int(''.join(list(filter(str.isdigit, str(process.stdout)))))
+            print(jobID)
+            slurmID.append(jobID)
         
-        quit()
+        for jobID in slurmID:
+            while 1: 
+                myCmd="sacct -T -ojobid,state --noheader -j " + str(jobID)
+                process = subprocess.run(myCmd, shell=True, stdout=subprocess.PIPE)
+
+                if "FAILED" in process.stdout:
+                    print("There was an error with Slurm JobID: " + str(jobID))
+                    quit()
+                elif "COMPLETED" in process.stdout:
+                    break
+                else:
+                    time.sleep(60)  
                         
-                             
 
     def _mix_lambdas(self, n_attempts=1):
         # Attempt to switch two replicas at random. 

@@ -1,6 +1,6 @@
 #!/bin/sh
 #SBATCH --job-name=pH_test
-#SBATCH -p edison
+#SBATCH -p cryo-gpu
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:1

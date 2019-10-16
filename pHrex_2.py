@@ -332,11 +332,8 @@ class pHrex:
 
         for pH in self._pH_list:
             myCmd="sbatch submit_individual_replica.sh " + str(pH) + " " + str(iteration) + " " + str(nsteps)
-            #process = subprocess.Popen(myCmd, shell=True, stdout=subprocess.PIPE)
             process = subprocess.run(myCmd, shell=True, stdout=subprocess.PIPE)
-            print(process.stdout)
             jobID = int(''.join(list(filter(str.isdigit, str(process.stdout)))))
-            print(jobID)
             slurmID.append(jobID)
         
         for jobID in slurmID:
@@ -344,10 +341,11 @@ class pHrex:
                 myCmd="sacct -T -ojobid,state --noheader -j " + str(jobID)
                 process = subprocess.run(myCmd, shell=True, stdout=subprocess.PIPE)
 
-                if "FAILED" in process.stdout:
+                if "FAILED" in str(process.stdout):
                     print("There was an error with Slurm JobID: " + str(jobID))
                     quit()
-                elif "COMPLETED" in process.stdout:
+                elif "COMPLETED" in str(process.stdout):
+                    print("Slurm JobID: " + str(jobID) + " COMPLETE")
                     break
                 else:
                     time.sleep(60)  

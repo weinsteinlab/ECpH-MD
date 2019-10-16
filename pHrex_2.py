@@ -329,14 +329,13 @@ class pHrex:
     def _propagate_replicas(self, iteration, nsteps):
 
         for pH in self._pH_list:
-#            pH_system_temp = copy.deepcopy(self._pH_system)
-#            lambda_list = pd.read_csv('lambda_list-'+str(pH)+'.csv', index_col=0)
-#            create_cpH_system(pH_system_temp, lambda_list)
-#            manage_waters(pH_system_temp)
-            myCmd="python run_replica.py " + str(pH) + " " + str(iteration) + " " + str(nsteps)
+            myCmd="sbatch submit_individual_replica.sh " + str(pH) + " " + str(iteration) + " " + str(nsteps)
             process = subprocess.Popen(myCmd, shell=True, stdout=subprocess.PIPE)
-            process.wait()                                         
-                                         
+            print(process)
+        
+        quit()
+                        
+                             
 
     def _mix_lambdas(self, n_attempts=1):
         # Attempt to switch two replicas at random. 

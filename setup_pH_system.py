@@ -1,79 +1,19 @@
 from imports import *
 from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, add_global_parameters, calc_system_charge, create_force_particle, create_force_bond)
 from definitions import *
-
-psf = CharmmPsfFile('./inputFiles/fep-40-i01-1-wb-i.psf')
-pdb = PDBFile('./inputFiles/fep-45-i01-1-wb-i.pdb')
-topology = psf.topology
-positions_init = pdb.positions
-params = CharmmParameterSet('./inputFiles/all_top.rtf', './inputFiles/parameters.prm')
-nonbondedMethod = PME
-nonbondedCutoff = 12*angstroms
-switchDistance=10*angstroms
-
-ewaldErrorTolerance = 0.0005
-constraints = HBonds
-rigidWater = True
-constraintTolerance = 0.000001
-
-
-dt = 0.002*picoseconds
-temperature = 276*kelvin
-friction = 1.0/picosecond
-#integrator = LangevinIntegrator(temperature, friction, dt)
-#integrator.setConstraintTolerance(constraintTolerance)
-
-x_PBC_vector_length = 6.05
-y_PBC_vector_length = 5.88
-z_PBC_vector_length = 5.25
-
-psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
+from input_file import *
 
 system = psf.createSystem(params, nonbondedMethod=PME, nonbondedCutoff=nonbondedCutoff, rigidWater=rigidWater, ewaldErrorTolerance=ewaldErrorTolerance, switchDistance=switchDistance)
 
 pH_system = copy.deepcopy(system)
 
-platform = Platform.getPlatformByName('CUDA')
-platformProperties = {'DeviceIndex': '0', 'Precision': 'mixed'}
-
-t = md.load('./inputFiles/fep-45-i01-1-wb-i.pdb')
-top = t.topology
-# Define alchemical protons
-lys_atoms = top.select('resname LYS and name HZ3')
-his_atoms_E = top.select('rescode H and name HD1')
-his_atoms_D = top.select('rescode H and name HE2')
-glu_atoms = top.select('resname GLU2 and name HE2')
-asp_atoms = top.select('resname ASP2 and name HD2')
-cys_atoms = top.select('resname CYS and name HG1')
-# Select water molecules to keep the net charge
-waters = t.top.select('water and type O')
-#Define side atoms with flexible charge
-lys_side_atoms = top.select('rescode K and name CE  HE2 HE3 NZ HZ1 HZ2')
-his_side_atoms = top.select('rescode H and name CB ND1 CG CE1 HE1 NE2 CD2 HD2 HE2 HD1')
-glu_side_atoms = top.select('resname GLU2 and name CG CD OE1 OE2')
-#asp_side_atoms = top.select('rescode ASP2 and name CB CG OD1 OD2')
-side_atoms = np.concatenate((lys_side_atoms, his_side_atoms, glu_side_atoms))
-side_atoms = np.sort(side_atoms)
-
-
-all_atoms_HSE = np.concatenate((lys_atoms, his_atoms_E, glu_atoms))
-all_atoms_HSE = np.sort(all_atoms_HSE)
-all_atoms = np.concatenate((lys_atoms, his_atoms_E, his_atoms_D, glu_atoms))
-all_atoms = np.sort(all_atoms)
-list_alchem_residues = [None]*all_atoms_HSE.size
-
-
-for i in range(len(list_alchem_residues)):
-    list_alchem_residues[i] = str(top.atom(all_atoms_HSE[i])).split('-')[0]
+pH_list = np.arange(pH_low, pH_high, pH_step)
 
 
 for force_index, reference_force in list(enumerate(pH_system.getForces())):
     reference_force_name = reference_force.__class__.__name__
     if reference_force_name == "NonbondedForce":
         NB = pH_system.getForces()[int(force_index)]
-    elif reference_force_name == "AndersenThermostat":
-        pH_system.removeForce(int(force_index))
-#print('pH = ', pH, 'lambdas: GLU ', lglu, ' LYS ', llys, ' HIS ', lhis, ' CYS ', lcys, ' ASP ', lasp)
 
 # Don't create a force if there are no alchemical atoms.
 if len(list_alchem_residues) !=0:
@@ -177,19 +117,19 @@ if len(list_alchem_residues) !=0:
                                                   aa_electrostatics_custom_nonbonded_force]
 
     # Common parameters and configuration for electrostatics CustomNonbondedForces.
-    for force_el_alchem in all_electrostatics_custom_nonbonded_forces:
-        force_el_alchem.addPerParticleParameter("lambda_electrostatics")
-        force_el_alchem.addPerParticleParameter("charge")  # partial charge
-        force_el_alchem.addPerParticleParameter("sigma")  # Lennard-Jones sigma
-        force_el_alchem.setUseSwitchingFunction(True)
-        force_el_alchem.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
-        force_el_alchem.setCutoffDistance(nonbonded_force.getCutoffDistance())
-        force_el_alchem.setUseLongRangeCorrection(False)  # long-range dispersion correction is meaningless for electrostatics
+    for force in all_electrostatics_custom_nonbonded_forces:
+        force.addPerParticleParameter("lambda_electrostatics")
+        force.addPerParticleParameter("charge")  # partial charge
+        force.addPerParticleParameter("sigma")  # Lennard-Jones sigma
+        force.setUseSwitchingFunction(True)
+        force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+        force.setCutoffDistance(nonbonded_force.getCutoffDistance())
+        force.setUseLongRangeCorrection(False)  # long-range dispersion correction is meaningless for electrostatics
 
         if is_periodic_method:
-            force_el_alchem.setNonbondedMethod(openmm.CustomNonbondedForce.CutoffPeriodic)
+            force.setNonbondedMethod(openmm.CustomNonbondedForce.CutoffPeriodic)
         else:
-            force_el_alchem.setNonbondedMethod(nonbonded_force.getNonbondedMethod())
+            force.setNonbondedMethod(nonbonded_force.getNonbondedMethod())
 
     # Create CustomBondForces to handle sterics 1,4 exceptions interactions between
     # non-alchemical/alchemical atoms (na) and alchemical/alchemical atoms (aa). Fix lambda
@@ -201,10 +141,10 @@ if len(list_alchem_residues) !=0:
     all_sterics_custom_bond_forces = [na_sterics_custom_bond_force, aa_sterics_custom_bond_force]
 
 
-    for force_blj_alchem in all_sterics_custom_bond_forces:
-        force_blj_alchem.addPerBondParameter("lambda_sterics")
-        force_blj_alchem.addPerBondParameter("sigma")  # Lennard-Jones effective sigma
-        force_blj_alchem.addPerBondParameter("epsilon")  # Lennard-Jones effective epsilon
+    for force in all_sterics_custom_bond_forces:
+        force.addPerBondParameter("lambda_sterics")
+        force.addPerBondParameter("sigma")  # Lennard-Jones effective sigma
+        force.addPerBondParameter("epsilon")  # Lennard-Jones effective epsilon
 
     # Create CustomBondForces to handle electrostatics 1,4 exceptions interactions between
     # non-alchemical/alchemical atoms (na) and alchemical/alchemical atoms (aa). Fix lambda
@@ -216,10 +156,10 @@ if len(list_alchem_residues) !=0:
     all_electrostatics_custom_bond_forces = [na_electrostatics_custom_bond_force, aa_electrostatics_custom_bond_force]
 
     # Create CustomBondForce to handle exceptions for electrostatics
-    for force_bel_alchem in all_electrostatics_custom_bond_forces:
-        force_bel_alchem.addPerBondParameter("lambda_electrostatics")
-        force_bel_alchem.addPerBondParameter("chargeprod")  # charge product
-        force_bel_alchem.addPerBondParameter("sigma")  # Lennard-Jones effective sigma
+    for force in all_electrostatics_custom_bond_forces:
+        force.addPerBondParameter("lambda_electrostatics")
+        force.addPerBondParameter("chargeprod")  # charge product
+        force.addPerBondParameter("sigma")  # Lennard-Jones effective sigma
 
 
 
@@ -228,12 +168,9 @@ if len(list_alchem_residues) !=0:
     # -------------------------------------------------------------------------------
 
     # Create atom groups.
-    alchemical_atomset = set(all_atoms)
-    #alchemical_atomset_lys = lys_atoms
-    #alchemical_atomset_glu = glu_atoms
-    #alchemical_atomset_his = his_atoms
+    alchemical_atomset = set(alchem_protons) # all alchemical protons
     all_atomset = set(range(NB.getNumParticles()))  # all atoms, including alchemical region
-    nonalchemical_atomset = all_atomset.difference(alchemical_atomset)
+    nonalchemical_atomset = all_atomset.difference(alchemical_atomset) #all non-alchemical atoms
     alchemical_atomset = all_atomset.difference(nonalchemical_atomset)
 
     # Fix any NonbondedForce issues with Lennard-Jones sigma = 0 (epsilon = 0), which should have sigma > 0.
@@ -353,4 +290,13 @@ else:
     print('Inconsistent number of nonbonded particles')
 
 
-pH_system.addForce(MonteCarloBarostat(1.01325*bar, 276*kelvin))
+pH_system.addForce(MonteCarloBarostat(1.01325*bar, temperature))
+
+for force_index, reference_force in list(enumerate(pH_system.getForces())):
+    reference_force_name = reference_force.__class__.__name__
+    if reference_force_name == "NonbondedForce":
+        NBi = int(force_index)
+    if reference_force_name == "CustomNonbondedForce" and reference_force.getNumPerParticleParameters() == 3:
+        CNB = np.append(CNB, int(force_index))
+    if reference_force_name == "CustomBondForce":
+        CB = np.append(CB, int(force_index))

@@ -2,6 +2,9 @@ from imports import *
 from input_file import *
 from setup_pH_system import *
 from pHrex import *
+from definitions import *
+
+
 pH = sys.argv[1]
 iteration = int(sys.argv[2])
 nsteps = int(sys.argv[3])
@@ -11,16 +14,33 @@ create_cpH_system(pH_system_temp, lambda_list)
 manage_waters(pH_system_temp)
 integrator = LangevinIntegrator(temperature, friction, dt)
 integrator.setConstraintTolerance(constraintTolerance)
+platform = Platform.getPlatformByName('CUDA')
+platformProperties = {'DeviceIndex':'0',  'Precision':'mixed'}
 simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
-if iteration == 0:
+print(pH_list)
+if read_state_geometries:
+    if len(pdb_state_files)== len(pH_list):
+        i = np.where(pH_list == float(pH))[0][0]
+        pdb = PDBFile(pdb_state_files[i])
+        positions = pdb.positions
+    else:
+        print("\nThe pH-replicas and given states do not match\n")
+else:
+    pdb = PDBFile(pdb_file)
+    positions = pdb.positions
+
+if restart == 'OFF':
+    print('Iteration ', iteration, 'pH ', pH)
     dcdReporter = DCDReporter(str(output_name) + '-' + str(pH) + '.dcd', dcdout_freq)
     dataReporter = StateDataReporter((str(output_name) + '-' + str(pH) + '.log'), 1000, totalSteps=nsteps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
-    simulation.context.setPositions(positions_init)
+    simulation.context.setPositions(positions)
     simulation.context.setVelocitiesToTemperature(temperature)
     simulation.currentStep = 0
+    print('Minimizing...')
     simulation.minimizeEnergy(maxIterations=n_min_steps)
     simulation.reporters.append(dcdReporter)
     simulation.reporters.append(dataReporter)
+    print('Simulating...')
     simulation.step(nsteps)
     simulation.saveState(str(output_name) + '-' + str(pH) + '-state.xml')
     state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True,
@@ -45,6 +65,7 @@ else:
     dataReporter = StateDataReporter((str(output_name) + '-' + str(pH) + '.log'), 1000, totalSteps=nsteps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
     simulation.reporters.append(dcdReporter)
     simulation.reporters.append(dataReporter)
+    print('Simulating...')
     simulation.step(nsteps)
     simulation.saveState(str(output_name) + '-' + str(pH) + '-state.xml')
     state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True,

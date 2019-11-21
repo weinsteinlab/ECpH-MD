@@ -51,7 +51,7 @@ def calc_system_charge(force):
         c += round(charge, 3)
 
     c = round(c, 3)
-    print('Net charge: ', c)
+#    print('Net charge: ', c)
     return c
 
 

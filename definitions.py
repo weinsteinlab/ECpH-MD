@@ -1,14 +1,16 @@
 from imports import *
 from input_file import *
 from setup_pH_system import *
+#from setup_pH_system import pH_list
 
+pH_list = np.arange(pH_low, pH_high, pH_step)
 
 psf = CharmmPsfFile(psf_file)
 psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
-pdb = PDBFile(pdb_file)
+
 topology = psf.topology
 print(topology.getUnitCellDimensions(), ' unit cell dimensions')
-positions_init = pdb.positions
+
 EpKa = 4.4
 EpKa2 = 7.3
 KpKa = 10.4
@@ -113,7 +115,6 @@ for line in open(pdb_file):
                     cys_atoms = np.append(cys_atoms, int(column_line[(i - 2)]) - 1)
             if cys_char.get(str(column_line[i])) != None:
                 if psf.atom_list[(int(column_line[(i - 2)]) - 1)].residue.idx not in disu:
-                    print('not HG1 CYS ', psf.atom_list[(int(column_line[(i - 2)]) - 1)])
                     cys_side_atoms = np.append(cys_side_atoms, int(column_line[(i - 2)]) - 1)
 
     elif 'ASP' in line:
@@ -142,31 +143,31 @@ for line in open(pdb_file):
             if column_line[i] == 'OH2':
                 waters = np.append(waters, int(column_line[(i - 2)]) - 1)
 
-print('HIS ', his_atoms_E.shape)
-print('HIS ', his_atoms_D.shape)
-print('GLU ', glu_atoms.shape)
-print('ASP ', asp_atoms.shape)
-print('CYS ', cys_atoms.shape)
-print('LYS ', lys_atoms.shape)
-print('LYS side ', lys_side_atoms.shape)
-print('CYS side ', cys_side_atoms.shape)
-print('GLU side ', glu_side_atoms.shape)
-print('ASP side ', asp_side_atoms.shape)
-print('HIS side ', his_side_atoms.shape)
-print('Water oxygen ', waters.shape)
+#print('HIS ', his_atoms_E.shape)
+print('HIS: ', his_atoms_D.shape)
+print('GLU: ', glu_atoms.shape)
+print('ASP: ', asp_atoms.shape)
+print('CYS: ', cys_atoms.shape)
+print('LYS: ', lys_atoms.shape)
+print('LYS side: ', lys_side_atoms.shape)
+print('CYS side: ', cys_side_atoms.shape)
+print('GLU side: ', glu_side_atoms.shape)
+print('ASP side: ', asp_side_atoms.shape)
+print('HIS side: ', his_side_atoms.shape)
+print('Water oxygen: ', waters.shape)
 alchem_residues = np.concatenate((lys_atoms, his_atoms_E, glu_atoms, asp_atoms, cys_atoms))
 alchem_residues = np.sort(alchem_residues)
 alchem_protons = np.concatenate((lys_atoms, his_atoms_E, his_atoms_D, glu_atoms, asp_atoms, cys_atoms))
 alchem_protons = np.sort(alchem_protons)
-print('all protons ', alchem_protons)
+print('all alchemical proton indicies \n', alchem_protons)
 list_alchem_residues = [None] * alchem_residues.size
 side_atoms = np.concatenate((lys_side_atoms, his_side_atoms, glu_side_atoms, asp_side_atoms, cys_side_atoms))
 side_atoms = np.sort(side_atoms)
 for i in range(alchem_residues.size):
     list_alchem_residues[i] = str(psf.atom_list[(alchem_residues[i] - 1)].residue.resname) + str(psf.atom_list[(alchem_residues[i] - 1)].residue.idx)
 
-print('List of residues with modified protonation state ', list_alchem_residues)
-print('Number of titratable sites ', alchem_residues.size)
+print('List of residues with modified protonation state: \n', list_alchem_residues)
+print('Number of titratable sites: ', alchem_residues.size)
 for i in range(pH_low * 10, pH_high * 10, 5):
     p = 1 - 1 / (1 + 10 ** (EpKa - i / 10))
     l_Glu[i / 10] = '%.4f' % p
@@ -179,7 +180,7 @@ for i in range(pH_low * 10, pH_high * 10, 5):
     p = 1 - 1 / (1 + 10 ** (DpKa - i / 10))
     l_Asp[i / 10] = '%.4f' % p
 
-if not len(special_pKa_names) == len(special_pKa_values) != 0:
+if len(special_pKa_names) == len(special_pKa_values) != 0:
     for n in range(len(special_pKa_names)):
         l_special[special_pKa_names[n]] = {}
         print(special_pKa_names[n])

@@ -1,18 +1,21 @@
 from imports import *
 import subprocess, time
+from input_file import pdb_state_files
 from definitions import *
-from setup_pH_system import NBi, CNB, CB, pH_list
+from setup_pH_system import NBi, CNB, CB
 def manage_waters(pH_system_temp):
     nonbonded_force = pH_system_temp.getForces()[NBi]
     custom_electrostatics = [pH_system_temp.getForces()[CNB[2]], pH_system_temp.getForces()[CNB[3]]]
     net_charge = calc_system_charge(custom_electrostatics[0])
     if abs(net_charge) > 0.001:
+        print('\nNon-zero net charge! Modifying the charge of water oxygens!\n')
         n_waters = int(abs(net_charge) / 0.001)
         print('Number of modified water oxygens ', n_waters)
         for w in waters:
             w = int(w)
             [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(w)
             if charge._value != -0.834:
+                print('\nRestoring the initial charges for water oxygens\n')
                 charge._value = -0.834
                 nonbonded_force.setParticleParameters(w, charge, sigma, epsilon)
             for force in custom_electrostatics:
@@ -20,7 +23,7 @@ def manage_waters(pH_system_temp):
                 if charge != -0.834:
                     charge = -0.834
                     force.setParticleParameters(w, [lambda_electrostatics, charge, sigma])
-
+#        print('Creating a list of random water oxygens to modify')
         r_waters = list(np.random.choice(waters, n_waters))
         if net_charge < 0:
             for w in r_waters:
@@ -41,6 +44,7 @@ def manage_waters(pH_system_temp):
                 for force in custom_electrostatics:
                     [lambda_electrostatics, charge, sigma] = force.getParticleParameters(w)
                     force.setParticleParameters(w, [lambda_electrostatics, wc * unit.elementary_charge, sigma])
+        print('Final net charge : ', calc_system_charge(custom_electrostatics[0])) 
 
 
 def pick_charges(res_list, residue, lambda_list):
@@ -58,6 +62,7 @@ def pick_charges(res_list, residue, lambda_list):
 
 def create_cpH_system(pH_system_temp, lambda_list):
     nonbonded_force = pH_system_temp.getForces()[NBi]
+    print('\nScaling the charges of atoms adjustent to alchemical protons for standard Nonbonded force\n')
     for side_atom in side_atoms:
         side_atom = int(side_atom)
         [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(side_atom)
@@ -68,21 +73,22 @@ def create_cpH_system(pH_system_temp, lambda_list):
             if atom_name in atom:
                 n_ch = charge._value - charge_list[atom] * (1 - float(lambda_list.at[(residue, str(lambda_list.shape[1] - 1))]))
                 nonbonded_force.setParticleParameters(side_atom, n_ch, sigma, epsilon)
-                print(residue, '  ', atom_name, 'initial charge ', charge, ' assigned charge ', n_ch)
+                print(residue, '  ', atom_name, 'initial charge: ', charge, '; assigned scaled charge: ', n_ch)
 
     print('CNB ', CNB)
     for f in CNB:
         force = pH_system_temp.getForces()[f]
-        print('CNB force ', force)
-        print('alchem protons in the loop ', alchem_protons)
+#        print('CNB force ', force)
+        print('\nScaling custom electrostatics and sterics nonbonded forces for alchemical protons\n') 
+#        print('alchem protons in the loop ', alchem_protons)
         for proton in alchem_protons:
             proton = int(proton)
             residue = str(psf.atom_list[proton].residue.resname) + str(psf.atom_list[proton].residue.idx)
             [lambda_sterics, sigma, epsilon] = force.getParticleParameters(proton)
-            print('proton ', proton, ' lambda ', lambda_sterics, ' residue ', residue)
+#            print('\nresidue ', residue, ' proton name ', proton, ' lambda value ', lambda_sterics, '\n')
             if 'HSP' in residue:
                 atom_name = str(psf.atom_list[proton].name)
-                print('HSP atom name ', atom_name)
+#                print('HSP atom name ', atom_name)
                 if float(lambda_list.at[(residue + '_sw', str(lambda_list.shape[1] - 1))]) == 0.0:
                     if 'HE2' in atom_name:
                         lambda_sterics = lambda_list.at[(residue, str(lambda_list.shape[1] - 1))]
@@ -97,7 +103,7 @@ def create_cpH_system(pH_system_temp, lambda_list):
                 lambda_sterics = lambda_list.at[(residue, str(lambda_list.shape[1] - 1))]
            
             force.setParticleParameters(proton, [lambda_sterics, sigma, epsilon])
-            print('proton index ', psf.atom_list[proton], ' assigned lambda value ', lambda_sterics)
+            print('NB forces: residue ', residue, ' proton name ', atom_name, ' lambda value ', lambda_sterics)
 
         if force.getPerParticleParameterName(1) == 'charge':
             for side_atom in side_atoms:
@@ -112,10 +118,10 @@ def create_cpH_system(pH_system_temp, lambda_list):
                         force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma])
                         print(residue, '  ', atom_name, 'initial charge ', charge, ' assigned charge ', n_ch)
 
-    print('CB ', CB)
+#    print('CB ', CB)
     for f in CB:
         force = pH_system_temp.getForces()[f]
-        print('CB force ', force)
+        print('\nScaling custom electrostatic and steric bond forces for alchemical protons\n')
         for bond in range(force.getNumBonds()):
             [atom_i, atom_j, (lambda_electrostatics, chargeprod, sigma)] = force.getBondParameters(bond)
             if atom_i in alchem_protons:
@@ -124,7 +130,7 @@ def create_cpH_system(pH_system_temp, lambda_list):
                 proton = atom_j
             else:
                 print('No alchemical protons in the bond') 
-                break
+#                break
             
             residue = str(psf.atom_list[proton].residue.resname) + str(psf.atom_list[proton].residue.idx)
             atom_name = str(psf.atom_list[proton].name)
@@ -143,9 +149,10 @@ def create_cpH_system(pH_system_temp, lambda_list):
                 lambda_electrostatics = lambda_list.at[(residue, str(lambda_list.shape[1] - 1))]
 
             force.setBondParameters(bond, atom_i, atom_j, [lambda_electrostatics, chargeprod, sigma])
-            print('bond index ', bond, 'lambda value ', lambda_electrostatics)
+            print('Bond forces: residue ', residue, ' proton name ', atom_name, ' lambda value ', lambda_electrostatics)
 
         if force.getPerBondParameterName(1) == 'chargeprod':
+            print('\nScaling the charges of atoms adjustent to alchemical protons in Custom Bond electostatic force\n')
             for bond in range(force.getNumBonds()):
                 [atom_i, atom_j, (lambda_electrostatics, chargeprod, sigma)] = force.getBondParameters(bond)
                 if atom_i in side_atoms:
@@ -354,7 +361,7 @@ class pHrex:
         self._MD_nsteps_replicas = MD_nsteps_replicas
         for it in range(n_iter):
             self._propagate_replicas(it, MD_nsteps_replicas)
-            print('\nbefore mix_replicas, after propagate\n')
+#            print('\nbefore mix_replicas, after propagate\n')
             self._mix_replicas()
             self._propagate_replicas(it, MD_nsteps_lambdas)
             self._mix_lambdas()
@@ -378,18 +385,25 @@ class pHrex:
                     print('Slurm JobID: ' + str(jobID) + ' COMPLETE')
                     break
                 else:
-                    print('Sleepy time!\ni')
+                    print('\nWaiting for Slurm JobID: '+str(jobID)+'\n')
                     time.sleep(60)
 
     def _mix_lambdas(self, n_attempts=1):
         for attempt in range(n_attempts):
             i = randint(0, self._pH_list.size - 1)
+
             if i == 0:
                 j = i + 1
             else:
                 j = i - 1
+
+            print('\nSelected replicas for lambda exchange: ', i, ' ', j, '\n')
+
             if n_residues_per_switch != None:
-                number_atoms_change = round(len(list_alchem_residues) * n_residues_per_switch)
+                if n_residues_per_switch > 1 or n_residues_per_switch < 0:
+                    print('\nImproper value for number of residues for lambda-exchange switch attempt!\n')
+                else:
+                    number_atoms_change = round(len(list_alchem_residues) * n_residues_per_switch)
             else:
                 number_atoms_change = round(len(list_alchem_residues) * 0.1)
           
@@ -398,7 +412,7 @@ class pHrex:
             for residue in range(len(residues_change)):
                 proton_change[residue] = list_alchem_residues[residues_change[residue]]
 
-            print('Exchange between replicas ', i, ' and ', j, ' protons ', proton_change)
+            print('\nAlchemical protons selected for switch  ', proton_change, '\n')
             lambda_list_i = pd.read_csv(('lambda_list-' + str(self._pH_list[i]) + '.csv'), index_col=0)
             lambda_list_j = pd.read_csv(('lambda_list-' + str(self._pH_list[j]) + '.csv'), index_col=0)
             lambda_iex = lambda_list_i.iloc[:, -1]
@@ -434,13 +448,13 @@ class pHrex:
             energy_ii_lambda = float(energy_ii_lambda_file.iloc[:, -1])
             energy_jj_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy-min.csv')
             energy_jj_lambda = float(energy_jj_lambda_file.iloc[:, -1])
-            print('Lambdas exchange energy ', energy_ii_lambda, energy_jj_lambda, energy_ij_lambda, energy_ji_lambda)
+            print('\nTotal minimize energy of replica ', i, ' : ',  energy_ii_lambda, '\nTotal minimized energy of replica ', j, ' : ', energy_jj_lambda, '\nTotal minimized energy of replica ', i, ' after lambda exchange: ', energy_ij_lambda, '\nTotal minimized energy of replica', j, ' after lambda exchnage ', energy_ji_lambda, '\n')
             log_p_accept_lambda = -(energy_ij_lambda + energy_ji_lambda) + energy_ii_lambda + energy_jj_lambda
-            print(log_p_accept_lambda)
+            #print(log_p_accept_lambda)
             if log_p_accept_lambda >= 0.0 or random.random() < math.exp(log_p_accept_lambda):
-                print('Lambda exchange accepted')
+                print('\nLambda exchange accepted\n')
                 for residue in proton_change:
-                    print('Shape ', lambda_list_i.shape[1], lambda_list_j.shape[1])
+                    #print('Shape ', lambda_list_i.shape[1], lambda_list_j.shape[1])
                     lambda_i = liex.at[(residue, str(lambda_list_i.shape[1]))]
                     lambda_j = ljex.at[(residue, str(lambda_list_j.shape[1]))]
                     liex.at[(residue, str(lambda_list_i.shape[1]))] = lambda_j
@@ -451,10 +465,10 @@ class pHrex:
                 df_output = pd.concat([lambda_list_j, ljex], axis=1, sort=False)
                 df_output.to_csv('lambda_list-' + str(self._pH_list[j]) + '.csv')
             else:
-                print('Lambda_exchange_rejected')
+                print('\nLambda exchange_rejected\n')
 
     def _mix_replicas(self, n_attempts=1):
-        print("\nin mix_replicas")
+        #print("\nin mix_replicas")
         for attempt in range(n_attempts):
             i = randint(0, self._pH_list.size - 1)
             j = i
@@ -462,7 +476,7 @@ class pHrex:
                 j = randint(0, self._pH_list.size - 1)
 
             rep_ex = [i, j]
-            print('Exchange between replicas ', i, ' and ', j)
+            print('\nSelected replicas for replica exchange ', i, ' ', j, '\n')
             lambda_list_i = pd.read_csv(('lambda_list-' + str(self._pH_list[i]) + '.csv'), index_col=0)
             lambda_list_j = pd.read_csv(('lambda_list-' + str(self._pH_list[j]) + '.csv'), index_col=0)
             lambda_iex = lambda_list_i.iloc[:, -1]
@@ -477,8 +491,8 @@ class pHrex:
             ljex = lambda_jex.rename(columns={name_j: new_name_j})
             pH_system_temp = copy.deepcopy(self._pH_system)
             nonbonded_force = pH_system_temp.getForces()[7]
-            print('lambdas of replica i ', liex)
-            print('lambdas of replica j ', ljex)
+            #print('lambdas of replica i ', liex)
+            #print('lambdas of replica j ', ljex)
             for replica in rep_ex:
                 pH_system_temp = copy.deepcopy(self._pH_system)
                 if replica == i:
@@ -487,8 +501,6 @@ class pHrex:
                 elif replica == j:
                     lambda_list = lambda_list_j
                     new_name = new_name_j
-                else:
-                    print('Error')
                 create_cpH_system(pH_system_temp, lambda_list)
                 manage_waters(pH_system_temp)
                 if replica == i:
@@ -514,7 +526,7 @@ class pHrex:
             energy_ii = float(energy_ii_file.iloc[:, -1])
             energy_jj_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy.csv')
             energy_jj = float(energy_jj_file.iloc[:, -1])
-            print('Replica exchange energy ', energy_ii, energy_jj, energy_ij, energy_ji)
+            print('\nTotal energy of replica ', i, ': ', energy_ii, '\nTotal energy of replica ', j, ': ', energy_jj, '\nTotal energy of replica ', i, ' after replica exchange ', energy_ij, '\nTotal energy of replica ', j, ' after replica exchange ', energy_ji, '\n')
             log_p_accept = -(energy_ij + energy_ji) + energy_ii + energy_jj
             if log_p_accept >= 0.0 or random.random() < math.exp(log_p_accept):
                 print('Replica exchange accepted')
@@ -527,5 +539,4 @@ class pHrex:
                 simulation_j.context.createCheckpoint()
                 simulation_j.saveState(str(output_name) + '-' + str(self._pH_list[j]) + '-state.xml')
             else:
-                print('Replica_exchange_rejected')
-# okay decompiling pHrex_2.cpython-37.pyc
+                print('Replica exchange rejected')

@@ -7,7 +7,7 @@ system = psf.createSystem(params, nonbondedMethod=PME, nonbondedCutoff=nonbonded
 
 pH_system = copy.deepcopy(system)
 
-pH_list = np.arange(pH_low, pH_high, pH_step)
+#pH_list = np.arange(pH_low, pH_high, pH_step)
 
 
 for force_index, reference_force in list(enumerate(pH_system.getForces())):

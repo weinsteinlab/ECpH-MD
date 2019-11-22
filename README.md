@@ -21,10 +21,10 @@
 2. Perform standard (and prefered) equilibration procedure
 
 3. To set up the constant pH replica/lambda-exchnage calculation change the input_file.py file:
-    - a. Specify a full path to your pdb/psf files (DO NOT forget the quotation marks)
+    - a) Specify a full path to your pdb/psf files (DO NOT forget the quotation marks)
        If you want to set different geometries for different replicas - put the paths to correspondong pdb files to pdb_state_files
-    - b. Put the PDB numbers of CYS residues involved in disulphide bond (Temporary)
-    - c. Fill in the OpenMM parameters for conventional MD runs
+    - b) Put the PDB numbers of CYS residues involved in disulphide bond (Temporary)
+    - c) Fill in the OpenMM parameters for conventional MD runs
     - d) Set the soft-core potential parameters for alchemical scaling of nonbonded forces for titratable  protons
     - e) Select a pH range and a pH-step between the replicas
     - f) Specify the names and values for residues with user-defined pKas (experimentally obtained or else)

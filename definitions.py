@@ -180,14 +180,19 @@ for i in range(pH_low * 10, pH_high * 10, 5):
     p = 1 - 1 / (1 + 10 ** (DpKa - i / 10))
     l_Asp[i / 10] = '%.4f' % p
 
-if len(special_pKa_names) == len(special_pKa_values) != 0:
-    for n in range(len(special_pKa_names)):
-        l_special[special_pKa_names[n]] = {}
-        print(special_pKa_names[n])
-        for pH in range(pH_low * 10, pH_high * 10, 5):
-            p = 1 - 1 / (1 + 10 ** (special_pKa_values[n] - pH / 10))
-            print(p)
-            l_special[special_pKa_names[n]][pH / 10] = '%.4f' % p
+try:
+    if len(special_pKa_names) == len(special_pKa_values):
+        for n in range(len(special_pKa_names)):
+            l_special[special_pKa_names[n]] = {}
+            print(special_pKa_names[n])
+            for pH in range(pH_low * 10, pH_high * 10, 5):
+                p = 1 - 1 / (1 + 10 ** (special_pKa_values[n] - pH / 10))
+                print(p)
+                l_special[special_pKa_names[n]][pH / 10] = '%.4f' % p
+    else:
+        print("Number of special residues and number of pKa values given do not match")
+except NameError:
+    print("Residues with special pKa values are not detected")
 
 pi = round(pi, 5)
 

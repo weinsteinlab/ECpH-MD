@@ -85,10 +85,8 @@ def create_cpH_system(pH_system_temp, lambda_list):
             proton = int(proton)
             residue = str(psf.atom_list[proton].residue.resname) + str(psf.atom_list[proton].residue.idx)
             [lambda_sterics, sigma, epsilon] = force.getParticleParameters(proton)
-#            print('\nresidue ', residue, ' proton name ', proton, ' lambda value ', lambda_sterics, '\n')
+            atom_name = str(psf.atom_list[proton].name)
             if 'HSP' in residue:
-                atom_name = str(psf.atom_list[proton].name)
-#                print('HSP atom name ', atom_name)
                 if float(lambda_list.at[(residue + '_sw', str(lambda_list.shape[1] - 1))]) == 0.0:
                     if 'HE2' in atom_name:
                         lambda_sterics = lambda_list.at[(residue, str(lambda_list.shape[1] - 1))]

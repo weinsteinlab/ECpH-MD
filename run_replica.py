@@ -8,16 +8,36 @@ from definitions import *
 pH = sys.argv[1]
 iteration = int(sys.argv[2])
 nsteps = int(sys.argv[3])
+
 pH_system_temp = copy.deepcopy(pH_system)
 lambda_list = pd.read_csv(('lambda_list-' + str(pH) + '.csv'), index_col=0)
+
 create_cpH_system(pH_system_temp, lambda_list)
 manage_waters(pH_system_temp)
-integrator = LangevinIntegrator(temperature, friction, dt)
+
+# Integrator setup
+if integrator_type == "Langevin":
+    integrator = LangevinIntegrator(temperature, friction, dt)
+elif integrator_type == "Verlet":
+    integrator = VerletIntegrator(dt)
+elif integrator_type == "Brownian":
+    integrator = BrownianIntegrator(temperature, friction, dt)
+elif integrator_type == "VariableVerlet":
+    integrator = VariableVerletIntegrator(err_tol)
+elif integrator_type == "VariableLangevin":
+    integrator = VariableLangevinIntegrator(temperature, friction, err_tol)
+else:
+   print("\nIntegrator type not recognized!\n")
+
 integrator.setConstraintTolerance(constraintTolerance)
+
+# CUDA platform
 platform = Platform.getPlatformByName('CUDA')
 platformProperties = {'DeviceIndex':'0',  'Precision':'mixed'}
+
 simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
-print(pH_list)
+# Load state geometries 
+
 if read_state_geometries:
     if len(pdb_state_files)== len(pH_list):
         i = np.where(pH_list == float(pH))[0][0]

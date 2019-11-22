@@ -290,7 +290,15 @@ else:
     print('Inconsistent number of nonbonded particles')
 
 
-pH_system.addForce(MonteCarloBarostat(1.01325*bar, temperature))
+if barostat_type == "MonteCarlo":
+    pH_system.addForce(MonteCarloBarostat(pressure, temperature))
+elif barostat_type == "MonteCarloAnisotropic":
+    pH_system.addForce(AnisotropicMonteCarloBarostat(pressure, temperature, scaleX = scale_X, scaleY = scale_Y, scaleZ = scale_Z, frequency = barostat_freq))
+elif barostat_type == "MonteCarloMembrane":
+    pH_system.addForce(MonteCarloMembraneBarostat(pressure, surface_tension, temperature, XYMode = xymode, ZMode = zmode, frequency = barostat_freq))
+else:
+    print("\nBarostat type not recognized\n")
+    
 
 for force_index, reference_force in list(enumerate(pH_system.getForces())):
     reference_force_name = reference_force.__class__.__name__

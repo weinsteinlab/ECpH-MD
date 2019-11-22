@@ -34,6 +34,27 @@ constraintTolerance = 1e-06
 dt = 0.002 * picoseconds
 temperature = 298 * kelvin
 friction = 1.0 / picosecond
+integrator_type = "Langevin" # Verlet/Brownian/VariableVerlet/VariableLangevin
+
+#err_tol = 0.001 # Error tolerance for Variable time step integrators
+
+#thermostat_type = "Andersen" # Used with Verlet Integrator only
+
+# Barostate type #
+barostat_type = "MonteCarlo" # MonteCarloAnisotropic/MonteCarloMembrane
+pressure = 1.01325*bar
+
+# For MonteCarloAnisotropic Barostat 
+# Define whether the dimensions fo periodic box are allowed to change size
+#scale_X = False #
+#scale_Y = False # True/False 
+#scale_Z = False #
+
+#barostat_freq = 100
+
+#surface_tension = 0.0 # the default surface tension acting on the system in bar*nm
+#xymode = XYIsotropic # XYIsotropic / XYAnisotropic
+#zmode = ZFree # ZFree / ZFixed / ConstantVolume
 
 # Periodic cell size (nm) #
 x_PBC_vector_length = 7.47

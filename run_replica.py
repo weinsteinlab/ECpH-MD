@@ -49,7 +49,7 @@ else:
     pdb = PDBFile(pdb_file)
     positions = pdb.positions
 
-if restart == 'OFF':
+if restart == 'OFF' and iteration == 0:
     print('Iteration ', iteration, 'pH ', pH)
     dcdReporter = DCDReporter(str(output_name) + '-' + str(pH) + '.dcd', dcdout_freq)
     dataReporter = StateDataReporter((str(output_name) + '-' + str(pH) + '.log'), 1000, totalSteps=nsteps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')

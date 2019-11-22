@@ -386,7 +386,7 @@ class pHrex:
                     print('\nWaiting for Slurm JobID: '+str(jobID)+'\n')
                     time.sleep(60)
 
-    def _mix_lambdas(self, n_attempts=1):
+    def _mix_lambdas(self, n_attempts = n_attempts_lambdas):
         for attempt in range(n_attempts):
             i = randint(0, self._pH_list.size - 1)
 
@@ -465,7 +465,7 @@ class pHrex:
             else:
                 print('\nLambda exchange_rejected\n')
 
-    def _mix_replicas(self, n_attempts=1):
+    def _mix_replicas(self, n_attempts = n_attempts_replicas):
         #print("\nin mix_replicas")
         for attempt in range(n_attempts):
             i = randint(0, self._pH_list.size - 1)

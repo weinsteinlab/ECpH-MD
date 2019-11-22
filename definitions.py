@@ -3,6 +3,8 @@ from input_file import *
 from setup_pH_system import *
 #from setup_pH_system import pH_list
 
+params = CharmmParameterSet(top_file, par_file)
+
 pH_list = np.arange(pH_low, pH_high, pH_step)
 
 psf = CharmmPsfFile(psf_file)

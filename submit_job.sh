@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --job-name=RNase-pH
+#SBATCH --job-name=new_test
 #SBATCH -p edison
 #SBATCH --nodes=1
 #SBATCH --ntasks=1

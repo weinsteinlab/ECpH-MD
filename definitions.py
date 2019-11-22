@@ -13,6 +13,10 @@ psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
 topology = psf.topology
 print(topology.getUnitCellDimensions(), ' unit cell dimensions')
 
+# CUDA platform
+platform = Platform.getPlatformByName('CUDA')
+platformProperties = {'DeviceIndex':'0',  'Precision':'mixed'}
+
 EpKa = 4.4
 EpKa2 = 7.3
 KpKa = 10.4

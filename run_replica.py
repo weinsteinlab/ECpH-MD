@@ -31,10 +31,6 @@ else:
 
 integrator.setConstraintTolerance(constraintTolerance)
 
-# CUDA platform
-platform = Platform.getPlatformByName('CUDA')
-platformProperties = {'DeviceIndex':'0',  'Precision':'mixed'}
-
 simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
 
 # Load state geometries 

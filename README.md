@@ -7,6 +7,9 @@
 ##########################################################################################
 
 1. Create a pair of pdb/psf files with all the titrateble residues protonated.
+
+   IMPORTANT: The PDB structre data should start from the SECOND line
+
    For CHARMM FF:
    Use GLUP and ASPP patiches for GLU and ASP; set HSP name for all HIS
    For CYS involved in disulphide bonds the procedure will be omitted

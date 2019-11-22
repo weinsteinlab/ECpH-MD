@@ -23,7 +23,6 @@ def manage_waters(pH_system_temp):
                 if charge != -0.834:
                     charge = -0.834
                     force.setParticleParameters(w, [lambda_electrostatics, charge, sigma])
-#        print('Creating a list of random water oxygens to modify')
         r_waters = list(np.random.choice(waters, n_waters))
         if net_charge < 0:
             for w in r_waters:

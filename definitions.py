@@ -145,7 +145,6 @@ for line in open(pdb_file):
             if column_line[i] == 'OH2':
                 waters = np.append(waters, int(column_line[(i - 2)]) - 1)
 
-#print('HIS ', his_atoms_E.shape)
 print('HIS: ', his_atoms_D.shape)
 print('GLU: ', glu_atoms.shape)
 print('ASP: ', asp_atoms.shape)
@@ -157,19 +156,26 @@ print('GLU side: ', glu_side_atoms.shape)
 print('ASP side: ', asp_side_atoms.shape)
 print('HIS side: ', his_side_atoms.shape)
 print('Water oxygen: ', waters.shape)
+
 alchem_residues = np.concatenate((lys_atoms, his_atoms_E, glu_atoms, asp_atoms, cys_atoms))
 alchem_residues = np.sort(alchem_residues)
+
 alchem_protons = np.concatenate((lys_atoms, his_atoms_E, his_atoms_D, glu_atoms, asp_atoms, cys_atoms))
 alchem_protons = np.sort(alchem_protons)
+
 print('all alchemical proton indicies \n', alchem_protons)
+
 list_alchem_residues = [None] * alchem_residues.size
 side_atoms = np.concatenate((lys_side_atoms, his_side_atoms, glu_side_atoms, asp_side_atoms, cys_side_atoms))
 side_atoms = np.sort(side_atoms)
+
 for i in range(alchem_residues.size):
     list_alchem_residues[i] = str(psf.atom_list[(alchem_residues[i] - 1)].residue.resname) + str(psf.atom_list[(alchem_residues[i] - 1)].residue.idx)
 
 print('List of residues with modified protonation state: \n', list_alchem_residues)
+
 print('Number of titratable sites: ', alchem_residues.size)
+
 for i in range(pH_low * 10, pH_high * 10, 5):
     p = 1 - 1 / (1 + 10 ** (EpKa - i / 10))
     l_Glu[i / 10] = '%.4f' % p

@@ -36,8 +36,8 @@ platform = Platform.getPlatformByName('CUDA')
 platformProperties = {'DeviceIndex':'0',  'Precision':'mixed'}
 
 simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
-# Load state geometries 
 
+# Load state geometries 
 if read_state_geometries:
     if len(pdb_state_files)== len(pH_list):
         i = np.where(pH_list == float(pH))[0][0]

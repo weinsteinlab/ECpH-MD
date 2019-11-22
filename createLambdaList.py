@@ -3,8 +3,6 @@ from fep_functions import (_get_pme_direct_space_unique_expression, _get_electro
 from definitions import *
 from setup_pH_system import *
 
-pH_list = np.arange(pH_low, pH_high, pH_step)
-
 for pH in pH_list:
     lambda_list = {}
     lglu = float(l_Glu[pH])
@@ -13,11 +11,9 @@ for pH in pH_list:
     lcys = float(l_Cys[pH])
     lasp = float(l_Asp[pH])
     for residue in list_alchem_residues:
-        print(residue)
         if l_special:
             for name in l_special:
                 if residue == name:
-                    print('Hura!')
                     lambda_list[residue] = l_special[name][pH]
         try: 
             print('residue with user-defined pKa ', residue, ' lambda value at pH ', pH, ': ', lambda_list[residue])

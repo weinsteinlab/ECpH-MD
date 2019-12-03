@@ -173,7 +173,6 @@ def create_cpH_exchange_system(pH_system, i, j, liex, lambda_list_i, ljex, lambd
             residue = str(psf.atom_list[side_atom].residue.resname) + str(psf.atom_list[side_atom].residue.idx)
             if replica == i:
                 if residue in proton_change:
-                    print('Lambda swap will be attempted for ', str(residue), ' protonation state')
                     lambda_list = ljex
                     extended_lambda_list = lambda_list_j
                     new_name = new_name_j
@@ -183,7 +182,6 @@ def create_cpH_exchange_system(pH_system, i, j, liex, lambda_list_i, ljex, lambd
                     new_name = new_name_i
             elif replica == j:
                 if residue in proton_change:
-                    print('Lambda swap will be attempted for ', str(residue), ' protonation state')
                     lambda_list = liex
                     extended_lambda_list = lambda_list_i
                     new_name = new_name_i
@@ -204,6 +202,7 @@ def create_cpH_exchange_system(pH_system, i, j, liex, lambda_list_i, ljex, lambd
             for proton in alchem_protons:
                 proton = int(proton)
                 residue = str(psf.atom_list[proton].residue.resname) + str(psf.atom_list[proton].residue.idx)
+                print('Lambda swap will be attempted for ', str(residue), ' protonation state')
                 if replica == i:
                     if residue in proton_change:
                         lambda_list = ljex

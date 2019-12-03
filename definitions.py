@@ -1,7 +1,6 @@
 from imports import *
 from input_file import *
 from setup_pH_system import *
-#from setup_pH_system import pH_list
 
 params = CharmmParameterSet(top_file, par_file)
 
@@ -10,13 +9,11 @@ pH_list = np.arange(pH_low, pH_high, pH_step)
 psf = CharmmPsfFile(psf_file)
 psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
 
+#pdb = PDBFile(pdb_file)
+
 topology = psf.topology
 print(topology.getUnitCellDimensions(), ' unit cell dimensions')
-
-# CUDA platform
-platform = Platform.getPlatformByName('CUDA')
-platformProperties = {'DeviceIndex':'0',  'Precision':'mixed'}
-
+#positions_init = pdb.positions
 EpKa = 4.4
 EpKa2 = 7.3
 KpKa = 10.4
@@ -38,7 +35,7 @@ his_char_D = {}
 asp_char = {}
 cys_char = {}
 res_list = {}
-glu_char['CG'] = 0.07
+glu_char['CG'] = 0.07          
 glu_char['CD'] = 0.13
 glu_char['OE1'] = 0.21
 glu_char['OE2'] = 0.15
@@ -93,73 +90,68 @@ waters = np.array([], dtype=(np.int16))
 CNB = np.array([], dtype=(np.int16))
 CB = np.array([], dtype=(np.int16))
 
-
-for line in open(pdb_file):
-    if 'LYS' in line:
+with open(pdb_file) as template:
+    for num, line in enumerate(template):
         column_line = line.split(' ')
-        for i in range(len(column_line)):
-            if 'HZ3' in column_line:
-                if column_line[i] == 'HZ3':
-                    lys_atoms = np.append(lys_atoms, int(column_line[(i - 2)]) - 1)
-            elif lys_char.get(str(column_line[i])) != None:
-                lys_side_atoms = np.append(lys_side_atoms, int(column_line[(i - 2)]) - 1)
+        if 'LYS' in line:
+            if 'HZ3' in line:
+                lys_atoms = np.append(lys_atoms, num - 1)
+            else:
+                for i in range(len(column_line)):
+                    if lys_char.get(str(column_line[i])) != None:
+                        lys_side_atoms = np.append(lys_side_atoms, num - 1)
 
-    elif 'GLU' in line:
-        column_line = line.split(' ')
-        for i in range(len(column_line)):
-            if 'HE2' in column_line:
-                if column_line[i] == 'HE2':
-                    glu_atoms = np.append(glu_atoms, int(column_line[(i - 2)]) - 1)
-            elif glu_char.get(str(column_line[i])) != None:
-                glu_side_atoms = np.append(glu_side_atoms, int(column_line[(i - 2)]) - 1)
+        elif 'GLU' in line:
+            if 'HE2' in line:
+                glu_atoms = np.append(glu_atoms, num - 1)
+            else:
+                for i in range(len(column_line)):
+                    if glu_char.get(str(column_line[i])) != None:
+                        glu_side_atoms = np.append(glu_side_atoms, num - 1)
 
-    elif 'CYS' in line:
-        column_line = line.split(' ')
-        for i in range(len(column_line)):
-            if 'HG1' in column_line:
-                if column_line[i] == 'HG1':
-                    cys_atoms = np.append(cys_atoms, int(column_line[(i - 2)]) - 1)
-            if cys_char.get(str(column_line[i])) != None:
-                if psf.atom_list[(int(column_line[(i - 2)]) - 1)].residue.idx not in disu:
-                    cys_side_atoms = np.append(cys_side_atoms, int(column_line[(i - 2)]) - 1)
+        elif 'CYS' in line:
+            if 'HG1' in line:
+                cys_atoms = np.append(cys_atoms, num - 1)
+            else:
+                for i in range(len(column_line)):
+                    if cys_char.get(str(column_line[i])) != None:
+                        if psf.atom_list[num - 1].residue.idx not in disu:
+                            cys_side_atoms = np.append(cys_side_atoms, num - 1)
+    
+        elif 'ASP' in line:
+            if 'HD2' in line:
+                asp_atoms = np.append(asp_atoms, num - 1)
+            else:
+                for i in range(len(column_line)):
+                    if asp_char.get(str(column_line[i])) != None:
+                        asp_side_atoms = np.append(asp_side_atoms, num - 1)
 
-    elif 'ASP' in line:
-        column_line = line.split(' ')
-        for i in range(len(column_line)):
-            if 'HD2' in column_line:
-                if column_line[i] == 'HD2':
-                    asp_atoms = np.append(asp_atoms, int(column_line[(i - 2)]) - 1)
-            elif asp_char.get(str(column_line[i])) != None:
-                asp_side_atoms = np.append(asp_side_atoms, int(column_line[(i - 2)]) - 1)
+        elif 'HSP' in line:
+            if 'HD1' in line:
+                his_atoms_E = np.append(his_atoms_E, num - 1)
+            elif 'HE2' in line:
+                his_atoms_D = np.append(his_atoms_D, num - 1)
+            else:
+                for i in range(len(column_line)):
+                    if his_char_E.get(str(column_line[i])) != None or his_char_D.get(str(column_line[i])) != None:
+                        his_side_atoms = np.append(his_side_atoms, num - 1)
 
-    elif 'HSP' in line:
-        column_line = line.split(' ')
-        for i in range(len(column_line)):
-            if 'HD1' in column_line or 'HE2' in column_line:
-                if column_line[i] == 'HD1':
-                    his_atoms_E = np.append(his_atoms_E, int(column_line[(i - 2)]) - 1)
-                elif column_line[i] == 'HE2':
-                    his_atoms_D = np.append(his_atoms_D, int(column_line[(i - 2)]) - 1)
-            elif his_char_E.get(str(column_line[i])) != None or his_char_D.get(str(column_line[i])) != None:
-                his_side_atoms = np.append(his_side_atoms, int(column_line[(i - 2)]) - 1)
+        elif 'TIP' in line:
+            if 'OH2' in line:
+                waters = np.append(waters, num - 1)
 
-    elif 'TIP3' in line:
-        column_line = line.split(' ')
-        for i in range(len(column_line)):
-            if column_line[i] == 'OH2':
-                waters = np.append(waters, int(column_line[(i - 2)]) - 1)
-
-print('HIS: ', his_atoms_D.shape)
-print('GLU: ', glu_atoms.shape)
-print('ASP: ', asp_atoms.shape)
-print('CYS: ', cys_atoms.shape)
-print('LYS: ', lys_atoms.shape)
-print('LYS side: ', lys_side_atoms.shape)
-print('CYS side: ', cys_side_atoms.shape)
-print('GLU side: ', glu_side_atoms.shape)
-print('ASP side: ', asp_side_atoms.shape)
-print('HIS side: ', his_side_atoms.shape)
-print('Water oxygen: ', waters.shape)
+print('HIS ', his_atoms_E.shape)
+print('HIS ', his_atoms_D.shape)
+print('GLU ', glu_atoms.shape)
+print('ASP ', asp_atoms.shape)
+print('CYS ', cys_atoms.shape)
+print('LYS ', lys_atoms.shape)
+print('LYS side ', lys_side_atoms.shape)
+print('CYS side ', cys_side_atoms.shape)
+print('GLU side ', glu_side_atoms.shape)
+print('ASP side ', asp_side_atoms.shape)
+print('HIS side ', his_side_atoms.shape)
+print('Water oxygen ', waters.shape)
 
 alchem_residues = np.concatenate((lys_atoms, his_atoms_E, glu_atoms, asp_atoms, cys_atoms))
 alchem_residues = np.sort(alchem_residues)
@@ -176,7 +168,7 @@ side_atoms = np.sort(side_atoms)
 for i in range(alchem_residues.size):
     list_alchem_residues[i] = str(psf.atom_list[(alchem_residues[i] - 1)].residue.resname) + str(psf.atom_list[(alchem_residues[i] - 1)].residue.idx)
 
-print('List of residues with modified protonation state: \n', list_alchem_residues)
+print('List of residues with modified protonation state: \n ', list_alchem_residues)
 
 print('Number of titratable sites: ', alchem_residues.size)
 
@@ -192,6 +184,7 @@ for i in range(pH_low * 10, pH_high * 10, 5):
     p = 1 - 1 / (1 + 10 ** (DpKa - i / 10))
     l_Asp[i / 10] = '%.4f' % p
 
+#if a_special_pKa_names and a_special_pKa_values:
 try:
     if len(special_pKa_names) == len(special_pKa_values):
         for n in range(len(special_pKa_names)):
@@ -208,3 +201,5 @@ except NameError:
 
 pi = round(pi, 5)
 
+platform = Platform.getPlatformByName('CUDA')
+platformProperties = {'DeviceIndex':'0',  'Precision':'mixed'}

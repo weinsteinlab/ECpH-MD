@@ -1,0 +1,1159 @@
+slurmstepd: error: task/cgroup: unable to add task[pid=3232] to memory cg '(null)'
+slurmstepd: error: Unable to create TMPDIR [/scratchLocal/edk4002_1715977]: Permission denied
+slurmstepd: error: Setting TMPDIR to /tmp
+Vec3(x=7.47, y=7.87, z=7.39) nm  unit cell dimensions
+HIS  (2,)
+HIS  (2,)
+GLU  (16,)
+ASP  (11,)
+CYS  (1,)
+LYS  (15,)
+LYS side  (90,)
+CYS side  (2,)
+GLU side  (64,)
+ASP side  (44,)
+HIS side  (16,)
+Water oxygen  (11509,)
+all alchemical proton indicies 
+ [ 137  176  234  427  508  682  698  739  797  817  852  948  988 1015
+ 1031 1090 1112 1176 1198 1234 1335 1367 1426 1462 1545 1572 1615 1637
+ 1759 1810 1840 1941 2044 2073 2086 2102 2147 2169 2202 2224 2275 2349
+ 2351 2540 2556 2597 2599]
+List of residues with modified protonation state: 
+  ['LYS8', 'ASP11', 'LYS14', 'ASP28', 'ASP33', 'GLU44', 'GLU45', 'LYS47', 'GLU51', 'ASP53', 'GLU55', 'LYS60', 'GLU62', 'ASP64', 'GLU65', 'LYS69', 'LYS70', 'GLU74', 'LYS75', 'LYS77', 'LYS83', 'ASP85', 'GLU89', 'LYS91', 'ASP96', 'ASP98', 'LYS100', 'LYS101', 'GLU108', 'GLU112', 'GLU114', 'CYS121', 'GLU127', 'ASP129', 'ASP130', 'GLU131', 'GLU134', 'LYS135', 'ASP137', 'LYS138', 'LYS141', 'HSP146', 'GLU157', 'GLU158', 'HSP161']
+Number of titratable sites:  45
+GLU89
+0.9999949881527824
+0.9999841513192601
+0.9999498837883978
+0.9998415357956377
+0.9994990638291864
+0.9984176147191983
+0.995013121263312
+0.9843983377581704
+0.952273278965796
+0.8631931113967899
+0.666139424583122
+0.3868631798468569
+0.16633753081656188
+0.05935094310276767
+0.0195623038725794
+0.006270012341433873
+0.0019912891707282165
+0.0006305594883400101
+
+Scaling the charges of atoms adjustent to alchemical protons for standard Nonbonded force
+
+LYS8    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS8    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS8    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS8    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS8    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS8    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+ASP11    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP11    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP11    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP11    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+LYS14    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS14    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS14    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS14    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS14    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS14    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+ASP28    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP28    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP28    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP28    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+ASP33    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP33    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP33    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP33    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+GLU44    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU44    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU44    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU44    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+GLU45    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU45    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU45    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU45    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+LYS47    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS47    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS47    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS47    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS47    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS47    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+GLU51    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU51    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU51    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU51    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+ASP53    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP53    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP53    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP53    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+GLU55    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU55    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU55    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU55    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+LYS60    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS60    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS60    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS60    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS60    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS60    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+GLU62    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU62    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU62    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU62    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+ASP64    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP64    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP64    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP64    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+GLU65    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU65    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU65    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU65    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+LYS69    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS69    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS69    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS69    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS69    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS69    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS70    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS70    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS70    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS70    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS70    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS70    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+GLU74    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU74    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU74    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU74    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+LYS75    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS75    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS75    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS75    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS75    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS75    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS77    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS77    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS77    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS77    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS77    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS77    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS83    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS83    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS83    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS83    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS83    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS83    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+ASP85    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP85    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP85    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP85    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+GLU89    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.219576
+GLU89    CD initial charge:  0.75 e ; assigned scaled charge:  0.732216
+GLU89    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.578728
+GLU89    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.63052
+LYS91    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS91    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS91    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS91    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS91    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS91    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+ASP96    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP96    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP96    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP96    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+ASP98    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP98    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP98    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP98    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+LYS100    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS100    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS100    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS100    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS100    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS100    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS101    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS101    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS101    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS101    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS101    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS101    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+GLU108    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU108    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU108    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU108    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+GLU112    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU112    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU112    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU112    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+GLU114    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU114    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU114    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU114    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+CYS121    CB initial charge:  -0.11 e ; assigned scaled charge:  -0.11026999999999997
+CYS121    SG initial charge:  -0.23 e ; assigned scaled charge:  -0.23056999999999994
+GLU127    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU127    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU127    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU127    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+ASP129    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP129    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP129    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP129    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+ASP130    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP130    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP130    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP130    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+GLU131    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU131    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU131    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU131    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+GLU134    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU134    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU134    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU134    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+LYS135    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS135    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS135    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS135    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS135    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS135    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+ASP137    CB initial charge:  -0.21 e ; assigned scaled charge:  -0.279776
+ASP137    CG initial charge:  0.75 e ; assigned scaled charge:  0.620416
+ASP137    OD1 initial charge:  -0.55 e ; assigned scaled charge:  -0.759328
+ASP137    OD2 initial charge:  -0.61 e ; assigned scaled charge:  -0.75952
+LYS138    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS138    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS138    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS138    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS138    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS138    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS141    CE initial charge:  0.21 e ; assigned scaled charge:  0.20999199999999998
+LYS141    HE1 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS141    HE2 initial charge:  0.05 e ; assigned scaled charge:  0.050002500000000005
+LYS141    NZ initial charge:  -0.3 e ; assigned scaled charge:  -0.300066
+LYS141    HZ1 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+LYS141    HZ2 initial charge:  0.33 e ; assigned scaled charge:  0.330001
+HSP146    CB initial charge:  -0.05 e ; assigned scaled charge:  -0.065
+HSP146    CD2 initial charge:  0.19 e ; assigned scaled charge:  0.07
+HSP146    HD2 initial charge:  0.13 e ; assigned scaled charge:  0.11
+HSP146    CG initial charge:  0.19 e ; assigned scaled charge:  0.20500000000000002
+HSP146    NE2 initial charge:  -0.51 e ; assigned scaled charge:  -0.435
+HSP146    ND1 initial charge:  -0.51 e ; assigned scaled charge:  -0.605
+HSP146    CE1 initial charge:  0.32 e ; assigned scaled charge:  0.28500000000000003
+HSP146    HE1 initial charge:  0.18 e ; assigned scaled charge:  0.155
+GLU157    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU157    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU157    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU157    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+GLU158    CG initial charge:  -0.21 e ; assigned scaled charge:  -0.279447
+GLU158    CD initial charge:  0.75 e ; assigned scaled charge:  0.621027
+GLU158    OE1 initial charge:  -0.55 e ; assigned scaled charge:  -0.758341
+GLU158    OE2 initial charge:  -0.61 e ; assigned scaled charge:  -0.758815
+HSP161    CB initial charge:  -0.05 e ; assigned scaled charge:  -0.065
+HSP161    CD2 initial charge:  0.19 e ; assigned scaled charge:  0.07
+HSP161    HD2 initial charge:  0.13 e ; assigned scaled charge:  0.11
+HSP161    CG initial charge:  0.19 e ; assigned scaled charge:  0.20500000000000002
+HSP161    NE2 initial charge:  -0.51 e ; assigned scaled charge:  -0.435
+HSP161    ND1 initial charge:  -0.51 e ; assigned scaled charge:  -0.605
+HSP161    CE1 initial charge:  0.32 e ; assigned scaled charge:  0.28500000000000003
+HSP161    HE1 initial charge:  0.18 e ; assigned scaled charge:  0.155
+CNB  [ 8  9 10 11]
+
+Scaling custom electrostatics and sterics nonbonded forces for alchemical protons
+
+NB forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP11  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP28  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP33  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU44  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU45  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU51  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP53  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU55  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU62  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP64  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU65  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU74  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP85  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU89  proton name  HE2  lambda value  0.8632
+NB forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP96  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP98  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU108  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU112  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU114  proton name  HE2  lambda value  0.0079
+NB forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+NB forces: residue  GLU127  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP129  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP130  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU131  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU134  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP137  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+NB forces: residue  HSP146  proton name  HE2  lambda value  1.0
+NB forces: residue  HSP146  proton name  HD1  lambda value  0.5
+NB forces: residue  GLU157  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU158  proton name  HE2  lambda value  0.0079
+NB forces: residue  HSP161  proton name  HE2  lambda value  1.0
+NB forces: residue  HSP161  proton name  HD1  lambda value  0.5
+
+Scaling custom electrostatics and sterics nonbonded forces for alchemical protons
+
+NB forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP11  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP28  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP33  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU44  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU45  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU51  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP53  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU55  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU62  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP64  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU65  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU74  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP85  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU89  proton name  HE2  lambda value  0.8632
+NB forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP96  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP98  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU108  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU112  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU114  proton name  HE2  lambda value  0.0079
+NB forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+NB forces: residue  GLU127  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP129  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP130  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU131  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU134  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP137  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+NB forces: residue  HSP146  proton name  HE2  lambda value  1.0
+NB forces: residue  HSP146  proton name  HD1  lambda value  0.5
+NB forces: residue  GLU157  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU158  proton name  HE2  lambda value  0.0079
+NB forces: residue  HSP161  proton name  HE2  lambda value  1.0
+NB forces: residue  HSP161  proton name  HD1  lambda value  0.5
+
+Scaling custom electrostatics and sterics nonbonded forces for alchemical protons
+
+NB forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP11  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP28  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP33  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU44  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU45  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU51  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP53  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU55  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU62  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP64  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU65  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU74  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP85  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU89  proton name  HE2  lambda value  0.8632
+NB forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP96  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP98  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU108  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU112  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU114  proton name  HE2  lambda value  0.0079
+NB forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+NB forces: residue  GLU127  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP129  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP130  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU131  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU134  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP137  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+NB forces: residue  HSP146  proton name  HE2  lambda value  1.0
+NB forces: residue  HSP146  proton name  HD1  lambda value  0.5
+NB forces: residue  GLU157  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU158  proton name  HE2  lambda value  0.0079
+NB forces: residue  HSP161  proton name  HE2  lambda value  1.0
+NB forces: residue  HSP161  proton name  HD1  lambda value  0.5
+LYS8    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS8    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS8    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS8    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS8    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS8    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP11    CB initial charge  -0.21  assigned charge  -0.279776
+ASP11    CG initial charge  0.75  assigned charge  0.620416
+ASP11    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP11    OD2 initial charge  -0.61  assigned charge  -0.75952
+LYS14    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS14    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS14    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS14    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS14    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS14    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP28    CB initial charge  -0.21  assigned charge  -0.279776
+ASP28    CG initial charge  0.75  assigned charge  0.620416
+ASP28    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP28    OD2 initial charge  -0.61  assigned charge  -0.75952
+ASP33    CB initial charge  -0.21  assigned charge  -0.279776
+ASP33    CG initial charge  0.75  assigned charge  0.620416
+ASP33    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP33    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU44    CG initial charge  -0.21  assigned charge  -0.279447
+GLU44    CD initial charge  0.75  assigned charge  0.621027
+GLU44    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU44    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU45    CG initial charge  -0.21  assigned charge  -0.279447
+GLU45    CD initial charge  0.75  assigned charge  0.621027
+GLU45    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU45    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS47    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS47    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS47    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS47    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS47    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS47    HZ2 initial charge  0.33  assigned charge  0.330001
+GLU51    CG initial charge  -0.21  assigned charge  -0.279447
+GLU51    CD initial charge  0.75  assigned charge  0.621027
+GLU51    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU51    OE2 initial charge  -0.61  assigned charge  -0.758815
+ASP53    CB initial charge  -0.21  assigned charge  -0.279776
+ASP53    CG initial charge  0.75  assigned charge  0.620416
+ASP53    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP53    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU55    CG initial charge  -0.21  assigned charge  -0.279447
+GLU55    CD initial charge  0.75  assigned charge  0.621027
+GLU55    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU55    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS60    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS60    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS60    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS60    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS60    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS60    HZ2 initial charge  0.33  assigned charge  0.330001
+GLU62    CG initial charge  -0.21  assigned charge  -0.279447
+GLU62    CD initial charge  0.75  assigned charge  0.621027
+GLU62    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU62    OE2 initial charge  -0.61  assigned charge  -0.758815
+ASP64    CB initial charge  -0.21  assigned charge  -0.279776
+ASP64    CG initial charge  0.75  assigned charge  0.620416
+ASP64    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP64    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU65    CG initial charge  -0.21  assigned charge  -0.279447
+GLU65    CD initial charge  0.75  assigned charge  0.621027
+GLU65    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU65    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS69    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS69    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS69    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS69    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS69    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS69    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS70    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS70    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS70    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS70    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS70    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS70    HZ2 initial charge  0.33  assigned charge  0.330001
+GLU74    CG initial charge  -0.21  assigned charge  -0.279447
+GLU74    CD initial charge  0.75  assigned charge  0.621027
+GLU74    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU74    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS75    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS75    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS75    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS75    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS75    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS75    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS77    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS77    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS77    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS77    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS77    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS77    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS83    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS83    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS83    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS83    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS83    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS83    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP85    CB initial charge  -0.21  assigned charge  -0.279776
+ASP85    CG initial charge  0.75  assigned charge  0.620416
+ASP85    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP85    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU89    CG initial charge  -0.21  assigned charge  -0.219576
+GLU89    CD initial charge  0.75  assigned charge  0.732216
+GLU89    OE1 initial charge  -0.55  assigned charge  -0.578728
+GLU89    OE2 initial charge  -0.61  assigned charge  -0.63052
+LYS91    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS91    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS91    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS91    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS91    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS91    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP96    CB initial charge  -0.21  assigned charge  -0.279776
+ASP96    CG initial charge  0.75  assigned charge  0.620416
+ASP96    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP96    OD2 initial charge  -0.61  assigned charge  -0.75952
+ASP98    CB initial charge  -0.21  assigned charge  -0.279776
+ASP98    CG initial charge  0.75  assigned charge  0.620416
+ASP98    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP98    OD2 initial charge  -0.61  assigned charge  -0.75952
+LYS100    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS100    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS100    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS100    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS100    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS100    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS101    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS101    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS101    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS101    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS101    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS101    HZ2 initial charge  0.33  assigned charge  0.330001
+GLU108    CG initial charge  -0.21  assigned charge  -0.279447
+GLU108    CD initial charge  0.75  assigned charge  0.621027
+GLU108    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU108    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU112    CG initial charge  -0.21  assigned charge  -0.279447
+GLU112    CD initial charge  0.75  assigned charge  0.621027
+GLU112    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU112    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU114    CG initial charge  -0.21  assigned charge  -0.279447
+GLU114    CD initial charge  0.75  assigned charge  0.621027
+GLU114    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU114    OE2 initial charge  -0.61  assigned charge  -0.758815
+CYS121    CB initial charge  -0.11  assigned charge  -0.11026999999999997
+CYS121    SG initial charge  -0.23  assigned charge  -0.23056999999999994
+GLU127    CG initial charge  -0.21  assigned charge  -0.279447
+GLU127    CD initial charge  0.75  assigned charge  0.621027
+GLU127    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU127    OE2 initial charge  -0.61  assigned charge  -0.758815
+ASP129    CB initial charge  -0.21  assigned charge  -0.279776
+ASP129    CG initial charge  0.75  assigned charge  0.620416
+ASP129    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP129    OD2 initial charge  -0.61  assigned charge  -0.75952
+ASP130    CB initial charge  -0.21  assigned charge  -0.279776
+ASP130    CG initial charge  0.75  assigned charge  0.620416
+ASP130    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP130    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU131    CG initial charge  -0.21  assigned charge  -0.279447
+GLU131    CD initial charge  0.75  assigned charge  0.621027
+GLU131    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU131    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU134    CG initial charge  -0.21  assigned charge  -0.279447
+GLU134    CD initial charge  0.75  assigned charge  0.621027
+GLU134    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU134    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS135    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS135    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS135    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS135    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS135    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS135    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP137    CB initial charge  -0.21  assigned charge  -0.279776
+ASP137    CG initial charge  0.75  assigned charge  0.620416
+ASP137    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP137    OD2 initial charge  -0.61  assigned charge  -0.75952
+LYS138    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS138    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS138    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS138    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS138    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS138    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS141    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS141    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS141    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS141    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS141    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS141    HZ2 initial charge  0.33  assigned charge  0.330001
+HSP146    CB initial charge  -0.05  assigned charge  -0.065
+HSP146    CD2 initial charge  0.19  assigned charge  0.07
+HSP146    HD2 initial charge  0.13  assigned charge  0.11
+HSP146    CG initial charge  0.19  assigned charge  0.20500000000000002
+HSP146    NE2 initial charge  -0.51  assigned charge  -0.435
+HSP146    ND1 initial charge  -0.51  assigned charge  -0.605
+HSP146    CE1 initial charge  0.32  assigned charge  0.28500000000000003
+HSP146    HE1 initial charge  0.18  assigned charge  0.155
+GLU157    CG initial charge  -0.21  assigned charge  -0.279447
+GLU157    CD initial charge  0.75  assigned charge  0.621027
+GLU157    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU157    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU158    CG initial charge  -0.21  assigned charge  -0.279447
+GLU158    CD initial charge  0.75  assigned charge  0.621027
+GLU158    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU158    OE2 initial charge  -0.61  assigned charge  -0.758815
+HSP161    CB initial charge  -0.05  assigned charge  -0.065
+HSP161    CD2 initial charge  0.19  assigned charge  0.07
+HSP161    HD2 initial charge  0.13  assigned charge  0.11
+HSP161    CG initial charge  0.19  assigned charge  0.20500000000000002
+HSP161    NE2 initial charge  -0.51  assigned charge  -0.435
+HSP161    ND1 initial charge  -0.51  assigned charge  -0.605
+HSP161    CE1 initial charge  0.32  assigned charge  0.28500000000000003
+HSP161    HE1 initial charge  0.18  assigned charge  0.155
+
+Scaling custom electrostatics and sterics nonbonded forces for alchemical protons
+
+NB forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP11  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP28  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP33  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU44  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU45  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU51  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP53  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU55  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU62  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP64  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU65  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU74  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP85  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU89  proton name  HE2  lambda value  0.8632
+NB forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP96  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP98  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+NB forces: residue  GLU108  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU112  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU114  proton name  HE2  lambda value  0.0079
+NB forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+NB forces: residue  GLU127  proton name  HE2  lambda value  0.0079
+NB forces: residue  ASP129  proton name  HD2  lambda value  0.0032
+NB forces: residue  ASP130  proton name  HD2  lambda value  0.0032
+NB forces: residue  GLU131  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU134  proton name  HE2  lambda value  0.0079
+NB forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+NB forces: residue  ASP137  proton name  HD2  lambda value  0.0032
+NB forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+NB forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+NB forces: residue  HSP146  proton name  HE2  lambda value  1.0
+NB forces: residue  HSP146  proton name  HD1  lambda value  0.5
+NB forces: residue  GLU157  proton name  HE2  lambda value  0.0079
+NB forces: residue  GLU158  proton name  HE2  lambda value  0.0079
+NB forces: residue  HSP161  proton name  HE2  lambda value  1.0
+NB forces: residue  HSP161  proton name  HD1  lambda value  0.5
+LYS8    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS8    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS8    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS8    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS8    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS8    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP11    CB initial charge  -0.21  assigned charge  -0.279776
+ASP11    CG initial charge  0.75  assigned charge  0.620416
+ASP11    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP11    OD2 initial charge  -0.61  assigned charge  -0.75952
+LYS14    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS14    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS14    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS14    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS14    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS14    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP28    CB initial charge  -0.21  assigned charge  -0.279776
+ASP28    CG initial charge  0.75  assigned charge  0.620416
+ASP28    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP28    OD2 initial charge  -0.61  assigned charge  -0.75952
+ASP33    CB initial charge  -0.21  assigned charge  -0.279776
+ASP33    CG initial charge  0.75  assigned charge  0.620416
+ASP33    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP33    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU44    CG initial charge  -0.21  assigned charge  -0.279447
+GLU44    CD initial charge  0.75  assigned charge  0.621027
+GLU44    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU44    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU45    CG initial charge  -0.21  assigned charge  -0.279447
+GLU45    CD initial charge  0.75  assigned charge  0.621027
+GLU45    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU45    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS47    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS47    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS47    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS47    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS47    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS47    HZ2 initial charge  0.33  assigned charge  0.330001
+GLU51    CG initial charge  -0.21  assigned charge  -0.279447
+GLU51    CD initial charge  0.75  assigned charge  0.621027
+GLU51    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU51    OE2 initial charge  -0.61  assigned charge  -0.758815
+ASP53    CB initial charge  -0.21  assigned charge  -0.279776
+ASP53    CG initial charge  0.75  assigned charge  0.620416
+ASP53    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP53    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU55    CG initial charge  -0.21  assigned charge  -0.279447
+GLU55    CD initial charge  0.75  assigned charge  0.621027
+GLU55    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU55    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS60    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS60    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS60    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS60    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS60    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS60    HZ2 initial charge  0.33  assigned charge  0.330001
+GLU62    CG initial charge  -0.21  assigned charge  -0.279447
+GLU62    CD initial charge  0.75  assigned charge  0.621027
+GLU62    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU62    OE2 initial charge  -0.61  assigned charge  -0.758815
+ASP64    CB initial charge  -0.21  assigned charge  -0.279776
+ASP64    CG initial charge  0.75  assigned charge  0.620416
+ASP64    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP64    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU65    CG initial charge  -0.21  assigned charge  -0.279447
+GLU65    CD initial charge  0.75  assigned charge  0.621027
+GLU65    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU65    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS69    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS69    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS69    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS69    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS69    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS69    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS70    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS70    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS70    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS70    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS70    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS70    HZ2 initial charge  0.33  assigned charge  0.330001
+GLU74    CG initial charge  -0.21  assigned charge  -0.279447
+GLU74    CD initial charge  0.75  assigned charge  0.621027
+GLU74    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU74    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS75    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS75    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS75    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS75    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS75    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS75    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS77    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS77    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS77    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS77    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS77    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS77    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS83    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS83    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS83    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS83    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS83    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS83    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP85    CB initial charge  -0.21  assigned charge  -0.279776
+ASP85    CG initial charge  0.75  assigned charge  0.620416
+ASP85    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP85    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU89    CG initial charge  -0.21  assigned charge  -0.219576
+GLU89    CD initial charge  0.75  assigned charge  0.732216
+GLU89    OE1 initial charge  -0.55  assigned charge  -0.578728
+GLU89    OE2 initial charge  -0.61  assigned charge  -0.63052
+LYS91    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS91    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS91    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS91    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS91    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS91    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP96    CB initial charge  -0.21  assigned charge  -0.279776
+ASP96    CG initial charge  0.75  assigned charge  0.620416
+ASP96    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP96    OD2 initial charge  -0.61  assigned charge  -0.75952
+ASP98    CB initial charge  -0.21  assigned charge  -0.279776
+ASP98    CG initial charge  0.75  assigned charge  0.620416
+ASP98    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP98    OD2 initial charge  -0.61  assigned charge  -0.75952
+LYS100    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS100    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS100    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS100    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS100    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS100    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS101    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS101    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS101    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS101    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS101    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS101    HZ2 initial charge  0.33  assigned charge  0.330001
+GLU108    CG initial charge  -0.21  assigned charge  -0.279447
+GLU108    CD initial charge  0.75  assigned charge  0.621027
+GLU108    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU108    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU112    CG initial charge  -0.21  assigned charge  -0.279447
+GLU112    CD initial charge  0.75  assigned charge  0.621027
+GLU112    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU112    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU114    CG initial charge  -0.21  assigned charge  -0.279447
+GLU114    CD initial charge  0.75  assigned charge  0.621027
+GLU114    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU114    OE2 initial charge  -0.61  assigned charge  -0.758815
+CYS121    CB initial charge  -0.11  assigned charge  -0.11026999999999997
+CYS121    SG initial charge  -0.23  assigned charge  -0.23056999999999994
+GLU127    CG initial charge  -0.21  assigned charge  -0.279447
+GLU127    CD initial charge  0.75  assigned charge  0.621027
+GLU127    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU127    OE2 initial charge  -0.61  assigned charge  -0.758815
+ASP129    CB initial charge  -0.21  assigned charge  -0.279776
+ASP129    CG initial charge  0.75  assigned charge  0.620416
+ASP129    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP129    OD2 initial charge  -0.61  assigned charge  -0.75952
+ASP130    CB initial charge  -0.21  assigned charge  -0.279776
+ASP130    CG initial charge  0.75  assigned charge  0.620416
+ASP130    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP130    OD2 initial charge  -0.61  assigned charge  -0.75952
+GLU131    CG initial charge  -0.21  assigned charge  -0.279447
+GLU131    CD initial charge  0.75  assigned charge  0.621027
+GLU131    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU131    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU134    CG initial charge  -0.21  assigned charge  -0.279447
+GLU134    CD initial charge  0.75  assigned charge  0.621027
+GLU134    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU134    OE2 initial charge  -0.61  assigned charge  -0.758815
+LYS135    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS135    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS135    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS135    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS135    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS135    HZ2 initial charge  0.33  assigned charge  0.330001
+ASP137    CB initial charge  -0.21  assigned charge  -0.279776
+ASP137    CG initial charge  0.75  assigned charge  0.620416
+ASP137    OD1 initial charge  -0.55  assigned charge  -0.759328
+ASP137    OD2 initial charge  -0.61  assigned charge  -0.75952
+LYS138    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS138    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS138    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS138    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS138    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS138    HZ2 initial charge  0.33  assigned charge  0.330001
+LYS141    CE initial charge  0.21  assigned charge  0.20999199999999998
+LYS141    HE1 initial charge  0.05  assigned charge  0.050002500000000005
+LYS141    HE2 initial charge  0.05  assigned charge  0.050002500000000005
+LYS141    NZ initial charge  -0.3  assigned charge  -0.300066
+LYS141    HZ1 initial charge  0.33  assigned charge  0.330001
+LYS141    HZ2 initial charge  0.33  assigned charge  0.330001
+HSP146    CB initial charge  -0.05  assigned charge  -0.065
+HSP146    CD2 initial charge  0.19  assigned charge  0.07
+HSP146    HD2 initial charge  0.13  assigned charge  0.11
+HSP146    CG initial charge  0.19  assigned charge  0.20500000000000002
+HSP146    NE2 initial charge  -0.51  assigned charge  -0.435
+HSP146    ND1 initial charge  -0.51  assigned charge  -0.605
+HSP146    CE1 initial charge  0.32  assigned charge  0.28500000000000003
+HSP146    HE1 initial charge  0.18  assigned charge  0.155
+GLU157    CG initial charge  -0.21  assigned charge  -0.279447
+GLU157    CD initial charge  0.75  assigned charge  0.621027
+GLU157    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU157    OE2 initial charge  -0.61  assigned charge  -0.758815
+GLU158    CG initial charge  -0.21  assigned charge  -0.279447
+GLU158    CD initial charge  0.75  assigned charge  0.621027
+GLU158    OE1 initial charge  -0.55  assigned charge  -0.758341
+GLU158    OE2 initial charge  -0.61  assigned charge  -0.758815
+HSP161    CB initial charge  -0.05  assigned charge  -0.065
+HSP161    CD2 initial charge  0.19  assigned charge  0.07
+HSP161    HD2 initial charge  0.13  assigned charge  0.11
+HSP161    CG initial charge  0.19  assigned charge  0.20500000000000002
+HSP161    NE2 initial charge  -0.51  assigned charge  -0.435
+HSP161    ND1 initial charge  -0.51  assigned charge  -0.605
+HSP161    CE1 initial charge  0.32  assigned charge  0.28500000000000003
+HSP161    HE1 initial charge  0.18  assigned charge  0.155
+
+Scaling custom electrostatic and steric bond forces for alchemical protons
+
+Bond forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP11  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP11  proton name  HD2  lambda value  0.0032
+Bond forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP28  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP28  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP33  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP33  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU44  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU44  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU45  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU45  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  GLU51  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU51  proton name  HE2  lambda value  0.0079
+Bond forces: residue  ASP53  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP53  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU55  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU55  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  GLU62  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU62  proton name  HE2  lambda value  0.0079
+Bond forces: residue  ASP64  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP64  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU65  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU65  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  GLU74  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU74  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP85  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP85  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU89  proton name  HE2  lambda value  0.8632
+Bond forces: residue  GLU89  proton name  HE2  lambda value  0.8632
+Bond forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP96  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP96  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP98  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP98  proton name  HD2  lambda value  0.0032
+Bond forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  GLU108  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU108  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU112  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU112  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU114  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU114  proton name  HE2  lambda value  0.0079
+Bond forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+Bond forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+Bond forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+Bond forces: residue  GLU127  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU127  proton name  HE2  lambda value  0.0079
+Bond forces: residue  ASP129  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP129  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP130  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP130  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU131  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU131  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU134  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU134  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP137  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP137  proton name  HD2  lambda value  0.0032
+Bond forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  HSP146  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP146  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP146  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP146  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP146  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP146  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP146  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP146  proton name  HD1  lambda value  0.5
+Bond forces: residue  GLU157  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU157  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU158  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU158  proton name  HE2  lambda value  0.0079
+Bond forces: residue  HSP161  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP161  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP161  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP161  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP161  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP161  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP161  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP161  proton name  HD1  lambda value  0.5
+
+Scaling custom electrostatic and steric bond forces for alchemical protons
+
+
+Scaling custom electrostatic and steric bond forces for alchemical protons
+
+Bond forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS8  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP11  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP11  proton name  HD2  lambda value  0.0032
+Bond forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS14  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP28  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP28  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP33  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP33  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU44  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU44  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU45  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU45  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS47  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  GLU51  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU51  proton name  HE2  lambda value  0.0079
+Bond forces: residue  ASP53  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP53  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU55  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU55  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS60  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  GLU62  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU62  proton name  HE2  lambda value  0.0079
+Bond forces: residue  ASP64  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP64  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU65  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU65  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS69  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS70  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  GLU74  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU74  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS75  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS77  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS83  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP85  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP85  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU89  proton name  HE2  lambda value  0.8632
+Bond forces: residue  GLU89  proton name  HE2  lambda value  0.8632
+Bond forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS91  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP96  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP96  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP98  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP98  proton name  HD2  lambda value  0.0032
+Bond forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS100  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS101  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  GLU108  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU108  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU112  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU112  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU114  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU114  proton name  HE2  lambda value  0.0079
+Bond forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+Bond forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+Bond forces: residue  CYS121  proton name  HG1  lambda value  0.9990000000000001
+Bond forces: residue  GLU127  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU127  proton name  HE2  lambda value  0.0079
+Bond forces: residue  ASP129  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP129  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP130  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP130  proton name  HD2  lambda value  0.0032
+Bond forces: residue  GLU131  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU131  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU134  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU134  proton name  HE2  lambda value  0.0079
+Bond forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS135  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  ASP137  proton name  HD2  lambda value  0.0032
+Bond forces: residue  ASP137  proton name  HD2  lambda value  0.0032
+Bond forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS138  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  LYS141  proton name  HZ3  lambda value  0.9999
+Bond forces: residue  HSP146  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP146  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP146  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP146  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP146  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP146  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP146  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP146  proton name  HD1  lambda value  0.5
+Bond forces: residue  GLU157  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU157  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU158  proton name  HE2  lambda value  0.0079
+Bond forces: residue  GLU158  proton name  HE2  lambda value  0.0079
+Bond forces: residue  HSP161  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP161  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP161  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP161  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP161  proton name  HD1  lambda value  0.5
+Bond forces: residue  HSP161  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP161  proton name  HE2  lambda value  1.0
+Bond forces: residue  HSP161  proton name  HD1  lambda value  0.5
+
+Scaling the charges of atoms adjustent to alchemical protons in Custom Bond electostatic force
+
+
+Scaling custom electrostatic and steric bond forces for alchemical protons
+
+
+Scaling the charges of atoms adjustent to alchemical protons in Custom Bond electostatic force
+
+Initial net charge:  -14.993
+
+Non-zero net charge! Modifying the charge of water oxygens!
+
+Number of modified water oxygens  14993
+Initial net charge:  0.0
+Final net charge :  0.0
+Iteration  0 pH  6.5
+Minimizing...
+Simulating...

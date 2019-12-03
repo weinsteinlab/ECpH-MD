@@ -11,7 +11,7 @@ pdb_file = './inputFiles/BB-pH6-wb-i.pdb'
 
 read_state_geometries = True 				# True/False; Default False
 
-pdb_state_files = ['./inputFiles/BB-pH6-wb-i.pdb']*11 +['./inputFiles/BB-pH8-i05-wb-i.pdb']*7
+pdb_state_files = ['./inputFiles/BB-pH6-wb-i.pdb']*11 +['./inputFiles/BB-pH6-wb-i.pdb']*7
                                                                                                
                                                                                                
 # !!! Occurance of disulphide bonds #

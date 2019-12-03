@@ -16,7 +16,7 @@ for pH in pH_list:
                 if residue == name:
                     lambda_list[residue] = l_special[name][pH]
         try: 
-            print('residue with user-defined pKa ', residue, ' lambda value at pH ', pH, ': ', lambda_list[residue])
+            print('\nresidue with user-defined pKa: ', residue, '\nlambda value at pH ', pH, ': ', lambda_list[residue])
         except KeyError:
             if 'LYS' in residue:
                 lambda_list[residue] = llys

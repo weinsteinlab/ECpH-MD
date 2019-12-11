@@ -394,13 +394,14 @@ class pHrex:
                 j = i - 1
 
             print('\nSelected replicas for lambda exchange: ', i, ' ', j, '\n')
-
-            if n_residues_per_switch != None:
+            try:
+#            if n_residues_per_switch != None:
                 if n_residues_per_switch > 1 or n_residues_per_switch < 0:
                     print('\nImproper value for number of residues for lambda-exchange switch attempt!\n')
                 else:
                     number_atoms_change = round(len(list_alchem_residues) * n_residues_per_switch)
-            else:
+            except NameError:
+#            else:
                 number_atoms_change = round(len(list_alchem_residues) * 0.1)
           
             residues_change = random.sample(range(0, len(list_alchem_residues) - 1), number_atoms_change)

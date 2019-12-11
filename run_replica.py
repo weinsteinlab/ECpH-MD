@@ -34,16 +34,21 @@ integrator.setConstraintTolerance(constraintTolerance)
 simulation = Simulation(topology, pH_system_temp, integrator, platform, platformProperties)
 
 # Load state geometries 
-if read_state_geometries:
-    if len(pdb_state_files)== len(pH_list):
-        i = np.where(pH_list == float(pH))[0][0]
-        pdb = PDBFile(pdb_state_files[i])
-        positions = pdb.positions
+try:
+    if read_state_geometries:
+        if len(pdb_state_files)== len(pH_list):
+            i = np.where(pH_list == float(pH))[0][0]
+            pdb = PDBFile(pdb_state_files[i])
+            positions = pdb.positions
+        else:
+            print("\nThe pH-replicas and given states do not match\n")
     else:
-        print("\nThe pH-replicas and given states do not match\n")
-else:
+        pdb = PDBFile(pdb_file)
+        positions = pdb.positions
+except NameError:
     pdb = PDBFile(pdb_file)
     positions = pdb.positions
+
 
 if restart == 'OFF' and iteration == 0:
     print('Iteration ', iteration, 'pH ', pH)

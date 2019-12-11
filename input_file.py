@@ -9,7 +9,7 @@ pdb_file = './inputFiles/BB-pH6-wb-i.pdb'
 # In this example 11 structures for pHs from 2.0 to 7.0 are in "closed" state (same pdb file)
 # and 7 structures for pHs from 7.5 to 10.5 are in "opened" state (same pdb file)
 
-read_state_geometries = True 				# True/False; Default False
+#read_state_geometries = True 				# True/False; Default False
 
 pdb_state_files = ['./inputFiles/BB-pH6-wb-i.pdb']*11 +['./inputFiles/BB-pH6-wb-i.pdb']*7
                                                                                                
@@ -91,7 +91,7 @@ restart = 'OFF' 					# ON/OFF
 
 # cpH setup #
 n_min_steps = 5000
-n_residues_per_switch = 0.1 				# Persentage of residues for which lambda exchange attempt will be attempted from 0 to 1 (default 0.1)
+#n_residues_per_switch = 0.1 				# Persentage of residues for which lambda exchange attempt will be attempted from 0 to 1 (default 0.1)
 n_iter = 1000 						# Number of iterations of MD - lambda-exchange - MD - replica-exchnage cycle
 
 # Lambda exchnage parameters

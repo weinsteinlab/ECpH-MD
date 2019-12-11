@@ -9,11 +9,7 @@ pH_list = np.arange(pH_low, pH_high, pH_step)
 psf = CharmmPsfFile(psf_file)
 psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
 
-#pdb = PDBFile(pdb_file)
-
 topology = psf.topology
-print(topology.getUnitCellDimensions(), ' unit cell dimensions')
-#positions_init = pdb.positions
 EpKa = 4.4
 EpKa2 = 7.3
 KpKa = 10.4

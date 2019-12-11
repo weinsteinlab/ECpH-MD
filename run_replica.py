@@ -58,6 +58,7 @@ if restart == 'OFF' and iteration == 0:
     simulation.reporters.append(dataReporter)
     print('Simulating...')
     simulation.step(nsteps)
+    print('Simulation completed\nSaving current state...')
     simulation.saveState(str(output_name) + '-' + str(pH) + '-state.xml')
     state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True,
       getParameters=False,
@@ -72,6 +73,7 @@ if restart == 'OFF' and iteration == 0:
     energy_min = state_min.getKineticEnergy()._value + state_min.getPotentialEnergy()._value
     energy_min = pd.DataFrame(np.array([energy_min]))
     energy_min.to_csv(str(output_name) + '-' + str(pH) + '-energy-min.csv')
+    print('FINISH')
 else:
     print('Iteration ', iteration, ' pH ', pH)
     simulation.loadState(str(output_name) + '-' + str(pH) + '-state.xml')
@@ -83,6 +85,7 @@ else:
     simulation.reporters.append(dataReporter)
     print('Simulating...')
     simulation.step(nsteps)
+    print('Simulation completed\nSaving current state...')
     simulation.saveState(str(output_name) + '-' + str(pH) + '-state.xml')
     state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True,
       getParameters=False,
@@ -107,3 +110,5 @@ else:
     energy_min_current = energy_min_last.rename(columns={name_i: name_j})
     output = pd.concat([energy_min_input, energy_min_current], axis=1, sort=False)
     output.to_csv(str(output_name) + '-' + str(pH) + '-energy-min.csv')
+    print('FINISH')
+

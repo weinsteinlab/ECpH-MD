@@ -91,7 +91,7 @@ restart = 'OFF' 					# ON/OFF
 
 # cpH setup #
 n_min_steps = 1000
-n_residues_per_switch = 0.5 				# Persentage of residues for which lambda exchange attempt will be attempted from 0 to 1 (default 0.1)
+n_residues_per_switch = 0.1 				# Persentage of residues for which lambda exchange attempt will be attempted from 0 to 1 (default 0.1)
 n_iter = 1000 						# Number of iterations of MD - lambda-exchange - MD - replica-exchnage cycle
 
 # Lambda exchnage parameters

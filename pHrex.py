@@ -77,9 +77,7 @@ def create_cpH_system(pH_system_temp, lambda_list):
     print('CNB ', CNB)
     for f in CNB:
         force = pH_system_temp.getForces()[f]
-#        print('CNB force ', force)
         print('\nScaling custom electrostatics and sterics nonbonded forces for alchemical protons\n') 
-#        print('alchem protons in the loop ', alchem_protons)
         for proton in alchem_protons:
             proton = int(proton)
             residue = str(psf.atom_list[proton].residue.resname) + str(psf.atom_list[proton].residue.idx)
@@ -115,7 +113,6 @@ def create_cpH_system(pH_system_temp, lambda_list):
                         force.setParticleParameters(side_atom, [lambda_electrostatics, n_ch, sigma])
                         print(residue, '  ', atom_name, 'initial charge ', charge, ' assigned charge ', n_ch)
 
-#    print('CB ', CB)
     for f in CB:
         force = pH_system_temp.getForces()[f]
         print('\nScaling custom electrostatic and steric bond forces for alchemical protons\n')
@@ -127,7 +124,6 @@ def create_cpH_system(pH_system_temp, lambda_list):
                 proton = atom_j
             else:
                 print('No alchemical protons in the bond') 
-#                break
             
             residue = str(psf.atom_list[proton].residue.resname) + str(psf.atom_list[proton].residue.idx)
             atom_name = str(psf.atom_list[proton].name)
@@ -357,7 +353,6 @@ class pHrex:
         self._MD_nsteps_replicas = MD_nsteps_replicas
         for it in range(n_iter):
             self._propagate_replicas(it, MD_nsteps_replicas)
-#            print('\nbefore mix_replicas, after propagate\n')
             self._mix_replicas()
             self._propagate_replicas(it, MD_nsteps_lambdas)
             self._mix_lambdas()
@@ -395,19 +390,25 @@ class pHrex:
 
             print('\nSelected replicas for lambda exchange: ', i, ' ', j, '\n')
             try:
-#            if n_residues_per_switch != None:
                 if n_residues_per_switch > 1 or n_residues_per_switch < 0:
                     print('\nImproper value for number of residues for lambda-exchange switch attempt!\n')
                 else:
-                    number_atoms_change = round(len(list_alchem_residues) * n_residues_per_switch)
+#                    number_atoms_change = round(len(list_alchem_residues) * n_residues_per_switch)
+                    number_atoms_change = round(len(list_exchange_residues) * n_residues_per_switch)
             except NameError:
-#            else:
-                number_atoms_change = round(len(list_alchem_residues) * 0.1)
+#                number_atoms_change = round(len(list_alchem_residues) * 0.1)
+                number_atoms_change = round(len(list_exchange_residues) * 0.1)
           
-            residues_change = random.sample(range(0, len(list_alchem_residues) - 1), number_atoms_change)
+#            residues_change = random.sample(range(0, len(list_alchem_residues) - 1), number_atoms_change)
+            residues_change = random.sample(range(0, len(list_exchange_residues) - 1), number_atoms_change)
             proton_change = [None] * number_atoms_change
+#            hist_state_exchange = list_hist
+
             for residue in range(len(residues_change)):
-                proton_change[residue] = list_alchem_residues[residues_change[residue]]
+#                proton_change[residue] = list_alchem_residues[residues_change[residue]]
+                proton_change[residue] = list_exchange_residues[residues_change[residue]]
+#                if 'HSP' in proton_change[residue]:
+#                    hist_state_exchange.remove(proton_change[residue])
 
             print('\nAlchemical protons selected for switch  ', proton_change, '\n')
             lambda_list_i = pd.read_csv(('lambda_list-' + str(self._pH_list[i]) + '.csv'), index_col=0)
@@ -445,24 +446,25 @@ class pHrex:
             energy_ii_lambda = float(energy_ii_lambda_file.iloc[:, -1])
             energy_jj_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy-min.csv')
             energy_jj_lambda = float(energy_jj_lambda_file.iloc[:, -1])
+
             print('\nTotal minimize energy of replica ', i, ' : ',  energy_ii_lambda, '\nTotal minimized energy of replica ', j, ' : ', energy_jj_lambda, '\nTotal minimized energy of replica ', i, ' after lambda exchange: ', energy_ij_lambda, '\nTotal minimized energy of replica', j, ' after lambda exchnage ', energy_ji_lambda, '\n')
+
             log_p_accept_lambda = -(energy_ij_lambda + energy_ji_lambda) + energy_ii_lambda + energy_jj_lambda
-            #print(log_p_accept_lambda)
             if log_p_accept_lambda >= 0.0 or random.random() < math.exp(log_p_accept_lambda):
                 print('\nLambda exchange accepted\n')
                 for residue in proton_change:
-                    #print('Shape ', lambda_list_i.shape[1], lambda_list_j.shape[1])
                     lambda_i = liex.at[(residue, str(lambda_list_i.shape[1]))]
                     lambda_j = ljex.at[(residue, str(lambda_list_j.shape[1]))]
                     liex.at[(residue, str(lambda_list_i.shape[1]))] = lambda_j
                     ljex.at[(residue, str(lambda_list_j.shape[1]))] = lambda_i
-
-                df_output = pd.concat([lambda_list_i, liex], axis=1, sort=False)
-                df_output.to_csv('lambda_list-' + str(self._pH_list[i]) + '.csv')
-                df_output = pd.concat([lambda_list_j, ljex], axis=1, sort=False)
-                df_output.to_csv('lambda_list-' + str(self._pH_list[j]) + '.csv')
             else:
                 print('\nLambda exchange_rejected\n')
+
+            df_output = pd.concat([lambda_list_i, liex], axis=1, sort=False)
+            df_output.to_csv('lambda_list-' + str(self._pH_list[i]) + '.csv')
+            df_output = pd.concat([lambda_list_j, ljex], axis=1, sort=False)
+            df_output.to_csv('lambda_list-' + str(self._pH_list[j]) + '.csv')
+
 
     def _mix_replicas(self, n_attempts = n_attempts_replicas):
         #print("\nin mix_replicas")
@@ -536,4 +538,4 @@ class pHrex:
                 simulation_j.context.createCheckpoint()
                 simulation_j.saveState(str(output_name) + '-' + str(self._pH_list[j]) + '-state.xml')
             else:
-                print('Replica exchange rejected')
+                rint('Replica exchange rejected')

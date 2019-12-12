@@ -90,8 +90,8 @@ special_pKa_values = [7.3] 				# the same order and size as the names in special
 restart = 'OFF' 					# ON/OFF
 
 # cpH setup #
-n_min_steps = 5000
-#n_residues_per_switch = 0.1 				# Persentage of residues for which lambda exchange attempt will be attempted from 0 to 1 (default 0.1)
+n_min_steps = 1000
+n_residues_per_switch = 0.5 				# Persentage of residues for which lambda exchange attempt will be attempted from 0 to 1 (default 0.1)
 n_iter = 1000 						# Number of iterations of MD - lambda-exchange - MD - replica-exchnage cycle
 
 # Lambda exchnage parameters
@@ -110,6 +110,6 @@ n_iter_replicas = 1000 					# Number of iterations of the preliminary MD-REX cyc
 MD_nsteps_replicas_prep = 1000 				# Number of MD steps for preliminary MD-REX cycle
 
 # Prep lambda-exchange
-prep_lambdas = False 					# True/Flase - run MD-lambda-EX cycle before the main cpH REX/lambda-EX cycle
+prep_lambdas = True 					# True/Flase - run MD-lambda-EX cycle before the main cpH REX/lambda-EX cycle
 n_iter_lambdas = 1000 					# Number of iterations of the preliminary MD-lambda-EX cycle
-MD_nsteps_lambdas_prep = 1000 				# Number of MD steps for preliminary MD-l-EX cycle
+MD_nsteps_lambdas_prep = 100 				# Number of MD steps for preliminary MD-l-EX cycle

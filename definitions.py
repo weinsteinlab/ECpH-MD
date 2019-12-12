@@ -160,12 +160,16 @@ print('all alchemical proton indicies \n', alchem_protons)
 list_alchem_residues = [None] * alchem_residues.size
 side_atoms = np.concatenate((lys_side_atoms, his_side_atoms, glu_side_atoms, asp_side_atoms, cys_side_atoms))
 side_atoms = np.sort(side_atoms)
+list_exchange_residues = []
 
 for i in range(alchem_residues.size):
     list_alchem_residues[i] = str(psf.atom_list[(alchem_residues[i] - 1)].residue.resname) + str(psf.atom_list[(alchem_residues[i] - 1)].residue.idx)
+    list_exchange_residues.append(str(list_alchem_residues[i]))
+    if 'HSP' in list_alchem_residues[i]:
+        list_exchange_residues.append(str(list_alchem_residues[i])+str('_sw'))
 
 print('List of residues with modified protonation state: \n ', list_alchem_residues)
-
+print('List of Histidines ', list_exchange_residues)
 print('Number of titratable sites: ', alchem_residues.size)
 
 for i in range(pH_low * 10, pH_high * 10, 5):

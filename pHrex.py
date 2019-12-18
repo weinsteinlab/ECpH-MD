@@ -354,13 +354,14 @@ class pHrex:
         for it in range(n_iter):
             self._propagate_replicas(it, MD_nsteps_replicas)
             self._mix_replicas()
-            self._propagate_replicas(it, MD_nsteps_lambdas)
+            self._propagate_replicas(it+1, MD_nsteps_lambdas)
             self._mix_lambdas()
 
     def _propagate_replicas(self, iteration, nsteps):
         slurmID = []
         for pH in self._pH_list:
-            myCmd = 'sbatch submit_individual_replica.sh ' + str(pH) + ' ' + str(iteration) + ' ' + str(nsteps)
+#            myCmd = 'sbatch submit_individual_replica.sh ' + str(pH) + ' ' + str(iteration) + ' ' + str(nsteps)
+            myCmd = 'sbatch -J ${SLURM_JOB_NAME}_${pH} submit_individual_replica.sh ' + str(pH) + ' ' + str(iteration) + ' ' + str(nsteps)
             process = subprocess.run(myCmd, shell=True, stdout=subprocess.PIPE)
             jobID = int(''.join(list(filter(str.isdigit, str(process.stdout)))))
             slurmID.append(jobID)
@@ -376,6 +377,7 @@ class pHrex:
                     print('Slurm JobID: ' + str(jobID) + ' COMPLETE')
                     break
                 else:
+                    print('Full process.stdout' + str(process.stdout) + '\n')
                     print('\nWaiting for Slurm JobID: '+str(jobID)+'\n')
                     time.sleep(60)
 
@@ -400,7 +402,7 @@ class pHrex:
                 number_atoms_change = round(len(list_exchange_residues) * 0.1)
           
 #            residues_change = random.sample(range(0, len(list_alchem_residues) - 1), number_atoms_change)
-            residues_change = random.sample(range(0, len(list_exchange_residues) - 1), number_atoms_change)
+            residues_change = random.sample(range(0, len(list_exchange_residues)), number_atoms_change)
             proton_change = [None] * number_atoms_change
 #            hist_state_exchange = list_hist
 

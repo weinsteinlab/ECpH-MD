@@ -184,7 +184,6 @@ for i in range(pH_low * 10, pH_high * 10, 5):
     p = 1 - 1 / (1 + 10 ** (DpKa - i / 10))
     l_Asp[i / 10] = '%.4f' % p
 
-#if a_special_pKa_names and a_special_pKa_values:
 try:
     if len(special_pKa_names) == len(special_pKa_values):
         for n in range(len(special_pKa_names)):

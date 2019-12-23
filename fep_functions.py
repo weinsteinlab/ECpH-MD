@@ -1,5 +1,6 @@
 from imports import *
 from input_file import *
+ONE_4PI_EPS0 = 138.935456
 
 def _get_pme_direct_space_unique_expression(reference_force):
     alpha_ewald, nx, ny, nz = reference_force.getPMEParameters()

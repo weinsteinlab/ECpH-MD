@@ -68,14 +68,10 @@ z_PBC_vector_length = 7.39
 
 # Soft-core potential parameters for alchemical forces #
 switch_width = 1 * unit.angstroms
-softcore_alpha = 0.5
-softcore_a = 1
-softcore_b = 1
-softcore_c = 1
-softcore_beta = 0.0
-softcore_d = 1
-softcore_e = 1
-softcore_f = 1
+#softcore_alpha = 0.5
+#softcore_a = 1
+#softcore_b = 1
+#softcore_c = 1
 
 # pH range #
 pH_low = 2

@@ -26,10 +26,10 @@ if len(list_alchem_residues) !=0:
 
     # Soft-core Lennard-Jones.
     exceptions_sterics_energy_expression = ('U_sterics;'
-                                            'U_sterics = (lambda_sterics^softcore_a)*4*epsilon*x*(x-1.0);'
+                                            'U_sterics = (lambda_sterics)*4*epsilon*x*(x-1.0);'
                                             'x = (sigma/reff_sterics)^6;'
                                              # Effective softcore distance for sterics.
-                                            'reff_sterics = sigma*((softcore_alpha*(1.0-lambda_sterics)^softcore_b + (r/sigma)^softcore_c))^(1/softcore_c);')
+                                            'reff_sterics = sigma*((0.5*(1.0-lambda_sterics) + (r/sigma)));')
 
 
     # Define energy expression for sterics.

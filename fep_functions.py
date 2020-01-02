@@ -34,15 +34,15 @@ def _get_electrostatics_energy_expressions(reference_force):
      electrostatics_energy_expression, exceptions_electrostatics_energy_expression)
 
 
-def add_global_parameters(force):
-    force.addGlobalParameter('softcore_alpha', softcore_alpha)
-    force.addGlobalParameter('softcore_beta', softcore_beta)
-    force.addGlobalParameter('softcore_a', softcore_a)
-    force.addGlobalParameter('softcore_b', softcore_b)
-    force.addGlobalParameter('softcore_c', softcore_c)
-    force.addGlobalParameter('softcore_d', softcore_d)
-    force.addGlobalParameter('softcore_e', softcore_e)
-    force.addGlobalParameter('softcore_f', softcore_f)
+#def add_global_parameters(force):
+#    force.addGlobalParameter('softcore_alpha', softcore_alpha)
+#    force.addGlobalParameter('softcore_beta', softcore_beta)
+#    force.addGlobalParameter('softcore_a', softcore_a)
+#    force.addGlobalParameter('softcore_b', softcore_b)
+#    force.addGlobalParameter('softcore_c', softcore_c)
+#    force.addGlobalParameter('softcore_d', softcore_d)
+#    force.addGlobalParameter('softcore_e', softcore_e)
+#    force.addGlobalParameter('softcore_f', softcore_f)
 
 
 def calc_system_charge(force):

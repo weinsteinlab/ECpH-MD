@@ -108,4 +108,4 @@ MD_nsteps_replicas_prep = 1000 				# Number of MD steps for preliminary MD-REX c
 # Prep lambda-exchange
 prep_lambdas = True 					# True/Flase - run MD-lambda-EX cycle before the main cpH REX/lambda-EX cycle
 n_iter_lambdas = 1000 					# Number of iterations of the preliminary MD-lambda-EX cycle
-MD_nsteps_lambdas_prep = 100 				# Number of MD steps for preliminary MD-l-EX cycle
+MD_nsteps_lambdas_prep = 20000 				# Number of MD steps for preliminary MD-l-EX cycle

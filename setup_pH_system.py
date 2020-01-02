@@ -1,5 +1,5 @@
 from imports import *
-from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, add_global_parameters, calc_system_charge, create_force_particle, create_force_bond)
+from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, calc_system_charge, create_force_particle, create_force_bond)
 from definitions import *
 from input_file import *
 
@@ -26,10 +26,10 @@ if len(list_alchem_residues) !=0:
 
     # Soft-core Lennard-Jones.
     exceptions_sterics_energy_expression = ('U_sterics;'
-                                            'U_sterics = (lambda_sterics)*4*epsilon*x*(x-1.0);'
+                                            'U_sterics = lambda_sterics*4*epsilon*x*(x-1.0);'
                                             'x = (sigma/reff_sterics)^6;'
                                              # Effective softcore distance for sterics.
-                                            'reff_sterics = sigma*((0.5*(1.0-lambda_sterics) + (r/sigma)));')
+                                            'reff_sterics = sigma*(0.5*(1-lambda_sterics) + (r/sigma));')
 
 
     # Define energy expression for sterics.
@@ -272,8 +272,8 @@ if len(list_alchem_residues) !=0:
     all_custom_forces = (all_custom_nonbonded_forces +
                          all_sterics_custom_bond_forces +
                          all_electrostatics_custom_bond_forces)
-    for force in all_custom_forces:
-        add_global_parameters(force)
+#    for force in all_custom_forces:
+#        add_global_parameters(force)
 
 
 #Check if number of particles in all NB interections is the same

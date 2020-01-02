@@ -13,9 +13,12 @@ def _get_pme_direct_space_unique_expression(reference_force):
 
 
 def _get_electrostatics_energy_expressions(reference_force):
-    electrostatics_prefix = 'U_electrostatics;U_electrostatics=(lambda_electrostatics)*ONE_4PI_EPS0*chargeprod'
-    electrostatics_suffix = 'reff_electrostatics = r;ONE_4PI_EPS0 = {};'.format(ONE_4PI_EPS0)
-    electrostatics_mixing_rules = 'chargeprod = charge1*charge2;sigma = 0.5*(sigma1 + sigma2);'
+    electrostatics_prefix = ('U_electrostatics;'
+                             'U_electrostatics=lambda_electrostatics*ONE_4PI_EPS0*chargeprod')
+    electrostatics_suffix = ('reff_electrostatics = r;'
+                             'ONE_4PI_EPS0 = {};'.format(ONE_4PI_EPS0))
+    electrostatics_mixing_rules = ('chargeprod = charge1*charge2;'
+                                   'sigma = 0.5*(sigma1 + sigma2);')
     coulomb_expression = '/reff_electrostatics;'
     nonbonded_method = reference_force.getNonbondedMethod()
     if nonbonded_method in [openmm.NonbondedForce.NoCutoff]:

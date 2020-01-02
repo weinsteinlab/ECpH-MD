@@ -52,7 +52,7 @@ except NameError:
 
 if restart == 'OFF' and iteration == 0:
     print('Iteration ', iteration, 'pH ', pH)
-    dcdReporter = DCDReporter(str(output_name) + '-' + str(pH) + '.dcd', dcdout_freq)
+    dcdReporter = DCDReporter(str(output_name) + '-' + str(pH) + '-' + str(iteration) + '.dcd', dcdout_freq)
     dataReporter = StateDataReporter((str(output_name) + '-' + str(pH) + '.log'), 1000, totalSteps=nsteps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
     simulation.context.setPositions(positions)
     simulation.context.setVelocitiesToTemperature(temperature)
@@ -84,7 +84,7 @@ else:
     simulation.loadState(str(output_name) + '-' + str(pH) + '-state.xml')
     positions = simulation.context.getState(getPositions=True).getPositions()
     system_temp = simulation.context.getSystem()
-    dcdReporter = DCDReporter((str(output_name) + '-' + str(pH) + '.dcd'), dcdout_freq, append=True)
+    dcdReporter = DCDReporter((str(output_name) + '-' + str(pH) + '-' + str(iteration) + '.dcd'), dcdout_freq)
     dataReporter = StateDataReporter((str(output_name) + '-' + str(pH) + '.log'), 1000, totalSteps=nsteps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
     simulation.reporters.append(dcdReporter)
     simulation.reporters.append(dataReporter)

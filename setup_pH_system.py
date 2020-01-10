@@ -29,7 +29,7 @@ if len(list_alchem_residues) !=0:
                                             'U_sterics = lambda_sterics*4*epsilon*x*(x-1.0);'
                                             'x = (sigma/reff_sterics)^6;'
                                              # Effective softcore distance for sterics.
-                                            'reff_sterics = sigma*(0.5*(1-lambda_sterics) + (r/sigma));')
+                                            'reff_sterics = r;')
 
 
     # Define energy expression for sterics.

@@ -169,30 +169,29 @@ for i in range(alchem_residues.size):
         list_exchange_residues.append(str(list_alchem_residues[i])+str('_sw'))
 
 print('List of residues with modified protonation state: \n ', list_alchem_residues)
-print('List of Histidines ', list_exchange_residues)
 print('Number of titratable sites: ', alchem_residues.size)
 
-for i in range(pH_low * 10, pH_high * 10, 5):
-    p = 1 - 1 / (1 + 10 ** (EpKa - i / 10))
-    l_Glu[i / 10] = '%.4f' % p
-    p = 1 - 1 / (1 + 10 ** (HpKa - i / 10))
-    l_His[i / 10] = '%.4f' % p
-    p = 1 - 1 / (1 + 10 ** (KpKa - i / 10))
-    l_Lys[i / 10] = '%.4f' % p
-    p = 1 - 1 / (1 + 10 ** (CpKa - i / 10))
-    l_Cys[i / 10] = '%.4f' % p
-    p = 1 - 1 / (1 + 10 ** (DpKa - i / 10))
-    l_Asp[i / 10] = '%.4f' % p
+for i in np.arange(pH_low, pH_high, pH_step ):
+    p = 1 - 1 / (1 + 10 ** (EpKa - i))
+    l_Glu[i] = '%.4f' % p
+    p = 1 - 1 / (1 + 10 ** (HpKa - i))
+    l_His[i] = '%.4f' % p
+    p = 1 - 1 / (1 + 10 ** (KpKa - i))
+    l_Lys[i] = '%.4f' % p
+    p = 1 - 1 / (1 + 10 ** (CpKa - i))
+    l_Cys[i] = '%.4f' % p
+    p = 1 - 1 / (1 + 10 ** (DpKa - i))
+    l_Asp[i] = '%.4f' % p
 
 try:
     if len(special_pKa_names) == len(special_pKa_values):
         for n in range(len(special_pKa_names)):
             l_special[special_pKa_names[n]] = {}
             print(special_pKa_names[n])
-            for pH in range(pH_low * 10, pH_high * 10, 5):
-                p = 1 - 1 / (1 + 10 ** (special_pKa_values[n] - pH / 10))
+            for pH in np.arange(pH_low, pH_high, pH_step):
+                p = 1 - 1 / (1 + 10 ** (special_pKa_values[n] - pH))
                 print(p)
-                l_special[special_pKa_names[n]][pH / 10] = '%.4f' % p
+                l_special[special_pKa_names[n]][pH] = '%.4f' % p
     else:
         print("Number of special residues and number of pKa values given do not match")
 except NameError:

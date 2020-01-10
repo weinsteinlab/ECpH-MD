@@ -38,7 +38,7 @@ constraintTolerance = 1e-06
 
 # Integration parameters #
 dt = 0.002 * picoseconds
-temperature = 298 * kelvin
+temperature = 310 * kelvin
 friction = 1.0 / picosecond
 integrator_type = "Langevin" 				# Verlet/Brownian/VariableVerlet/VariableLangevin
 
@@ -74,9 +74,9 @@ switch_width = 1 * unit.angstroms
 #softcore_c = 1
 
 # pH range #
-pH_low = 2
-pH_high = 11
-pH_step = 0.5
+pH_low = -2
+pH_high = 18
+pH_step = 0.37
 
 # Special pKa values #
 special_pKa_names = ['GLU89']

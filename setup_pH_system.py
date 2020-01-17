@@ -168,7 +168,9 @@ if len(list_alchem_residues) !=0:
     # -------------------------------------------------------------------------------
 
     # Create atom groups.
-    alchemical_atomset = set(alchem_protons) # all alchemical protons
+    alchemical_atomset = set(alchem_protons[0]) # all alchemical protons
+    for segment in range(1, len(segment_list)):
+        alchemical_atomset.update(set(alchem_protons[segment]))
     all_atomset = set(range(NB.getNumParticles()))  # all atoms, including alchemical region
     nonalchemical_atomset = all_atomset.difference(alchemical_atomset) #all non-alchemical atoms
     alchemical_atomset = all_atomset.difference(nonalchemical_atomset)
@@ -295,7 +297,9 @@ if barostat_type == "MonteCarlo":
 elif barostat_type == "MonteCarloAnisotropic":
     pH_system.addForce(AnisotropicMonteCarloBarostat(pressure, temperature, scaleX = scale_X, scaleY = scale_Y, scaleZ = scale_Z, frequency = barostat_freq))
 elif barostat_type == "MonteCarloMembrane":
-    pH_system.addForce(MonteCarloMembraneBarostat(pressure, surface_tension, temperature, XYMode = xymode, ZMode = zmode, frequency = barostat_freq))
+    if xymode == 'XYIsotropic':
+        if zmode == 'ZFree':
+            pH_system.addForce(MonteCarloMembraneBarostat(pressure, surface_tension, temperature, MonteCarloMembraneBarostat.XYIsotropic, MonteCarloMembraneBarostat.ZFree))
 else:
     print("\nBarostat type not recognized\n")
     

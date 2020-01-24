@@ -452,19 +452,19 @@ class pHrex:
             integrator_i.setConstraintTolerance(constraintTolerance)
             simulation_i = Simulation(topology, pH_system_temp_i, integrator_i, platform, platformProperties)
             simulation_i.loadState(str(output_name) + '-' + str(self._pH_list[i]) + '-state.xml')
-            simulation_i.minimizeEnergy(maxIterations=1000)
+#            simulation_i.minimizeEnergy(maxIterations=1000)
             integrator_j = LangevinIntegrator(temperature, friction, dt)
             integrator_j.setConstraintTolerance(constraintTolerance)
             simulation_j = Simulation(topology, pH_system_temp_j, integrator_j, platform, platformProperties)
             simulation_j.loadState(str(output_name) + '-' + str(self._pH_list[j]) + '-state.xml')
-            simulation_j.minimizeEnergy(maxIterations=1000)
+#            simulation_j.minimizeEnergy(maxIterations=1000)
             state_ji_lambda = simulation_j.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
             state_ij_lambda = simulation_i.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
             energy_ji_lambda = state_ji_lambda.getKineticEnergy()._value + state_ji_lambda.getPotentialEnergy()._value
             energy_ij_lambda = state_ij_lambda.getKineticEnergy()._value + state_ij_lambda.getPotentialEnergy()._value
-            energy_ii_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[i]) + '-energy-min.csv')
+            energy_ii_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[i]) + '-energy.csv')
             energy_ii_lambda = float(energy_ii_lambda_file.iloc[:, -1])
-            energy_jj_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy-min.csv')
+            energy_jj_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy.csv')
             energy_jj_lambda = float(energy_jj_lambda_file.iloc[:, -1])
 
             print('\nTotal minimize energy of replica ', i, ' : ',  energy_ii_lambda, '\nTotal minimized energy of replica ', j, ' : ', energy_jj_lambda, '\nTotal minimized energy of replica ', i, ' after lambda exchange: ', energy_ij_lambda, '\nTotal minimized energy of replica', j, ' after lambda exchnage ', energy_ji_lambda, '\n')

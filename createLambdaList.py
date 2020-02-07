@@ -23,9 +23,9 @@ for pH in pH_list:
             elif 'HSP' in residue:
                 lambda_list[residue] = lhis
                 if pH < HpKa_switch:
-                    lambda_list[residue+'_sw'] = 1
+                    lambda_list['%s_sw' % (residue)] = 1
                 else:
-                    lambda_list[residue+'_sw'] = 0
+                    lambda_list['%s_sw' % (residue)] = 0
             elif 'GLU' in residue:
                 lambda_list[residue] = lglu
             elif 'ASP' in residue:
@@ -33,4 +33,4 @@ for pH in pH_list:
             elif 'CYS' in residue:
                 lambda_list[residue] = lcys
     df = pd.DataFrame.from_dict(lambda_list, orient='index')
-    df.to_csv('lambda_list-'+str(pH)+'.csv')
+    df.to_csv('lambda_list-%s.csv'i % (str(pH)))

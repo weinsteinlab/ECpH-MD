@@ -137,11 +137,11 @@ for segment in range(len(segment_list)):
     side_atoms[segment].sort()
 
     for index in range(alchem_residues[segment].size):
-        residue = segment_list[segment] + ': ' + str(psf.atom_list[(alchem_residues[segment][index] - 1)].residue.resname) + str(psf.atom_list[(alchem_residues[segment][index] - 1)].residue.idx)
+        residue = '%s: %s%s' % (segment_list[segment], str(psf.atom_list[(alchem_residues[segment][index] - 1)].residue.resname), str(psf.atom_list[(alchem_residues[segment][index] - 1)].residue.idx))
         list_alchem_residues.append(residue)
         list_exchange_residues.append(residue)
         if 'HSP' in residue:
-            list_exchange_residues.append(residue + str('_sw'))
+            list_exchange_residues.append('%s_sw', % (residue))
 print('Water oxygen ', waters.shape)
 
 

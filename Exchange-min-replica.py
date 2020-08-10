@@ -18,4 +18,4 @@ if prep_replicas:
 if prep_lambdas:
     parallel_tempering.run_prep_lambdas(MD_nsteps_lambdas_prep, n_iter_lambdas)
 
-parallel_tempering.run(n_iter, MD_nsteps_lambdas, MD_nsteps_replicas)
+parallel_tempering.run_cpH(MD_steps_cpH)

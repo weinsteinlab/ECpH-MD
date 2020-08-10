@@ -7,6 +7,8 @@ system = psf.createSystem(params, nonbondedMethod=PME, nonbondedCutoff=nonbonded
 
 pH_system = copy.deepcopy(system)
 
+#pH_list = np.arange(pH_low, pH_high, pH_step)
+
 
 for force_index, reference_force in list(enumerate(pH_system.getForces())):
     reference_force_name = reference_force.__class__.__name__
@@ -15,7 +17,10 @@ for force_index, reference_force in list(enumerate(pH_system.getForces())):
 
 # Don't create a force if there are no alchemical atoms.
 if len(list_alchem_residues) !=0:
-
+    # --------------------------------------------------
+    # Determine energy expression for all custom forces
+    # --------------------------------------------------
+    # Sterics mixing rules.
     sterics_mixing_rules = ('epsilon = sqrt(epsilon1*epsilon2);'  # Mixing rule for epsilon.
                             'sigma = 0.5*(sigma1 + sigma2);')  # Mixing rule for sigma.
 
@@ -41,7 +46,39 @@ if len(list_alchem_residues) !=0:
     energy_expressions = _get_electrostatics_energy_expressions(NB)
     (electrostatics_energy_expression,
      exceptions_electrostatics_energy_expression) = energy_expressions  # Unpack tuple.
-    
+    # ------------------------------------------------------------
+    # Create and configure all forces to add to alchemical system
+    # ------------------------------------------------------------
+    # Interactions and exceptions will be distributed according to the following table.
+    # --------------------------------------------------------------------------------------------------
+    # FORCE                                    | INTERACTION GROUP                                     |
+    # --------------------------------------------------------------------------------------------------
+    # nonbonded_force (unmodified)             | all interactions nonalchemical/nonalchemical          |
+    #                                          | all exceptions nonalchemical/nonalchemical            |
+    # --------------------------------------------------------------------------------------------------
+    # aa_sterics_custom_nonbonded_force        | sterics interactions alchemical/alchemical            |
+    # --------------------------------------------------------------------------------------------------
+    # aa_electrostatics_custom_nonbonded_force | electrostatics interactions alchemical/alchemical     |
+    #                                          | (only without exact PME treatment)                    |
+    # --------------------------------------------------------------------------------------------------
+    # na_sterics_custom_nonbonded_force        | sterics interactions non-alchemical/alchemical        |
+    # --------------------------------------------------------------------------------------------------
+    # na_electrostatics_custom_nonbonded_force | electrostatics interactions non-alchemical/alchemical |
+    #                                          | (only without exact PME treatment)                    |
+    # --------------------------------------------------------------------------------------------------
+    # aa_sterics_custom_bond_force             | sterics exceptions alchemical/alchemical              |
+    # --------------------------------------------------------------------------------------------------
+    # aa_electrostatics_custom_bond_force      | electrostatics exceptions alchemical/alchemical       |
+    #                                          | (only without exact PME treatment)                    |
+    # --------------------------------------------------------------------------------------------------
+    # na_sterics_custom_bond_force             | sterics exceptions non-alchemical/alchemical          |
+    # --------------------------------------------------------------------------------------------------
+    # na_electrostatics_custom_bond_force      | electrostatics exceptions non-alchemical/alchemical   |
+    #                                          | (only without exact PME treatment)                    |
+    # --------------------------------------------------------------------------------------------------
+
+    # Create a copy of the NonbondedForce to handle particle interactions and
+    # 1,4 exceptions between non-alchemical/non-alchemical atoms (nn).
     nonbonded_force = copy.deepcopy(NB)
 
 
@@ -124,6 +161,12 @@ if len(list_alchem_residues) !=0:
         force.addPerBondParameter("chargeprod")  # charge product
         force.addPerBondParameter("sigma")  # Lennard-Jones effective sigma
 
+
+
+   # -------------------------------------------------------------------------------
+    # Distribute particle interactions contributions in appropriate nonbonded forces
+    # -------------------------------------------------------------------------------
+
     # Create atom groups.
     alchemical_atomset = set(alchem_protons[0]) # all alchemical protons
     for segment in range(1, len(segment_list)):
@@ -183,6 +226,10 @@ if len(list_alchem_residues) !=0:
     na_electrostatics_custom_nonbonded_force.addInteractionGroup(nonalchemical_atomset, alchemical_atomset)
     aa_electrostatics_custom_nonbonded_force.addInteractionGroup(alchemical_atomset, alchemical_atomset)
 
+   # ---------------------------------------------------------------
+    # Distribute exceptions contributions in appropriate bond forces
+    # ---------------------------------------------------------------
+
     all_custom_nonbonded_forces = all_sterics_custom_nonbonded_forces + all_electrostatics_custom_nonbonded_forces
 
     # Move all NonbondedForce exception terms for alchemically-modified particles to CustomBondForces.
@@ -227,10 +274,11 @@ if len(list_alchem_residues) !=0:
     all_custom_forces = (all_custom_nonbonded_forces +
                          all_sterics_custom_bond_forces +
                          all_electrostatics_custom_bond_forces)
+#    for force in all_custom_forces:
+#        add_global_parameters(force)
 
-# Check if number of particles in all NB interections is the same,
-# replce original Nonbonded force with the alchemical one and 
-# add new alchemical forces
+
+#Check if number of particles in all NB interections is the same
 
 if na_electrostatics_custom_nonbonded_force.getNumParticles() == aa_electrostatics_custom_nonbonded_force.getNumParticles() == nonbonded_force.getNumParticles():
     for force_index, reference_force in list(enumerate(pH_system.getForces())):
@@ -243,7 +291,6 @@ if na_electrostatics_custom_nonbonded_force.getNumParticles() == aa_electrostati
 else:
     print('Inconsistent number of nonbonded particles')
 
-# Setup a barostat
 
 if barostat_type == "MonteCarlo":
     pH_system.addForce(MonteCarloBarostat(pressure, temperature))
@@ -256,7 +303,6 @@ elif barostat_type == "MonteCarloMembrane":
 else:
     print("\nBarostat type not recognized\n")
     
-# Track the newly created forces
 
 for force_index, reference_force in list(enumerate(pH_system.getForces())):
     reference_force_name = reference_force.__class__.__name__

@@ -353,18 +353,6 @@ class pHrex:
         self._pH_system = pH_system
         self._pH_list = pH_list
 
-    #def run_prep_lambdas(self, MD_nsteps_lambdas, n_iter_lambdas):
-    #    self._MD_nsteps_lambdas = MD_nsteps_lambdas
-    #    self._n_iter_lambdas = n_iter_lambdas
-    #    for iteration in range(n_iter_lambdas):
-    #        self._propagate_replicas(iteration, nsteps = MD_nsteps_lambdas)
-    #        self._mix_lambdas()
-    #def run_prep_replicas(self, MD_nsteps_replicas, n_iter_replicas):
-    #    self._MD_nsteps_replicas = MD_nsteps_replicas
-    #    self._n_iter_replicas = n_iter_replicas
-    #    for iteration in range(n_iter_replicas):
-    #        self._propagate_replicas(iteration, nsteps = MD_nsteps_replicas)
-    #        self._mix_replicas()
     def run_REX_EcpH(self, n_iter):
         self._n_iter = n_iter
         #self._MD_nsteps_lambdas = MD_nsteps_lambdas

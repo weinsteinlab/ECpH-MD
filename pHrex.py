@@ -353,39 +353,35 @@ class pHrex:
         self._pH_system = pH_system
         self._pH_list = pH_list
 
-    def run_prep_lambdas(self, MD_nsteps_lambdas, n_iter_lambdas):
-        self._MD_nsteps_lambdas = MD_nsteps_lambdas
-        self._n_iter_lambdas = n_iter_lambdas
-        for iteration in range(n_iter_lambdas):
-            self._propagate_replicas(restart, nsteps = MD_nsteps_lambdas)
-            self._mix_lambdas()
-    def run_prep_replicas(self, MD_nsteps_replicas, n_iter_replicas):
-        self._MD_nsteps_replicas = MD_nsteps_replicas
-        self._n_iter_replicas = n_iter_replicas
-        for iteration in range(n_iter_replicas):
-            self._propagate_replicas(restart, nsteps = MD_nsteps_replicas)
-            self._mix_replicas()
-    def run_cpH(self, MD_steps_cpH):
-        self._propagate_replicas(restart, nsteps=MD_steps_cpH)
-    def run(self, n_iter, MD_nsteps_lambdas, MD_nsteps_replicas):
+    #def run_prep_lambdas(self, MD_nsteps_lambdas, n_iter_lambdas):
+    #    self._MD_nsteps_lambdas = MD_nsteps_lambdas
+    #    self._n_iter_lambdas = n_iter_lambdas
+    #    for iteration in range(n_iter_lambdas):
+    #        self._propagate_replicas(iteration, nsteps = MD_nsteps_lambdas)
+    #        self._mix_lambdas()
+    #def run_prep_replicas(self, MD_nsteps_replicas, n_iter_replicas):
+    #    self._MD_nsteps_replicas = MD_nsteps_replicas
+    #    self._n_iter_replicas = n_iter_replicas
+    #    for iteration in range(n_iter_replicas):
+    #        self._propagate_replicas(iteration, nsteps = MD_nsteps_replicas)
+    #        self._mix_replicas()
+    def run_REX_EcpH(self, n_iter):
         self._n_iter = n_iter
-        self._MD_nsteps_lambdas = MD_nsteps_lambdas
-        self._MD_nsteps_replicas = MD_nsteps_replicas
+        #self._MD_nsteps_lambdas = MD_nsteps_lambdas
         for it in range(n_iter):
-            self._propagate_replicas(restart, MD_nsteps_replicas)
+            self._propagate_replicas()
             self._mix_replicas()
-            self._propagate_replicas(restart, MD_nsteps_lambdas)
-            self._mix_lambdas()
+            #self._propagate_replicas(it+1, MD_nsteps_lambdas)
+            #self._mix_lambdas()
+    def run(self):
+        self._propagate_replicas()
 
-    def _propagate_replicas(self, restart,  nsteps):
+    def _propagate_replicas(self):
         slurmID = []
-        if restart == 'OFF':
-            iteration = 0
-#       The reading from the written xml file name
-        else:
-            iteration = 1
         for pH in self._pH_list:
-            myCmd = 'sbatch -J ${SLURM_JOB_NAME}_${pH} submit_individual_replica.sh ' + str(pH) + ' ' + str(iteration) + ' ' + str(nsteps)
+#            myCmd = 'sbatch submit_individual_replica.sh ' + str(pH) + ' ' + str(iteration) + ' ' + str(nsteps)
+            #myCmd = 'sbatch -J ${SLURM_JOB_NAME}_${pH} submit_individual_replica.sh ' + str(pH) + ' ' + str(iteration) + ' ' + str(nsteps)
+            myCmd = 'sbatch -J ${SLURM_JOB_NAME}_${pH} submit_individual_replica.sh ' + str(pH)
             process = subprocess.run(myCmd, shell=True, stdout=subprocess.PIPE)
             jobID = int(''.join(list(filter(str.isdigit, str(process.stdout)))))
             slurmID.append(jobID)
@@ -405,97 +401,98 @@ class pHrex:
                     print('\nWaiting for Slurm JobID: '+str(jobID)+'\n')
                     time.sleep(60)
 
-    def _mix_lambdas(self, n_attempts = n_attempts_lambdas):
-        for attempt in range(n_attempts):
-            i = randint(0, self._pH_list.size - 1)
-
-            if i == 0:
-                j = i + 1
-            else:
-                j = i - 1
-
-            print('\nSelected replicas for lambda exchange: ', i, ' ', j, '\n')
-            try:
-                if n_residues_per_switch > 1 or n_residues_per_switch < 0:
-                    print('\nImproper value for number of residues for lambda-exchange switch attempt!\n')
-                else:
-#                    number_atoms_change = round(len(list_alchem_residues) * n_residues_per_switch)
-                    number_atoms_change = round(len(list_exchange_residues) * n_residues_per_switch)
-            except NameError:
-#                number_atoms_change = round(len(list_alchem_residues) * 0.1)
-                number_atoms_change = round(len(list_exchange_residues) * 0.1)
-          
-#            residues_change = random.sample(range(0, len(list_alchem_residues) - 1), number_atoms_change)
-            residues_change = random.sample(range(0, len(list_exchange_residues)), number_atoms_change)
-            proton_change = [None] * number_atoms_change
-#            hist_state_exchange = list_hist
-
-            for residue in range(len(residues_change)):
-#                proton_change[residue] = list_alchem_residues[residues_change[residue]]
-                proton_change[residue] = list_exchange_residues[residues_change[residue]]
-#                if 'HSP' in proton_change[residue]:
-#                    hist_state_exchange.remove(proton_change[residue])
-
-            print('\nAlchemical protons selected for switch  ', proton_change, '\n')
-            lambda_list_i = pd.read_csv(('lambda_list-' + str(self._pH_list[i]) + '.csv'), index_col=0)
-            lambda_list_j = pd.read_csv(('lambda_list-' + str(self._pH_list[j]) + '.csv'), index_col=0)
-            lambda_iex = lambda_list_i.iloc[:, -1]
-            lambda_jex = lambda_list_j.iloc[:, -1]
-            lambda_iex = pd.DataFrame(lambda_iex)
-            lambda_jex = pd.DataFrame(lambda_jex)
-            name_i = str(lambda_iex.columns.tolist()[0])
-            name_j = str(lambda_jex.columns.tolist()[0])
-            new_name_i = str(lambda_list_i.shape[1])
-            new_name_j = str(lambda_list_j.shape[1])
-            liex = lambda_iex.rename(columns={name_i: new_name_i})
-            ljex = lambda_jex.rename(columns={name_j: new_name_j})
-            pH_system_temp = copy.deepcopy(self._pH_system)
-            print('lambdas of replica i ', liex)
-            print('lambdas of replica j ', ljex)
-            pH_system_temp_i, pH_system_temp_j = create_cpH_exchange_system(self._pH_system, i, j, liex, lambda_list_i, ljex, lambda_list_j, new_name_i, new_name_j, proton_change)
-            manage_waters(pH_system_temp)
-            integrator_i = LangevinIntegrator(temperature, friction, dt)
-            integrator_i.setConstraintTolerance(constraintTolerance)
-            simulation_i = Simulation(topology, pH_system_temp_i, integrator_i, platform, platformProperties)
-            simulation_i.loadState(str(output_name) + '-' + str(self._pH_list[i]) + '-state.xml')
-            simulation_i.minimizeEnergy(maxIterations=1000)
-            integrator_j = LangevinIntegrator(temperature, friction, dt)
-            integrator_j.setConstraintTolerance(constraintTolerance)
-            simulation_j = Simulation(topology, pH_system_temp_j, integrator_j, platform, platformProperties)
-            simulation_j.loadState(str(output_name) + '-' + str(self._pH_list[j]) + '-state.xml')
-            simulation_j.minimizeEnergy(maxIterations=1000)
-            state_ji_lambda = simulation_j.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
-            state_ij_lambda = simulation_i.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
-            energy_ji_lambda = state_ji_lambda.getKineticEnergy()._value + state_ji_lambda.getPotentialEnergy()._value
-            energy_ij_lambda = state_ij_lambda.getKineticEnergy()._value + state_ij_lambda.getPotentialEnergy()._value
-            energy_ii_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[i]) + '-energy.csv')
-            energy_ii_lambda = float(energy_ii_lambda_file.iloc[:, -1])
-            energy_jj_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy.csv')
-            energy_jj_lambda = float(energy_jj_lambda_file.iloc[:, -1])
-
-            print('\nTotal minimize energy of replica ', i, ' : ',  energy_ii_lambda, '\nTotal minimized energy of replica ', j, ' : ', energy_jj_lambda, '\nTotal minimized energy of replica ', i, ' after lambda exchange: ', energy_ij_lambda, '\nTotal minimized energy of replica', j, ' after lambda exchnage ', energy_ji_lambda, '\n')
-
-            log_p_accept_lambda = -(energy_ij_lambda + energy_ji_lambda) + energy_ii_lambda + energy_jj_lambda
-            if log_p_accept_lambda >= 0.0 or random.random() < math.exp(log_p_accept_lambda/(temperature._value*1.38*10**(-20))):
-#            if log_p_accept_lambda >= 0.0 or random.random() < math.exp(log_p_accept_lambda):
-                print('\nLambda exchange accepted\n')
-                for residue in proton_change:
-                    lambda_i = liex.at[(residue, str(lambda_list_i.shape[1]))]
-                    lambda_j = ljex.at[(residue, str(lambda_list_j.shape[1]))]
-                    liex.at[(residue, str(lambda_list_i.shape[1]))] = lambda_j
-                    ljex.at[(residue, str(lambda_list_j.shape[1]))] = lambda_i
-            else:
-                print('\nLambda exchange_rejected\n')
-
-            df_output = pd.concat([lambda_list_i, liex], axis=1, sort=False)
-            df_output.to_csv('lambda_list-' + str(self._pH_list[i]) + '.csv')
-            df_output = pd.concat([lambda_list_j, ljex], axis=1, sort=False)
-            df_output.to_csv('lambda_list-' + str(self._pH_list[j]) + '.csv')
-
-
-    def _mix_replicas(self, n_attempts = n_attempts_replicas):
+#    def _mix_lambdas(self, n_attempts = n_attempts_lambdas):
+#        for attempt in range(n_attempts):
+#            i = randint(0, self._pH_list.size - 1)
+#
+#            if i == 0:
+#                j = i + 1
+#            else:
+#                j = i - 1
+#
+#            print('\nSelected replicas for lambda exchange: ', i, ' ', j, '\n')
+#            try:
+#                if n_residues_per_switch > 1 or n_residues_per_switch < 0:
+#                    print('\nImproper value for number of residues for lambda-exchange switch attempt!\n')
+#                else:
+##                    number_atoms_change = round(len(list_alchem_residues) * n_residues_per_switch)
+ #                   number_atoms_change = round(len(list_exchange_residues) * n_residues_per_switch)
+ #           except NameError:
+##                number_atoms_change = round(len(list_alchem_residues) * 0.1)
+ #               number_atoms_change = round(len(list_exchange_residues) * 0.1)
+ #         
+##            residues_change = random.sample(range(0, len(list_alchem_residues) - 1), number_atoms_change)
+ #           residues_change = random.sample(range(0, len(list_exchange_residues)), number_atoms_change)
+ #           proton_change = [None] * number_atoms_change
+##            hist_state_exchange = list_hist
+ #
+ #           for residue in range(len(residues_change)):
+##                proton_change[residue] = list_alchem_residues[residues_change[residue]]
+ #               proton_change[residue] = list_exchange_residues[residues_change[residue]]
+##                if 'HSP' in proton_change[residue]:
+##                    hist_state_exchange.remove(proton_change[residue])
+#
+#            print('\nAlchemical protons selected for switch  ', proton_change, '\n')
+#            lambda_list_i = pd.read_csv(('lambda_list-' + str(self._pH_list[i]) + '.csv'), index_col=0)
+#            lambda_list_j = pd.read_csv(('lambda_list-' + str(self._pH_list[j]) + '.csv'), index_col=0)
+#            lambda_iex = lambda_list_i.iloc[:, -1]
+#            lambda_jex = lambda_list_j.iloc[:, -1]
+#            lambda_iex = pd.DataFrame(lambda_iex)
+#            lambda_jex = pd.DataFrame(lambda_jex)
+#            name_i = str(lambda_iex.columns.tolist()[0])
+#            name_j = str(lambda_jex.columns.tolist()[0])
+#            new_name_i = str(lambda_list_i.shape[1])
+#            new_name_j = str(lambda_list_j.shape[1])
+#            liex = lambda_iex.rename(columns={name_i: new_name_i})
+#            ljex = lambda_jex.rename(columns={name_j: new_name_j})
+#            pH_system_temp = copy.deepcopy(self._pH_system)
+ #           print('lambdas of replica i ', liex)
+ #           print('lambdas of replica j ', ljex)
+ #           pH_system_temp_i, pH_system_temp_j = create_cpH_exchange_system(self._pH_system, i, j, liex, lambda_list_i, ljex, lambda_list_j, new_name_i, new_name_j, proton_change)
+ #           manage_waters(pH_system_temp)
+ #           integrator_i = LangevinIntegrator(temperature, friction, dt)
+ #           integrator_i.setConstraintTolerance(constraintTolerance)
+ #           simulation_i = Simulation(topology, pH_system_temp_i, integrator_i, platform, platformProperties)
+ #           simulation_i.loadState(str(output_name) + '-' + str(self._pH_list[i]) + '-state.xml')
+ #           simulation_i.minimizeEnergy(maxIterations=1000)
+ #           integrator_j = LangevinIntegrator(temperature, friction, dt)
+ #           integrator_j.setConstraintTolerance(constraintTolerance)
+ #           simulation_j = Simulation(topology, pH_system_temp_j, integrator_j, platform, platformProperties)
+ #           simulation_j.loadState(str(output_name) + '-' + str(self._pH_list[j]) + '-state.xml')
+ #           simulation_j.minimizeEnergy(maxIterations=1000)
+ #           state_ji_lambda = simulation_j.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
+ #           state_ij_lambda = simulation_i.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
+ #           energy_ji_lambda = state_ji_lambda.getKineticEnergy()._value + state_ji_lambda.getPotentialEnergy()._value
+ #           energy_ij_lambda = state_ij_lambda.getKineticEnergy()._value + state_ij_lambda.getPotentialEnergy()._value
+ #           energy_ii_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[i]) + '-energy.csv')
+ #           energy_ii_lambda = float(energy_ii_lambda_file.iloc[:, -1])
+ #           energy_jj_lambda_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy.csv')
+ #           energy_jj_lambda = float(energy_jj_lambda_file.iloc[:, -1])
+ #
+ #           print('\nTotal minimize energy of replica ', i, ' : ',  energy_ii_lambda, '\nTotal minimized energy of replica ', j, ' : ', energy_jj_lambda, '\nTotal minimized energy of replica ', i, ' after lambda exchange: ', energy_ij_lambda, '\nTotal minimized energy of replica', j, ' after lambda exchnage ', energy_ji_lambda, '\n')
+ #
+ #           log_p_accept_lambda = -(energy_ij_lambda + energy_ji_lambda) + energy_ii_lambda + energy_jj_lambda
+ #           if log_p_accept_lambda >= 0.0 or random.random() < math.exp(log_p_accept_lambda/(temperature._value*1.38*10**(-20))):
+##            if log_p_accept_lambda >= 0.0 or random.random() < math.exp(log_p_accept_lambda):
+ #               print('\nLambda exchange accepted\n')
+ #               for residue in proton_change:
+ #                   lambda_i = liex.at[(residue, str(lambda_list_i.shape[1]))]
+ #                   lambda_j = ljex.at[(residue, str(lambda_list_j.shape[1]))]
+ #                   liex.at[(residue, str(lambda_list_i.shape[1]))] = lambda_j
+ #                   ljex.at[(residue, str(lambda_list_j.shape[1]))] = lambda_i
+ #           else:
+ #               print('\nLambda exchange_rejected\n')
+ #
+ #           df_output = pd.concat([lambda_list_i, liex], axis=1, sort=False)
+ #           df_output.to_csv('lambda_list-' + str(self._pH_list[i]) + '.csv')
+ #           df_output = pd.concat([lambda_list_j, ljex], axis=1, sort=False)
+ #           df_output.to_csv('lambda_list-' + str(self._pH_list[j]) + '.csv')
+ #
+ #
+    def _mix_replicas(self):
+        
         #print("\nin mix_replicas")
-        for attempt in range(n_attempts):
+        for attempt in range(1):
             i = randint(0, self._pH_list.size - 1)
             j = i
             while j == i:

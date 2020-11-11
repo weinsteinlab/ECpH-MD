@@ -6,8 +6,8 @@ from definitions import *
 
 
 pH = sys.argv[1]
-iteration = int(sys.argv[2])
-nsteps = int(sys.argv[3])
+#nsteps = int(sys.argv[2])
+#cycle = int(sys.argv[3])
 
 pH_system_temp = copy.deepcopy(pH_system)
 lambda_list = pd.read_csv(('lambda_list-' + str(pH) + '.csv'), index_col=0)
@@ -50,27 +50,27 @@ except NameError:
     positions = pdb.positions
 
 
-if restart == 'OFF' and iteration == 0:
-    print('Iteration ', iteration, 'pH ', pH)
-    dcdReporter = DCDReporter(str(output_name) + '-pH' + str(pH) + '-' + str(iteration) + '.dcd', dcdout_freq)
-    dataReporter = StateDataReporter((str(output_name) + '-' + str(pH) + '.log'), 1000, totalSteps=nsteps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
+if restart == 'OFF':
+    print('pH ', pH)
     simulation.context.setPositions(positions)
     simulation.context.setVelocitiesToTemperature(temperature)
     simulation.currentStep = 0
-    print('Minimizing...')
-    simulation.minimizeEnergy(maxIterations=n_min_steps)
-    simulation.reporters.append(dcdReporter)
-    simulation.reporters.append(dataReporter)
-    print('Simulating...')
-    simulation.step(nsteps)
-    print('Simulation completed\nSaving current state...')
-    simulation.saveState(str(output_name) + '-' + str(pH) + '-state.xml')
-    state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True,
-      getParameters=False,
-      getParameterDerivatives=False)
-    energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
-    energy = pd.DataFrame(np.array([energy]))
-    energy.to_csv(str(output_name) + '-' + str(pH) + '-energy.csv')
+    if minimize == True:
+        print('Minimizing...')
+        simulation.minimizeEnergy(maxIterations=n_min_steps)
+    for cycle in range(ncycles):
+        print('Simulating...')
+        dcdReporter = DCDReporter(str(output_name) + '-pH' + str(pH) + '-' + str(cycle) + '.dcd', dcdout_freq)
+        simulation.reporters.append(dcdReporter)
+        dataReporter = StateDataReporter((str(output_name) + '-' + str(pH) + '-' + str(cycle) + '.log'), 1000, totalSteps=nsteps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
+        simulation.reporters.append(dataReporter)
+        simulation.step(nsteps)
+        print('Simulation completed\nSaving current state...')
+        simulation.saveState(str(output_name) + '-pH' + str(pH) + '-' + str(cycle) + '-state.xml')
+        state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True, getParameters=False, getParameterDerivatives=False)
+        energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
+        energy = pd.DataFrame(np.array([energy]))
+        energy.to_csv(str(output_name) + '-' + str(pH) + '-energy.csv')
 #    simulation.minimizeEnergy(maxIterations=1000)
 #    state_min = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True,
 #      getParameters=False,
@@ -80,32 +80,28 @@ if restart == 'OFF' and iteration == 0:
 #    energy_min.to_csv(str(output_name) + '-' + str(pH) + '-energy-min.csv')
     print('FINISH')
 else:
-    print('Iteration ', iteration, ' pH ', pH)
-    simulation.loadState(str(output_name) + '-' + str(pH) + '-state.xml')
+    print('Restarting from cycle  ', last_cycle, ' pH ', pH)
+    simulation.loadState(str(output_name) + '-pH' + str(pH) + '-' + str(last_cycle) + '-state.xml')
     positions = simulation.context.getState(getPositions=True).getPositions()
     system_temp = simulation.context.getSystem()
-    dcdReporter = DCDReporter((str(output_name) + '-pH' + str(pH) + '-6-' + str(iteration) + '.dcd'), dcdout_freq)
-#    dcdReporter = DCDReporter((str(output_name) + '-' + str(pH) + '.dcd'), dcdout_freq, append=True)
-
-#    dcdReporter = DCDReporter((str(output_name) + '-' + str(pH) + '-' + str(iteration) + '.dcd'), dcdout_freq)
-    dataReporter = StateDataReporter((str(output_name) + '-' + str(pH) + '.log'), 1000, totalSteps=nsteps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
-    simulation.reporters.append(dcdReporter)
-    simulation.reporters.append(dataReporter)
-    print('Simulating...')
-    simulation.step(nsteps)
-    print('Simulation completed\nSaving current state...')
-    simulation.saveState(str(output_name) + '-' + str(pH) + '-state.xml')
-    state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True,
-      getParameters=False,
-      getParameterDerivatives=False)
-    energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
-    energy_input = pd.read_csv((str(output_name) + '-' + str(pH) + '-energy.csv'), index_col=0)
-    energy_last = pd.DataFrame(np.array([energy]))
-    name_i = str(energy_last.columns.tolist()[0])
-    name_j = str(energy_input.shape[1])
-    energy_current = energy_last.rename(columns={name_i: name_j})
-    output = pd.concat([energy_input, energy_current], axis=1, sort=False)
-    output.to_csv(str(output_name) + '-' + str(pH) + '-energy.csv')
+    for cycle in range(last_cycle+1, ncycles):
+        print('Simulating...')
+        dcdReporter = DCDReporter((str(output_name) + '-pH' + str(pH) + '-' + str(cycle) + '.dcd'), dcdout_freq)
+        simulation.reporters.append(dcdReporter)
+        dataReporter = StateDataReporter((str(output_name) + '-' + str(pH) + '-' + str(cycle) + '.log'), 1000, totalSteps=nsteps, step=True, time=True, speed=True, progress=True, elapsedTime=True, remainingTime=True, potentialEnergy=True, kineticEnergy=True, totalEnergy=True, temperature=True, volume=True, density=True, separator=',')
+        simulation.reporters.append(dataReporter)
+        simulation.step(nsteps)
+        print('Simulation completed\nSaving current state...')
+        simulation.saveState(str(output_name) + '-' + str(pH) + '-' + str(cycle) + '-state.xml')
+        state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True, getParameters=False, getParameterDerivatives=False)
+        energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
+        energy_input = pd.read_csv((str(output_name) + '-' + str(pH) + '-energy.csv'), index_col=0)
+        energy_last = pd.DataFrame(np.array([energy]))
+        name_i = str(energy_last.columns.tolist()[0])
+        name_j = str(energy_input.shape[1])
+        energy_current = energy_last.rename(columns={name_i: name_j})
+        output = pd.concat([energy_input, energy_current], axis=1, sort=False)
+        output.to_csv(str(output_name) + '-' + str(pH) + '-energy.csv')
 #    simulation.minimizeEnergy(maxIterations=1000)
 #    state_min = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True,
 #      getParameters=False,

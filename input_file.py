@@ -1,7 +1,7 @@
 from imports import *
 # Input structure and coordinates #
-psf_file = './inputFiles/BB-pH6-wb-i.psf'
-pdb_file = './inputFiles/BB-pH6-wb-i.pdb'
+psf_file = './inputFiles/sars-wt-term-i.psf'
+pdb_file = './inputFiles/sars-wt-term-i.pdb'
 
 # Load pH-states geometries #
 
@@ -15,10 +15,10 @@ pdb_state_files = ['./inputFiles/BB-pH6-wb-i.pdb']*11 +['./inputFiles/BB-pH6-8-w
                                                                                                
                                                                                                
 # !!! Occurance of disulphide bonds #
-disu = [66, 106, 119, 160]                       	# PDB residue numbers
+disu = [840, 851]                       	# PDB residue numbers
 
 # Output name #
-output_name = 'bb-cph'
+output_name = 'sars-cph'
 dcdout_freq = 5000                               	# Number of steps between writing a dcd file
 
 # Force field parameters #
@@ -62,9 +62,9 @@ pressure = 1.01325*bar
 #zmode = ZFree 						# ZFree / ZFixed / ConstantVolume
 
 # Periodic cell size (nm) #
-x_PBC_vector_length = 7.47
-y_PBC_vector_length = 7.87
-z_PBC_vector_length = 7.39
+x_PBC_vector_length = 8.26
+y_PBC_vector_length = 8.31
+z_PBC_vector_length = 8.31
 
 # Soft-core potential parameters for alchemical forces #
 switch_width = 1 * unit.angstroms
@@ -78,41 +78,46 @@ softcore_e = 1
 softcore_f = 1
 
 # pH range #
-pH_low = 9
-pH_high = 12
+pH_low = 5
+pH_high = 8
 pH_step = 1
 
 # Special pKa values #
-special_pKa_names = ['GLU89']
-special_pKa_values = [7.3] 				# the same order and size as the names in special_pKa_names
+special_pKa_names = []
+special_pKa_values = [] 				# the same order and size as the names in special_pKa_names
 
 # Restart option #
-restart = 'ON' 					# ON/OFF
+restart = 'OFF' 					# ON/OFF
+#last_cycle = 20
+
 
 # cpH setup #
+minimize = True
 n_min_steps = 1000
-n_residues_per_switch = 0.4 				# Persentage of residues for which lambda exchange attempt will be attempted from 0 to 1 (default 0.1)
-n_iter = 1000000 						# Number of iterations of MD - lambda-exchange - MD - replica-exchnage cycle
+#n_residues_per_switch = 0.4 	
+ncycles = 100						# Number of MD cycles for writing dcd/restart files
+nsteps = 10000
 
+HREMD = False						# Steps within 1 MD cycle
+n_iter = 1000						# Number of iterations of MD - replica-exchnage cycle
+n_attempts_replicas = 1
 # Lambda exchnage parameters
-MD_nsteps_lambdas = 50 				# Number of MD steps before lambda-exchamge attempt
-n_attempts_lambdas = 1 					# Number of attempts for lambda-exchange
+#MD_nsteps_lambdas = 50 				# Number of MD steps before lambda-exchamge attempt
+#n_attempts_lambdas = 1 					# Number of attempts for lambda-exchange
 
 # Relica exchnage parameters
-MD_nsteps_replicas = 50 				# Number of MD steps before replica-exchnage attempt
-n_attempts_replicas = 1 				# Number of attempts for replica-exchange
+#MD_nsteps_replicas = 50 				# Number of MD steps before replica-exchnage attempt
+#n_attempts_replicas = 1 				# Number of attempts for replica-exchange
 
 # Preparatory runs #
 
 # Prep replica-exchange
-prep_replicas = False 					# True/False - run MD-REX cycle before the main cpH REX/lambda-EX cycle
-n_iter_replicas = 1					# Number of iterations of the preliminary MD-REX cycle
-MD_nsteps_replicas_prep = 60000000 			# Number of MD steps for preliminary MD-REX cycle
+#prep_replicas = False 					# True/False - run MD-REX cycle before the main cpH REX/lambda-EX cycle
+#n_iter_replicas = 1					# Number of iterations of the preliminary MD-REX cycle
+#MD_nsteps_replicas_prep = 60000000 			# Number of MD steps for preliminary MD-REX cycle
 
 # Prep lambda-exchange
-prep_lambdas = False 					# True/Flase - run MD-lambda-EX cycle before the main cpH REX/lambda-EX cycle
-n_iter_lambdas = 1000 					# Number of iterations of the preliminary MD-lambda-EX cycle
-MD_nsteps_lambdas_prep = 5000 				# Number of MD steps for preliminary MD-l-EX cycle
-# ECpH run
+#prep_lambdas = False 					# True/Flase - run MD-lambda-EX cycle before the main cpH REX/lambda-EX cycle
+#n_iter_lambdas = 1000 					# Number of iterations of the preliminary MD-lambda-EX cycle
+#MD_nsteps_lambdas_prep = 5000 				# Number of MD steps for preliminary MD-l-EX cycle
 
-MD_steps_cpH = 90000000

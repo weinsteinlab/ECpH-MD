@@ -13,9 +13,12 @@ if restart != "ON":
 
 parallel_tempering = pHrex(pH_system=pH_system, pH_list=pH_list)
 
-if prep_replicas:
-    parallel_tempering.run_prep_replicas(MD_nsteps_replicas_prep, n_iter_replicas = 1000)
-if prep_lambdas:
-    parallel_tempering.run_prep_lambdas(MD_nsteps_lambdas_prep, n_iter_lambdas)
+#if prep_replicas:
+#    parallel_tempering.run_prep_replicas(MD_nsteps_replicas_prep, n_iter_replicas = 1000)
+#if prep_lambdas:
+#    parallel_tempering.run_prep_lambdas(MD_nsteps_lambdas_prep, n_iter_lambdas)
 
-parallel_tempering.run_cpH(MD_steps_cpH)
+if HREMD == True:
+    parallel.tempering.run_REX_EcpH(n_iter)
+else:
+    parallel_tempering.run()

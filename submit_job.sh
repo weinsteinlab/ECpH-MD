@@ -1,18 +1,33 @@
 #!/bin/sh
-#SBATCH --job-name=bb6
-#SBATCH -p dcs
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --gres=gpu:1
-#SBATCH --mem=40G
-##SBATCH --mail-user=kots.katya@gmail.com
-##SBATCH --mail-type=END
 
-source ~/.bashrc
+number_of_replicas=12
+subjobs_per_iteration=1
+iterations_per_subjob=2
+number_of_subjobs=1 
+jobName="dat" # no spaces
 
-module load gcc/8.1.0/1
-module load cuda/10.1
+# do not edit below this line
 
-conda activate openmm_7.4.0 
 
-python -u Exchange-min-replica.py
+# make sure each iteration is able to completely finish
+if [ $((number_of_subjobs % subjobs_per_iteration)) != 0 ]; then exit 1; fi
+
+first_subjob=0
+numberOfNodes=`expr $number_of_replicas / 6`
+swarmNumber_padded=`printf %04d $swarmNumber`
+
+mkdir -p erf_files energies progress propagate_runs simulations submission_logs lambdas 
+
+for (( subjob=1; subjob<=$number_of_subjobs; subjob++ ))
+do
+  if [ $first_subjob -eq 0 ]; then
+    jobSchedulerOutput="$(bsub -P BIP109 -W 2:00 -nnodes $numberOfNodes -J ./submission_logs/${jobName} -alloc_flags 'gpumps smt4' ./submit_Exchange-min-replica.sh ${number_of_replicas} ${subjobs_per_iteration} ${iterations_per_subjob})"
+  else
+    jobSchedulerOutput="$(bsub -P BIP109 -W 2:00 -nnodes $numberOfNodes -J ./submission_logs/${jobName} -alloc_flags 'gpumps smt4' -w $job_scheduler_number ./submit_Exchange-min-replica.sh ${number_of_replicas} ${subjobs_per_iteration} ${iterations_per_subjob})"
+  fi
+
+  job_scheduler_number=$(echo $jobSchedulerOutput | awk '{print $2}' | sed -e 's/<//' | sed -e 's/>//')
+  let first_subjob=1
+done
+
+exit

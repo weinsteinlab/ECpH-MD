@@ -19,6 +19,6 @@ parallel_tempering = pHrex(pH_system=pH_system, pH_list=pH_list)
 #    parallel_tempering.run_prep_lambdas(MD_nsteps_lambdas_prep, n_iter_lambdas)
 
 if HREMD == True:
-    parallel.tempering.run_REX_EcpH(n_iter)
+    parallel_tempering.run_REX_EcpH(n_iter)
 else:
     parallel_tempering.run()

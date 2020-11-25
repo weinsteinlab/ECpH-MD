@@ -1,21 +1,18 @@
 #!/bin/sh
 #SBATCH --job-name=bb6
-#SBATCH -p edison
+#SBATCH -p dcs
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:1
 #SBATCH --mem=40G
-##SBATCH --ntasks-per-node=16
-##SBATCH --dependency=afterany:1142811
-#SBATCH --mail-user=kots.katya@gmail.com
-#SBATCH --mail-type=END
+##SBATCH --mail-user=kots.katya@gmail.com
+##SBATCH --mail-type=END
 
-source /home/des2037/.bashrc
+source ~/.bashrc
 
-spack load -r cuda@9.2.88
-spack load -r /omvpd5u # fftw@3.3.8
+module load gcc/8.1.0/1
+module load cuda/10.1
 
-conda activate pHreplicaExchange 
+conda activate openmm_7.4.0 
 
-#python -u exchange_min_replica.py
 python -u Exchange-min-replica.py

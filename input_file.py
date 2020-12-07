@@ -81,7 +81,7 @@ softcore_f = 1
 pH_low = 5
 pH_high = 8
 pH_step = 1
-replicas_per_pH = 6
+replicas_per_pH = 6 # must be a multiple of 6
 
 # Special pKa values #
 special_pKa_names = []
@@ -99,7 +99,7 @@ n_min_steps = 1000
 ncycles = 100						# Number of MD cycles for writing dcd/restart files
 nsteps = 10000
 
-md_steps = 100000
+md_steps = 40000
 
 HREMD = False						# Steps within 1 MD cycle
 n_iter = 1000						# Number of iterations of MD - replica-exchnage cycle

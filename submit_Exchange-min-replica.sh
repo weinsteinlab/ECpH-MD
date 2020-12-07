@@ -44,8 +44,8 @@ fi
 replica_counter=0
 subjob_number_padded=`printf %04d $subjob_number`
 
-for ((replica=0; j < $number_of_replicas; j++)); do
-    if [ $(($replica % $replicas_per_pH)) == 0 ]; then ((replica_counter++)); fi     
+for ((replica=0; replica < $number_of_replicas; replica++)); do
+    if [ $replica != 0 ] && [ $(($replica % $replicas_per_pH)) == 0 ]; then ((replica_counter++)); fi     
 
     replica_number_padded=`printf %04d $replica_number`
     mkdir -p ./simulations/pH_${pH_seq[replica_counter]}_replica_number_${replica_number_padded}

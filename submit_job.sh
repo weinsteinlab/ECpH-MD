@@ -31,7 +31,7 @@ for (( subjob=0; subjob<$number_of_subjobs; subjob++ )); do
     fi
 
     echo $jobSchedulerOutput
-    job_scheduler_number=$(echo $jobSchedulerOutput | awk '{print $2}' | sed -e 's/<//' | sed -e 's/>//')
+    job_scheduler_number=${jobSchedulerOutput//[!0-9]}
     echo $job_scheduler_number
     echo
     let first_subjob=1

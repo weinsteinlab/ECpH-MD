@@ -4,6 +4,7 @@ source ~/.bashrc
 
 module load gcc/8.1.0/1
 module load cuda/10.1
+conda activate openmm_7.4.0
 
 number_of_replicas=$1
 subjobs_per_iteration=$2
@@ -11,32 +12,74 @@ iterations_per_subjob=$3
 
 iteration_number=0
 subjob_number=0
+node_number=1
 
-rm -rf ./progress/* num_finished_jobs.txt
-unformatted_output_name=$(grep 'output_name' input_file.py)
-eval "${unformatted_output_name// /}" # sets the variable output_name in this scope
+CWD=`pwd`
 
-echo $number_of_replicas
-number_of_log_files=$(ls -1 ./simulations/${output_name}*.log 2>/dev/null | wc -l)
+pH_low=$(grep 'pH_low' input_file.py); eval "${pH_low// /}"
+pH_step=$(grep 'pH_step' input_file.py); eval "${pH_step// /}"
+pH_high=$(grep 'pH_high' input_file.py); eval "${pH_high// /}"; pH_high=$(echo $pH_high - $pH_step | bc)
+pH_seq=($(seq $pH_low $pH_step $pH_high))
+pH_low=$(grep 'replicas_per_pH' input_file.py); eval "${replicas_per_pH// /}"
 
+MD_nsteps_lambdas=$(grep 'MD_nsteps_lambdas' input_file.py); eval "${MD_nsteps_lambdas// /}"
+MD_nsteps_replicas=$(grep 'MD_nsteps_replicas' input_file.py); eval "${MD_nsteps_replicas// /}"
 
-# set subjob_number and iteration_number if previous runs exist
-if [ $number_of_log_files != 0 ]; then
-    # check that each replica's prior job ran
-    if [ $(($number_of_log_files % $number_of_replicas)) != 0 ]; then exit 1; fi
-    
-    number_of_FINISH=$(grep "FINISH" ./propagate_runs/propagate_runs*.log | wc -l)
+MD_nsteps_lambdas=$(grep 'MD_nsteps_lambdas' input_file.py); eval "${MD_nsteps_lambdas// /}"
+MD_nsteps_replicas=$(grep 'MD_nsteps_replicas' input_file.py); eval "${MD_nsteps_replicas// /}"
 
-    # make sure each job completed correctly
-    if [ $number_of_FINISH != $number_of_log_files ]; then exit 1 ; fi
+for ((i=0; i < $iterations_per_subjob; i++)); do
+    rm -rf ./progress/* num_finished_jobs.txt
+    unformatted_output_name=$(grep 'output_name' input_file.py)
+    eval "${unformatted_output_name// /}" # sets the variable output_name in this scope
 
-    individual_log_file=$(ls -1 ./propagate_runs/propagate_runs_pH_*.log | head -n1)
-    finish_in_individual_log=$(grep "FINISH" $individual_log_file | wc -l) 
+    number_of_log_files=$(ls -1 ./simulations/${output_name}*.log 2>/dev/null | wc -l)
 
-    subjob_number=$(($finish_in_individual_log % subjobs_per_iteration))
-    iteration_number=$((number_of_log_files/(subjobs_per_iteration * number_of_replicas)))
-fi
-    
-conda activate openmm_7.4.0
+    # set subjob_number and iteration_number if previous runs exist
+    if [ $number_of_log_files != 0 ]; then
+        # check that each previous replica job ran
+        if [ $(($number_of_log_files % $number_of_replicas)) != 0 ]; then exit 1; fi
 
-python3 -u Exchange-min-replica.py $iteration_number $subjob_number $subjobs_per_iteration $iterations_per_subjob >> overall_job.log
+        number_of_FINISH=$(grep "FINISH" ./propagate_runs/propagate_runs*.log | wc -l)
+
+        # make sure each job completed correctly
+        if [ $number_of_FINISH != $number_of_log_files ]; then exit 1; fi
+
+        individual_log_file=$(ls -1 ./propagate_runs/propagate_runs_pH_*.log | head -n1)
+        finish_in_individual_log=$(grep "FINISH" $individual_log_file | wc -l)
+
+        subjob_number=$(($finish_in_individual_log % subjobs_per_iteration))
+        iteration_number=$((number_of_log_files/(subjobs_per_iteration * number_of_replicas)))
+    fi
+
+    if [ $iteration_number -eq 0 ] && [ $subjob_number -eq 0 ]; then
+        echo "generating lambda list"
+        python3 -u Exchange-min-replica.py
+    fi
+
+    # propagate_replicas 
+    for ((j=0; j < $number_of_replicas; j++)); do
+        echo "pH:${pH_seq[j]} erf_input:${erf_files[j]} iteration_number:${iteration_number} subjobs_per_iteration:${subjobs_per_iteration} MD_nsteps_replica:${MD_nsteps_replicas} MD part 1" 
+        jsrun --progress ./progress/pH${pH_seq[j]}.txt --smpiargs=none --erf_input ${erf_files[j]} python3 -u run_replica.py ${pH_seq[j]} ${iteration_number} ${subjob_number} $subjobs_per_iteration $MD_nsteps_replicas 1 >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[j]}.log &
+    done
+
+    while true; do
+        echo "propagate_replicas() subjobs still running..."
+
+        isFinished=0
+        finished_jobs=`grep -sR 'finished' ./progress/* | wc -l`
+
+        if [ "${#pH_seq[@]}" -eq $finished_jobs ]; then
+            echo "all propagate_replica jobs done!"
+            break
+        fi
+
+        sleep 15
+    done
+
+    #mix_lambdas
+    #jsrun --smpiargs=none --erf_input ${erf_files[1]} python3 -u mix_lambdas.py ${iteration_number} ${subjob_number} 1
+    rm -rf ${CWD}/progress/*
+    sleep 5
+
+done

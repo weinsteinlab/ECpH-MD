@@ -1,4 +1,5 @@
 from imports import *
+from input_file import *
 from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, calc_system_charge, create_force_particle, create_force_bond)
 from definitions import *
 from setup_pH_system import *
@@ -33,4 +34,4 @@ for pH in pH_list:
             elif 'CYS' in residue:
                 lambda_list[residue] = lcys
     df = pd.DataFrame.from_dict(lambda_list, orient='index')
-    df.to_csv('lambda_list-'+str(pH)+'.csv')
+    df.to_csv('./lambdas/lambda_list-'+str(pH)+'.csv')

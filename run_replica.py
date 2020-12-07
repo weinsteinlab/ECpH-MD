@@ -9,7 +9,7 @@ subjob_number = int(sys.argv[2])
 replica_number = int(sys.argv[3])
 
 print("============================================================================================================")
-print('======pH:' + str(pH) + ' subjob_number:' + str(subjob_number) + ' replica_number:' + str(replica_number) 
+print('======pH:' + str(pH) + ' subjob_number:' + str(subjob_number) + ' replica_number:' + str(replica_number)) 
 print("============================================================================================================")
 print()
 

@@ -12,7 +12,7 @@ first_subjob=0
 numberOfNodes=`expr $number_of_replicas / 6`
 swarmNumber_padded=`printf %04d $swarmNumber`
 
-mkdir -p energies progress propagate_runs simulations submission_logs lambdas 
+mkdir -p energies propagate_runs simulations submission_logs lambdas 
 
 for (( subjob=1; subjob<=$number_of_subjobs; subjob++ ))
 do

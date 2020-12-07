@@ -13,7 +13,7 @@ numberOfNodes=`expr $number_of_replicas / 6`
 swarmNumber_padded=`printf %04d $swarmNumber`
 
 # make sure number_of_replicas is a multiple of 6
-if [ $(($number_of_replias % 6)) != 0 ]; then exit 1; fi
+if [ $(($number_of_replicas % 6)) != 0 ]; then exit 1; fi
 
 mkdir -p energies propagate_runs simulations submission_logs lambdas 
 

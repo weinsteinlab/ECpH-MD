@@ -81,6 +81,7 @@ softcore_f = 1
 pH_low = 5
 pH_high = 8
 pH_step = 1
+replicas_per_pH = 6
 
 # Special pKa values #
 special_pKa_names = []

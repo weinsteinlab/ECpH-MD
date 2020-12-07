@@ -20,7 +20,7 @@ pH_low=$(grep 'pH_low' input_file.py); eval "${pH_low// /}"
 pH_step=$(grep 'pH_step' input_file.py); eval "${pH_step// /}"
 pH_high=$(grep 'pH_high' input_file.py); eval "${pH_high// /}"; pH_high=$(echo $pH_high - $pH_step | bc)
 pH_seq=($(seq $pH_low $pH_step $pH_high))
-pH_low=$(grep 'replicas_per_pH' input_file.py); eval "${replicas_per_pH// /}"
+replicas_per_pH=$(grep 'replicas_per_pH' input_file.py); eval "${replicas_per_pH// /}"
 
 MD_nsteps_lambdas=$(grep 'MD_nsteps_lambdas' input_file.py); eval "${MD_nsteps_lambdas// /}"
 MD_nsteps_replicas=$(grep 'MD_nsteps_replicas' input_file.py); eval "${MD_nsteps_replicas// /}"
@@ -33,7 +33,7 @@ for ((i=0; i < $iterations_per_subjob; i++)); do
     unformatted_output_name=$(grep 'output_name' input_file.py)
     eval "${unformatted_output_name// /}" # sets the variable output_name in this scope
 
-    number_of_log_files=$(ls -1 ./simulations/${output_name}*.log 2>/dev/null | wc -l)
+    number_of_log_files=$(find . -name "*${output_name}*.log" | wc -l)
 
     # set subjob_number and iteration_number if previous runs exist
     if [ $number_of_log_files != 0 ]; then
@@ -54,32 +54,18 @@ for ((i=0; i < $iterations_per_subjob; i++)); do
 
     if [ $iteration_number -eq 0 ] && [ $subjob_number -eq 0 ]; then
         echo "generating lambda list"
-        python3 -u Exchange-min-replica.py
+        python3 -u createLambdaList.py 
     fi
 
     # propagate_replicas 
     for ((j=0; j < $number_of_replicas; j++)); do
-        echo "pH:${pH_seq[j]} erf_input:${erf_files[j]} iteration_number:${iteration_number} subjobs_per_iteration:${subjobs_per_iteration} MD_nsteps_replica:${MD_nsteps_replicas} MD part 1" 
-        jsrun --progress ./progress/pH${pH_seq[j]}.txt --smpiargs=none --erf_input ${erf_files[j]} python3 -u run_replica.py ${pH_seq[j]} ${iteration_number} ${subjob_number} $subjobs_per_iteration $MD_nsteps_replicas 1 >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[j]}.log &
+        echo "pH:${pH_seq[j]} iteration_number:${iteration_number} subjobs_per_iteration:${subjobs_per_iteration} MD_nsteps_replica:${MD_nsteps_replicas} MD part 1"
+        srun -N1 --gres=gpu:32g:1 --mem=50G python3 -u run_replica.py ${pH_seq[j]} ${iteration_number} ${subjob_number} $subjobs_per_iteration $MD_nsteps_replicas 1 >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[j]}.log & 
+       sleep 5
     done
 
-    while true; do
-        echo "propagate_replicas() subjobs still running..."
-
-        isFinished=0
-        finished_jobs=`grep -sR 'finished' ./progress/* | wc -l`
-
-        if [ "${#pH_seq[@]}" -eq $finished_jobs ]; then
-            echo "all propagate_replica jobs done!"
-            break
-        fi
-
-        sleep 15
-    done
+    wait  
 
     #mix_lambdas
-    #jsrun --smpiargs=none --erf_input ${erf_files[1]} python3 -u mix_lambdas.py ${iteration_number} ${subjob_number} 1
-    rm -rf ${CWD}/progress/*
-    sleep 5
-
+    #jsrun --smpiargs=none  python3 -u mix_lambdas.py ${iteration_number} ${subjob_number} 1
 done

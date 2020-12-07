@@ -9,7 +9,6 @@ partitionName=dcs            #Slurm partition to run job on
 
 # do not edit below this line
 
-
 # make sure each iteration is able to completely finish
 if [ $((number_of_subjobs % subjobs_per_iteration)) != 0 ]; then exit 1; fi
 

@@ -1,8 +1,9 @@
 from imports import *
 from input_file import *
-from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, calc_system_charge, create_force_particle, create_force_bond)
-from definitions import *
+#from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, calc_system_charge, create_force_particle, create_force_bond)
+#from definitions import *
 from setup_pH_system import *
+from pHrex import *
 
 for pH in pH_list:
     lambda_list = {}

@@ -53,7 +53,7 @@ except NameError:
     positions = pdb.positions
 
 
-print(' pH:', pH, ' subjob:', subjob_number, 'replica:' replica_number)
+print(' pH:', pH, ' subjob:', subjob_number, 'replica:', replica_number)
 
 output_directory = './simulations/pH_' + str(pH) + '_replica_number_' + str(replica_number).zfill(4)
 output_name = str(output_name) + '-ph' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) + '-subjob' + str(subjob_number).zfill(4) 

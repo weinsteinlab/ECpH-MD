@@ -17,11 +17,11 @@ pH_seq=($(seq $pH_low $pH_step $pH_high))
 replicas_per_pH=$(grep 'replicas_per_pH' input_file.py); eval "${replicas_per_pH// /}"
 MD_nsteps_replicas=$(grep 'MD_nsteps_replicas' input_file.py); eval "${MD_nsteps_replicas// /}"
 
-rm -rf ./progress/* num_finished_jobs.txt
 unformatted_output_name=$(grep 'output_name' input_file.py)
 eval "${unformatted_output_name// /}" # sets the variable output_name in this scope
 
 number_of_log_files=$(find . -name "*${output_name}*.log" | wc -l)
+subjob_number=0
 
 # set subjob_number and iteration_number if previous runs exist
 if [ $number_of_log_files != 0 ]; then
@@ -33,11 +33,7 @@ if [ $number_of_log_files != 0 ]; then
     # make sure each job completed correctly
     if [ $number_of_FINISH != $number_of_log_files ]; then exit 1; fi
 
-    individual_log_file=$(ls -1 ./propagate_runs/propagate_runs_pH_*.log | head -n1)
-    finish_in_individual_log=$(grep "FINISH" $individual_log_file | wc -l)
-
-    subjob_number=$(($finish_in_individual_log % subjobs_per_iteration))
-     
+    subjob_number=$(($number_of_log_files / $number_of_replicas))
 fi
 
 if [ $iteration_number -eq 0 ] && [ $subjob_number -eq 0 ]; then

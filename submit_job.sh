@@ -1,6 +1,6 @@
 #!/bin/sh
 
-number_of_replicas=12
+number_of_replicas=12 # must be a multiple of 6
 number_of_subjobs=2 
 subjobs_before_exchange=0 # set to 0 if no exchanges desired
 jobName="dat" # no spaces
@@ -11,6 +11,9 @@ partitionName=dcs            #Slurm partition to run job on
 first_subjob=0
 numberOfNodes=`expr $number_of_replicas / 6`
 swarmNumber_padded=`printf %04d $swarmNumber`
+
+# make sure number_of_replicas is a multiple of 6
+if [ $(($number_of_replias % 6)) != 0 ]; then exit 1; fi
 
 mkdir -p energies propagate_runs simulations submission_logs lambdas 
 

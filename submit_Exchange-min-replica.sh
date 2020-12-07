@@ -23,7 +23,7 @@ eval "${unformatted_output_name// /}" # sets the variable output_name in this sc
 number_of_log_files=$(find . -name "*${output_name}*.log" | wc -l)
 subjob_number=0
 
-# set subjob_number and iteration_number if previous runs exist
+# set subjob_number if previous runs exist
 if [ $number_of_log_files != 0 ]; then
     # check that each previous replica job ran
     if [ $(($number_of_log_files % $number_of_replicas)) != 0 ]; then exit 1; fi
@@ -36,15 +36,15 @@ if [ $number_of_log_files != 0 ]; then
     subjob_number=$(($number_of_log_files / $number_of_replicas))
 fi
 
-if [ $iteration_number -eq 0 ] && [ $subjob_number -eq 0 ]; then
+if [ $subjob_number -eq 0 ]; then
     echo "generating lambda list"
     python3 -u createLambdaList.py 
 fi
 
 # propagate_replicas 
 for ((j=0; j < $number_of_replicas; j++)); do
-    echo "pH:${pH_seq[j]} iteration_number:${iteration_number} MD_nsteps_replica:${MD_nsteps_replicas}"
-    srun -N1 --gres=gpu:32g:1 --mem=50G python3 -u run_replica.py ${pH_seq[j]} ${iteration_number} ${subjob_number} $subjobs_per_iteration $MD_nsteps_replicas 1 >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[j]}.log & 
+    echo "pH:${pH_seq[j]} subjob_number:${subjob_number}"
+    srun -N1 --gres=gpu:32g:1 --mem=50G python3 -u run_replica.py ${pH_seq[j]} ${subjob_number} >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[j]}.log & 
    sleep 5
 done
 

@@ -99,6 +99,8 @@ n_min_steps = 1000
 ncycles = 100						# Number of MD cycles for writing dcd/restart files
 nsteps = 10000
 
+md_steps = 100000
+
 HREMD = False						# Steps within 1 MD cycle
 n_iter = 1000						# Number of iterations of MD - replica-exchnage cycle
 n_attempts_replicas = 1

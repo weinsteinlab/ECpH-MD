@@ -1,8 +1,8 @@
 #!/bin/sh
 
 number_of_replicas=12
-number_of_subjobs=1 
-subjobs_before_exchange=0
+number_of_subjobs=2 
+subjobs_before_exchange=0 # set to 0 if no exchanges desired
 jobName="dat" # no spaces
 partitionName=dcs            #Slurm partition to run job on
 
@@ -14,7 +14,7 @@ swarmNumber_padded=`printf %04d $swarmNumber`
 
 mkdir -p energies propagate_runs simulations submission_logs lambdas 
 
-for (( subjob=1; subjob<=$number_of_subjobs; subjob++ )); do
+for (( subjob=0; subjob<$number_of_subjobs; subjob++ )); do
     if [ $first_subjob -eq 0 ]; then
         jobSchedulerOutput="$(sbatch -J ./submission_logs/${jobName} -N ${numberOfNodes} -p $partitionName --gres=gpu:32g:6 -C cuda-mode-exclusive -t 0-02:00:00 ./submit_Exchange-min-replica.sh ${number_of_replicas})"
 

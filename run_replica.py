@@ -89,7 +89,7 @@ if subjob_number == 0:
     print('FINISH')
 
 else:
-    previous_output_name=output_directory + str(output_no_path) + '-ph' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) + '-subjob' + str(subjob_number - 1).zfill(4)
+    previous_output_name=output_directory + str(output_name) + '-ph' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) + '-subjob' + str(subjob_number - 1).zfill(4)
     print("Reading previous state from: " + previous_output_name + "-state.xml")
     simulation.loadState(previous_output_name + '-state.xml')
     positions = simulation.context.getState(getPositions=True).getPositions()

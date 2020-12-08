@@ -57,7 +57,7 @@ print(' pH:', pH, ' subjob:', subjob_number, 'replica:', replica_number)
 
 output_directory = './simulations/pH_' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) + '/'
 output_no_path = str(output_name) + '-ph' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) + '-subjob' + str(subjob_number).zfill(4) 
-full_output_name = output_directory + str(output_no_name)
+full_output_name = output_directory + str(output_no_path)
 
 if subjob_number == 0:
     print("Reading in previous state: FALSE")

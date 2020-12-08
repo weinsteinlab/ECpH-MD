@@ -106,7 +106,9 @@ else:
 
     state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True, getParameters=False, getParameterDerivatives=False)
     energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
-    energy_input = pd.read_csv(('./energies/' + str(output_no_path) + '-energy.csv'), index_col=0)
+    # here, are we supposed to read the previous energy file? 
+    #energy_input = pd.read_csv(('./energies/' + str(output_no_path) + '-energy.csv'), index_col=0)
+    energy_input = pd.read_csv(('./energies/' + str(output_name) + '-ph' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) +     '-subjob' + str(subjob_number - 1).zfill(4) + '-energy.csv'), index_col=0)
     energy_last = pd.DataFrame(np.array([energy]))
     name_i = str(energy_last.columns.tolist()[0])
     name_j = str(energy_input.shape[1])

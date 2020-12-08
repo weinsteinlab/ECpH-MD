@@ -47,7 +47,7 @@ subjob_number_padded=`printf %04d $subjob_number`
 for ((replica=0; replica < $number_of_replicas; replica++)); do
     if [ $replica != 0 ] && [ $(($replica % $replicas_per_pH)) == 0 ]; then ((replica_counter++)); fi     
 
-    replica_number_padded=`printf %04d $replica_number`
+    replica_number_padded=`printf %04d $replica`
     mkdir -p ./simulations/pH_${pH_seq[replica_counter]}_replica_number_${replica_number_padded}
     echo "pH:${pH_seq[replica_counter]} subjob_number:${subjob_number} replica_number:${replica_number_padded}"
     srun -N1 --gres=gpu:32g:1 --mem=50G python3 -u run_replica.py ${pH_seq[replica_counter]} ${subjob_number} ${replica} >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[replica_counter]}_replica_${replica_number_padded}_subjob${subjob_number_padded}.log & 

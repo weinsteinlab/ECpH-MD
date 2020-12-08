@@ -26,7 +26,7 @@ for (( subjob=0; subjob<$number_of_subjobs; subjob++ )); do
             echo "exchange time!" 
             # insert job submission for exchange
         else 
-            jobSchedulerOutput="$(sbatch --depend=afterok:${job_scheduler_number} -J ./submission_logs/${jobName} -N ${numberOfNodes} -p $partitionName --gres=gpu:32g:6 -C cuda-mode-exclusive -t 0-02:00:00 ./submit_Exchange-min-replica.sh ${number_of_replias})"
+            jobSchedulerOutput="$(sbatch --depend=afterok:${job_scheduler_number} -J ./submission_logs/${jobName} -N ${numberOfNodes} -p $partitionName --gres=gpu:32g:6 -C cuda-mode-exclusive -t 0-02:00:00 ./submit_Exchange-min-replica.sh ${number_of_replicas})"
         fi
     fi
 

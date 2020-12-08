@@ -118,7 +118,9 @@ else:
     simulation.minimizeEnergy(maxIterations=1000)
     state_min = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True, getParameters=False, getParameterDerivatives=False)
     energy_min = state_min.getKineticEnergy()._value + state_min.getPotentialEnergy()._value
-    energy_min_input = pd.read_csv(('./energies/' + str(output_no_path) + '-energy-min.csv'), index_col=0)
+    # here, are we supposed to read the previous energy file? 
+    #energy_min_input = pd.read_csv(('./energies/' + str(output_no_path) + '-energy-min.csv'), index_col=0)
+    energy_min_input = pd.read_csv(('./energies/' + str(output_name) + '-ph' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) +     '-subjob' + str(subjob_number - 1).zfill(4) + '-energy-min.csv'), index_col=0)
     energy_min_last = pd.DataFrame(np.array([energy_min]))
     name_i = str(energy_min_last.columns.tolist()[0])
     name_j = str(energy_min_input.shape[1])

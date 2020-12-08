@@ -30,10 +30,7 @@ for (( subjob=0; subjob<$number_of_subjobs; subjob++ )); do
         fi
     fi
 
-    echo $jobSchedulerOutput
     job_scheduler_number=${jobSchedulerOutput//[!0-9]}
-    echo $job_scheduler_number
-    echo
     let first_subjob=1
 done
 

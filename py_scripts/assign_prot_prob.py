@@ -1,11 +1,13 @@
 from imports import *
+#from simtk.openmm.app import CharmmPsfFile
 from input_file import *
-from setup_pH_system import *
+#from input_file import psf_file, pH_low, pH_high, pH_step, x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length, pdb_file
+#from setup_pH_system import *
 from definitions import *
-params = CharmmParameterSet(top_file, par_file)
+
 
 pH_list = np.arange(pH_low, pH_high, pH_step)
-
+#psf_file = '../inputFiles/sars-wt-term-i.psf'
 psf = CharmmPsfFile(psf_file)
 psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
 
@@ -33,7 +35,7 @@ lys_atoms, cys_atoms, asp_atoms, glu_atoms, his_atoms_D, his_atoms_E = ([np.arra
 lys_side_atoms, cys_side_atoms, asp_side_atoms, glu_side_atoms, his_side_atoms = ([np.array([], dtype=(np.int16))]*len(segment_list) for i in range(5))
 
 waters = np.array([], dtype=(np.int16))
-CNB, CB = (np.array([], dtype=(np.int16)) for i in range(2))
+
 
 # Read pdb file to select the indicies of the protons and the neighboring atoms of the titratable residues
 # Here the CHARMM36 atom naming is required

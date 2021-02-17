@@ -1,16 +1,16 @@
 import sys
-sys.path.append('./py_scripts/')
 from imports import *
+sys.path.append("/gpfs/u/home/SMMS/SMMSktsk/scratch/pH-Replica-Exchange/py_scripts/")
 
 # Input structure and coordinates #
-psf_file = './inputFiles/sars-wt-term-i.psf'
-pdb_file = './inputFiles/sars-wt-term-i.pdb'
+psf_file = './inputFiles/BB-pH6-wb-i.psf'
+pdb_file = './inputFiles/BB-pH6-wb-i.pdb'
 
 # !!! Occurance of disulphide bonds #
-disu = [840, 851]                       	# PDB residue numbers
+disu = [66, 106, 119, 160]                       	# PDB residue numbers
 
 # Output name #
-output_name = 'sars-cph'
+output_name = 'BBL-ecph'
 dcdout_freq = 5000                               	# Number of steps between writing a dcd file
 
 # Force field parameters #
@@ -54,9 +54,9 @@ pressure = 1.01325*bar
 #zmode = ZFree 						# ZFree / ZFixed / ConstantVolume
 
 # Periodic cell size (nm) #
-x_PBC_vector_length = 8.26
-y_PBC_vector_length = 8.31
-z_PBC_vector_length = 8.31
+x_PBC_vector_length = 7.47
+y_PBC_vector_length = 7.87
+z_PBC_vector_length = 7.39
 
 # pH range #
 pH_low = 5
@@ -70,18 +70,12 @@ special_pKa_values = [] 				# the same order and size as the names in special_pK
 
 # Restart option #
 restart = 'OFF' 					# ON/OFF
-#last_cycle = 20
 
 
 # cpH setup #
 minimize = True
 n_min_steps = 1000
-#n_residues_per_switch = 0.4 	
-ncycles = 100						# Number of MD cycles for writing dcd/restart files
-nsteps = 10000
 
 md_steps = 40000
 
 HREMD = False						# Steps within 1 MD cycle
-n_iter = 1000						# Number of iterations of MD - replica-exchnage cycle
-n_attempts_replicas = 1

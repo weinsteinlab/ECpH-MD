@@ -7,7 +7,7 @@ def _get_pme_direct_space_unique_expression(reference_force):
     if alpha_ewald / alpha_ewald.unit == 0.0:
         tol = reference_force.getEwaldErrorTolerance()
         alpha_ewald = 1.0 / reference_force.getCutoffDistance() * np.sqrt(-np.log(2.0 * tol))
-    alpha_ewald = alpha_ewald.value_in_unit_system(unit.md_unit_system)
+    alpha_ewald = alpha_ewald.value_in_unit_system(md_unit_system)
     pme_expression = '*erfc(alpha_ewald*reff_electrostatics)/reff_electrostatics;alpha_ewald = {};'.format(alpha_ewald)
     return pme_expression
 

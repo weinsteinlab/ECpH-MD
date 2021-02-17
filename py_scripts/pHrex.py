@@ -1,6 +1,7 @@
 from imports import *
 import subprocess, time
-from input_file import pdb_state_files
+#from input_file import pdb_state_files
+from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, calc_system_charge, create_force_particle, create_force_bond)
 from assign_prot_prob import *
 from setup_pH_system import NBi, CNB, CB
 def manage_waters(pH_system_temp):
@@ -29,20 +30,20 @@ def manage_waters(pH_system_temp):
                 w = int(w)
                 [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(w)
                 wc = charge._value + 0.001
-                nonbonded_force.setParticleParameters(w, wc * unit.elementary_charge, sigma, epsilon)
+                nonbonded_force.setParticleParameters(w, wc * elementary_charge, sigma, epsilon)
                 for force in custom_electrostatics:
                     [lambda_electrostatics, charge, sigma] = force.getParticleParameters(w)
-                    force.setParticleParameters(w, [lambda_electrostatics, wc * unit.elementary_charge, sigma])
+                    force.setParticleParameters(w, [lambda_electrostatics, wc * elementary_charge, sigma])
 
         if net_charge > 0:
             for w in r_waters:
                 w = int(w)
                 [charge, sigma, epsilon] = nonbonded_force.getParticleParameters(w)
                 wc = charge._value - 0.001
-                nonbonded_force.setParticleParameters(w, wc * unit.elementary_charge, sigma, epsilon)
+                nonbonded_force.setParticleParameters(w, wc * elementary_charge, sigma, epsilon)
                 for force in custom_electrostatics:
                     [lambda_electrostatics, charge, sigma] = force.getParticleParameters(w)
-                    force.setParticleParameters(w, [lambda_electrostatics, wc * unit.elementary_charge, sigma])
+                    force.setParticleParameters(w, [lambda_electrostatics, wc * elementary_charge, sigma])
         print('Final net charge : ', calc_system_charge(custom_electrostatics[0])) 
 
 

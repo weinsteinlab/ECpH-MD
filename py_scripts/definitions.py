@@ -1,5 +1,5 @@
-from imports import *
-from assign_prot_prob import * 
+#from imports import *
+#from assign_prot_prob import * 
 asp_atom_names = ['CB', 'CG', 'OD1', 'OD2']
 cys_atom_names = ['CB', 'SG']
 glu_atom_names = ['CG', 'CD', 'OE1', 'OE2']

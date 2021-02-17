@@ -1,7 +1,7 @@
 #!/bin/sh
 
-number_of_replicas=18 # must be a multiple of 6
-number_of_subjobs=3 
+number_of_replicas=6 # must be a multiple of 6
+number_of_subjobs=1 
 subjobs_before_exchange=0 # set to 0 if no exchanges desired
 jobName="dat" # no spaces
 partitionName=dcs            #Slurm partition to run job on

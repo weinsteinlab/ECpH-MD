@@ -1,19 +1,11 @@
+import sys
+sys.path.append('./py_scripts/')
 from imports import *
+
 # Input structure and coordinates #
 psf_file = './inputFiles/sars-wt-term-i.psf'
 pdb_file = './inputFiles/sars-wt-term-i.pdb'
 
-# Load pH-states geometries #
-
-# The number of elements in the list should be the same as the number of pH replicas/values.
-# In this example 11 structures for pHs from 2.0 to 7.0 are in "closed" state (same pdb file)
-# and 7 structures for pHs from 7.5 to 10.5 are in "opened" state (same pdb file)
-
-read_state_geometries = False 				# True/False; Default False
-
-pdb_state_files = ['./inputFiles/BB-pH6-wb-i.pdb']*11 +['./inputFiles/BB-pH6-8-wb-i.pdb']*7
-                                                                                               
-                                                                                               
 # !!! Occurance of disulphide bonds #
 disu = [840, 851]                       	# PDB residue numbers
 
@@ -66,17 +58,6 @@ x_PBC_vector_length = 8.26
 y_PBC_vector_length = 8.31
 z_PBC_vector_length = 8.31
 
-# Soft-core potential parameters for alchemical forces #
-switch_width = 1 * unit.angstroms
-softcore_alpha = 0.5
-softcore_a = 1
-softcore_b = 1
-softcore_c = 1
-softcore_beta = 0.0
-softcore_d = 1
-softcore_e = 1
-softcore_f = 1
-
 # pH range #
 pH_low = 5
 pH_high = 8
@@ -104,23 +85,3 @@ md_steps = 40000
 HREMD = False						# Steps within 1 MD cycle
 n_iter = 1000						# Number of iterations of MD - replica-exchnage cycle
 n_attempts_replicas = 1
-# Lambda exchnage parameters
-#MD_nsteps_lambdas = 50 				# Number of MD steps before lambda-exchamge attempt
-#n_attempts_lambdas = 1 					# Number of attempts for lambda-exchange
-
-# Relica exchnage parameters
-#MD_nsteps_replicas = 50 				# Number of MD steps before replica-exchnage attempt
-#n_attempts_replicas = 1 				# Number of attempts for replica-exchange
-
-# Preparatory runs #
-
-# Prep replica-exchange
-#prep_replicas = False 					# True/False - run MD-REX cycle before the main cpH REX/lambda-EX cycle
-#n_iter_replicas = 1					# Number of iterations of the preliminary MD-REX cycle
-#MD_nsteps_replicas_prep = 60000000 			# Number of MD steps for preliminary MD-REX cycle
-
-# Prep lambda-exchange
-#prep_lambdas = False 					# True/Flase - run MD-lambda-EX cycle before the main cpH REX/lambda-EX cycle
-#n_iter_lambdas = 1000 					# Number of iterations of the preliminary MD-lambda-EX cycle
-#MD_nsteps_lambdas_prep = 5000 				# Number of MD steps for preliminary MD-l-EX cycle
-

@@ -1,0 +1,153 @@
+generating lambda list
+Traceback (most recent call last):
+  File "./py_scripts/createLambdaList.py", line 3, in <module>
+    from assign_prot_prob import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/assign_prot_prob.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 6, in <module>
+    system = psf.createSystem(params, nonbondedMethod=PME, nonbondedCutoff=nonbondedCutoff, rigidWater=rigidWater, ewaldErrorTolerance=ewaldErrorTolerance, switchDistance=switchDistance)
+NameError: name 'psf' is not defined
+pH:5 subjob_number:0 replica_number:0000
+pH:5 subjob_number:0 replica_number:0001
+pH:5 subjob_number:0 replica_number:0002
+pH:5 subjob_number:0 replica_number:0003
+pH:5 subjob_number:0 replica_number:0004
+pH:5 subjob_number:0 replica_number:0005
+pH:6 subjob_number:0 replica_number:0006
+pH:6 subjob_number:0 replica_number:0007
+pH:6 subjob_number:0 replica_number:0008
+pH:6 subjob_number:0 replica_number:0009
+pH:6 subjob_number:0 replica_number:0010
+pH:6 subjob_number:0 replica_number:0011
+pH:7 subjob_number:0 replica_number:0012
+pH:7 subjob_number:0 replica_number:0013
+pH:7 subjob_number:0 replica_number:0014
+pH:7 subjob_number:0 replica_number:0015
+pH:7 subjob_number:0 replica_number:0016
+pH:7 subjob_number:0 replica_number:0017
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+srun: error: dcs140: task 0: Exited with exit code 1
+srun: error: dcs141: task 0: Exited with exit code 1
+srun: error: dcs140: task 0: Exited with exit code 1
+srun: error: dcs140: task 0: Exited with exit code 1
+srun: error: dcs141: task 0: Exited with exit code 1
+srun: error: dcs141: task 0: Exited with exit code 1
+srun: error: dcs141: task 0: Exited with exit code 1
+srun: error: dcs140: task 0: Exited with exit code 1
+srun: error: dcs141: task 0: Exited with exit code 1
+srun: error: dcs141: task 0: Exited with exit code 1
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+Traceback (most recent call last):
+  File "./py_scripts/run_replica.py", line 3, in <module>
+    from setup_pH_system import *
+  File "/gpfs/u/scratch/SMMS/SMMSktsk/pH-Replica-Exchange/py_scripts/setup_pH_system.py", line 127, in <module>
+    force.setSwitchingDistance(nonbonded_force.getCutoffDistance() - switch_width)
+NameError: name 'switch_width' is not defined
+srun: error: dcs140: task 0: Exited with exit code 1
+srun: error: dcs140: task 0: Exited with exit code 1
+srun: error: dcs142: task 0: Exited with exit code 1
+srun: error: dcs142: task 0: Exited with exit code 1
+srun: error: dcs142: task 0: Exited with exit code 1
+srun: error: dcs142: task 0: Exited with exit code 1
+srun: error: dcs142: task 0: Exited with exit code 1
+srun: error: dcs142: task 0: Exited with exit code 1

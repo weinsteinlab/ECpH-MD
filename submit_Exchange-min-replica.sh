@@ -48,19 +48,24 @@ subjob_number_padded=`printf %04d $subjob_number`
 
 if [ $exchange == 0 ]; then
     for ((replica=0; replica < $number_of_replicas; replica++)); do
-        if [ $replica != 0 ] && [ $(($replica % $replicas_per_pH)) == 0 ]; then ((replica_counter++)); fi     
+        if [ $replica != 0 ] && [ $(($replica % $replicas_per_pH)) == 0 ]; then let "replica_counter+=1"; fi     
 
         replica_number_padded=`printf %04d $replica`
         mkdir -p ./simulations/pH_${pH_seq[replica_counter]}_replica_number_${replica_number_padded}
         echo "pH:${pH_seq[replica_counter]} subjob_number:${subjob_number} replica_number:${replica_number_padded}"
-        srun -N1 --gres=gpu:32g:1 --mem=50G python3 -u ./py_scripts/run_replica.py ${pH_seq[replica_counter]} ${subjob_number} ${replica} >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[replica_counter]}_replica_${replica_number_padded}_subjob${subjob_number_padded}.log & 
-    #sleep 1
+        srun -N1 -K1 --gres=gpu:32g:1 --mem=50G python3 -u ./py_scripts/run_replica.py ${pH_seq[replica_counter]} ${subjob_number} ${replica} >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[replica_counter]}_replica_${replica_number_padded}_subjob${subjob_number_padded}.log & 
     done
 else
     echo "Performing exchange..."
-    srun -N1 --gres=gpu:32g:1 --mem=50G python3 -u ./py_scripts/run_exchange.py &  
+    srun -N1 -K1 --gres=gpu:32g:1 --mem=50G python3 -u ./py_scripts/run_exchange.py &  
 fi 
 
-wait  
+FAIL=0
 
-exit
+for job in `jobs -p`; do
+    wait $job || let "FAIL+=1"
+done
+
+echo "Background srun jobs failed."
+
+exit ${FAIL}

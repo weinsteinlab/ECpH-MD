@@ -76,6 +76,6 @@ restart = 'OFF' 					# ON/OFF
 minimize = True
 n_min_steps = 1000
 
-md_steps = 40000
+md_steps = 4000
 
 HREMD = False						# Steps within 1 MD cycle

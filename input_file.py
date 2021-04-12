@@ -60,9 +60,9 @@ z_PBC_vector_length = 7.39
 
 # pH range #
 pH_low = 5
-pH_high = 8
+pH_high = 8 # exclusive--i.e. make this one larger than the last pH desired
 pH_step = 1
-replicas_per_pH = 6
+replicas_per_pH = 2
 
 # Special pKa values #
 special_pKa_names = []

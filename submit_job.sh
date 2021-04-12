@@ -1,9 +1,9 @@
 #!/bin/sh
 
 number_of_replicas=6 # must be a multiple of 6
-number_of_subjobs=1 
-subjobs_before_exchange=0 # set to 0 if no exchanges desired
-jobName="dat" # no spaces
+number_of_subjobs=5 
+subjobs_before_exchange=2 # set to 0 if no exchanges desired
+jobName="exchange_test" # no spaces
 partitionName=dcs            #Slurm partition to run job on
 
 # do not edit below this line
@@ -23,8 +23,7 @@ for (( subjob=0; subjob<$number_of_subjobs; subjob++ )); do
 
     else
         if [ $subjobs_before_exchange != 0 ] && [ $(($subjob % $subjobs_before_exchange)) == 0 ]; then
-            echo "exchange time!" 
-            # insert job submission for exchange
+            # Perform exchange
             jobSchedulerOutput="$(sbatch --depend=afterok:${job_scheduler_number} -J ./submission_logs/${jobName} -N 1 -p $partitionName --gres=gpu:32g:1 -C cuda-mode-exclusive -t 0-02:00:00 ./submit_Exchange-min-replica.sh ${number_of_replicas} 1)"
         else 
             jobSchedulerOutput="$(sbatch --depend=afterok:${job_scheduler_number} -J ./submission_logs/${jobName} -N ${numberOfNodes} -p $partitionName --gres=gpu:32g:6 -C cuda-mode-exclusive -t 0-02:00:00 ./submit_Exchange-min-replica.sh ${number_of_replicas} 0)"

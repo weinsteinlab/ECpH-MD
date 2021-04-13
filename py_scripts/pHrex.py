@@ -391,18 +391,29 @@ class pHrex:
                     time.sleep(60)
 
 
-    def _mix_replicas(self):
+    def _mix_replicas(self, subjob_number, replicas_per_pH, number_of_replicas):
         
         for attempt in range(1):
             i = randint(0, self._pH_list.size - 1)
             j = i
             while j == i:
                 j = randint(0, self._pH_list.size - 1)
+          
+            
+            i_replica = randint(0, replicas_per_pH - 1)
+            j_replica = randint(0, replicas_per_pH - 1)
+
+            i_replica_directory = (i * replicas_per_pH) + i_replica
+            j_replica_directory = (j * replicas_per_pH) + j_replica
+
+            i_directory_path = './simulations/pH_' + str(self._pH_list[i]) + '_replica_number_' + str(i_replica_directory).zfill(4) + '/'
+            j_directory_path = './simulations/pH_' + str(self._pH_list[j]) + '_replica_number_' + str(j_replica_directory).zfill(4) + '/'
 
             rep_ex = [i, j]
-            print('\nSelected replicas for replica exchange ', i, ' ', j, '\n')
-            lambda_list_i = pd.read_csv(('lambda_list-' + str(self._pH_list[i]) + '.csv'), index_col=0)
-            lambda_list_j = pd.read_csv(('lambda_list-' + str(self._pH_list[j]) + '.csv'), index_col=0)
+            print('\nSelected pHs for replica exchange: ' + str(self._pH_list[i]) + ' and ' + str(self._pH_list[j]) + '\n')
+            print('\nSelected replica directories for replica exchange: ' + str(i_replica_directory) + ' and ' +  str(j_replica_directory) + '\n')
+            lambda_list_i = pd.read_csv(('./lambdas/lambda_list-' + str(self._pH_list[i]) + '.csv'), index_col=0)
+            lambda_list_j = pd.read_csv(('./lambdas/lambda_list-' + str(self._pH_list[j]) + '.csv'), index_col=0)
             lambda_iex = lambda_list_i.iloc[:, -1]
             lambda_jex = lambda_list_j.iloc[:, -1]
             lambda_iex = pd.DataFrame(lambda_iex)
@@ -428,14 +439,17 @@ class pHrex:
                 if replica == i:
                     integrator_i = LangevinIntegrator(temperature, friction, dt)
                     integrator_i.setConstraintTolerance(constraintTolerance)
+                    platformProperties = {'DeviceIndex':'0',  'Precision':'mixed'}   
                     simulation_i = Simulation(topology, pH_system_temp, integrator_i, platform, platformProperties)
-                    simulation_i.loadState(str(output_name) + '-' + str(self._pH_list[i]) + '-state.xml')
+                    simulation_i.loadState(i_directory_path + str(output_name) + '-ph' + str(self._pH_list[i]) + '_replica_number_' + str(i_replica_directory).zfill(4) + '-subjob' + str(subjob_number).zfill(4) + '-state.xml')
                     positions_i = simulation_i.context.getState(getPositions=True).getPositions()
                 elif replica == j:
                     integrator_j = LangevinIntegrator(temperature, friction, dt)
                     integrator_j.setConstraintTolerance(constraintTolerance)
+                    platformProperties = {'DeviceIndex':'1',  'Precision':'mixed'}  
                     simulation_j = Simulation(topology, pH_system_temp, integrator_j, platform, platformProperties)
-                    simulation_j.loadState(str(output_name) + '-' + str(self._pH_list[j]) + '-state.xml')
+                    #simulation_j.loadState(str(output_name) + '-' + str(self._pH_list[j]) + '-state.xml')
+                    simulation_j.loadState(j_directory_path + str(output_name) + '-ph' + str(self._pH_list[j]) + '_replica_number_' + str(j_replica_directory).zfill(4) + '-subjob' + str(subjob_number).zfill(4) + '-state.xml')
                     positions_j = simulation_j.context.getState(getPositions=True).getPositions()
 
             simulation_i.context.setPositions(positions_j)
@@ -444,19 +458,23 @@ class pHrex:
             state_ij = simulation_i.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
             energy_ji = state_ji.getKineticEnergy()._value + state_ji.getPotentialEnergy()._value
             energy_ij = state_ij.getKineticEnergy()._value + state_ij.getPotentialEnergy()._value
-            energy_ii_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[i]) + '-energy.csv')
+            #energy_ii_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[i]) + '-energy.csv')
+            energy_ii_file = pd.read_csv('./energies/' + str(output_name) + '-ph' + str(self._pH_list[i]) + '_replica_number_' + str(i_replica_directory).zfill(4) + '-subjob' + str(subjob_number).zfill(4) + '-energy.csv')
             energy_ii = float(energy_ii_file.iloc[:, -1])
-            energy_jj_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy.csv')
+            #energy_jj_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy.csv')
+            energy_jj_file = pd.read_csv('./energies/' + str(output_name) + '-ph' + str(self._pH_list[j]) + '_replica_number_' + str(j_replica_directory).zfill(4) + '-subjob' + str(subjob_number).zfill(4) + '-energy.csv')
             energy_jj = float(energy_jj_file.iloc[:, -1])
-            print('\nTotal energy of replica ', i, ': ', energy_ii, '\nTotal energy of replica ', j, ': ', energy_jj, '\nTotal energy of replica ', i, ' after replica exchange ', energy_ij, '\nTotal energy of replica ', j, ' after replica exchange ', energy_ji, '\n')
+            print('\nTotal energy of replica ', i_replica_directory, ': ', energy_ii, '\nTotal energy of replica ', j_replica_directory, ': ', energy_jj, '\nTotal energy of replica ', i_replica_directory, ' after replica exchange ', energy_ij, '\nTotal energy of replica ', j_replica_directory, ' after replica exchange ', energy_ji, '\n')
             log_p_accept = -(energy_ij + energy_ji) + energy_ii + energy_jj
             if log_p_accept >= 0.0 or random.random() < math.exp(log_p_accept):
                 print('Replica exchange accepted')
                 simulation_i.context.setState(state_ij)
-                simulation_i.saveState(str(output_name) + '-' + str(self._pH_list[i]) + '-state.xml')
+                #simulation_i.saveState(str(output_name) + '-' + str(self._pH_list[i]) + '-state.xml')
+                simulation_i.saveState(i_directory_path + str(output_name) + '-ph' + str(self._pH_list[i]) + '_replica_number_' + str(i_replica_directory).zfill(4) + '-subjob' + str(subjob_number).zfill(4) + '-state.xml')
                 simulation_i.context.createCheckpoint()
                 simulation_j.context.setState(state_ji)
                 simulation_j.context.createCheckpoint()
-                simulation_j.saveState(str(output_name) + '-' + str(self._pH_list[j]) + '-state.xml')
+                #simulation_j.saveState(str(output_name) + '-' + str(self._pH_list[j]) + '-state.xml')
+                simulation_j.saveState(j_directory_path + str(output_name) + '-ph' + str(self._pH_list[j]) + '_replica_number_' + str(j_replica_directory).zfill(4) + '-subjob' + str(subjob_number).zfill(4) + '-state.xml')
             else:
                 print('Replica exchange rejected')

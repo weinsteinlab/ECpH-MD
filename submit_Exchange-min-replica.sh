@@ -57,7 +57,7 @@ if [ $exchange == 0 ]; then
     done
 else
     echo "Performing exchange..."
-    srun -N1 -K1 --gres=gpu:32g:1 --mem=50G python3 -u ./py_scripts/run_exchange.py &  
+    srun -N1 -K1 --gres=gpu:32g:6 --mem=50G python3 -u ./py_scripts/run_exchange.py $subjob_number $replicas_per_pH $number_of_replicas &  
 fi 
 
 FAIL=0
@@ -65,7 +65,5 @@ FAIL=0
 for job in `jobs -p`; do
     wait $job || let "FAIL+=1"
 done
-
-echo "Background srun jobs failed."
 
 exit ${FAIL}

@@ -1,8 +1,8 @@
 #!/bin/sh
 
 number_of_replicas=6 # must be a multiple of 6
-number_of_subjobs=3 
-subjobs_before_exchange=2 # set to 0 if no exchanges desired
+number_of_subjobs=5 
+subjobs_before_exchange=2 # set to 0 if no exchanges desired; if not 0, then must be >= 2
 jobName="exchange_test" # no spaces
 partitionName=dcs            #Slurm partition to run job on
 

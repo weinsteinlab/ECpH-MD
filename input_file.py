@@ -11,7 +11,7 @@ disu = [66, 106, 119, 160]                       	# PDB residue numbers
 
 # Output name #
 output_name = 'BBL-ecph'
-dcdout_freq = 5000                               	# Number of steps between writing a dcd file
+dcdout_freq = 1000                               	# Number of steps between writing a dcd file
 
 # Force field parameters #
 top_file  ='./inputFiles/all_top.rtf'
@@ -78,4 +78,4 @@ n_min_steps = 1000
 
 md_steps = 4000
 
-HREMD = False						# Steps within 1 MD cycle
+HREMD = True						# Steps within 1 MD cycle

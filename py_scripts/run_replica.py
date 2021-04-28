@@ -70,11 +70,6 @@ if subjob_number == 0:
     energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
     energy = pd.DataFrame(np.array([energy]))
     energy.to_csv('./energies/' + str(output_no_path) + '-energy.csv')
-    simulation.minimizeEnergy(maxIterations=1000)
-    state_min = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True, getParameters=False, getParameterDerivatives=False)
-    energy_min = state_min.getKineticEnergy()._value + state_min.getPotentialEnergy()._value
-    energy_min = pd.DataFrame(np.array([energy_min]))
-    energy_min.to_csv('./energies/' + str(output_no_path) + '-energy-min.csv')
     print('FINISH')
 
 else:
@@ -102,15 +97,4 @@ else:
     energy_current = energy_last.rename(columns={name_i: name_j})
     output = pd.concat([energy_input, energy_current], axis=1, sort=False)
     output.to_csv('./energies/' + str(output_no_path) + '-energy.csv')
-    simulation.minimizeEnergy(maxIterations=1000)
-    state_min = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True, getParameters=False, getParameterDerivatives=False)
-    energy_min = state_min.getKineticEnergy()._value + state_min.getPotentialEnergy()._value
-    energy_min_input = pd.read_csv(('./energies/' + str(output_name) + '-ph' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) +     '-subjob' + str(subjob_number - 1).zfill(4) + '-energy-min.csv'), index_col=0)
-    energy_min_last = pd.DataFrame(np.array([energy_min]))
-    name_i = str(energy_min_last.columns.tolist()[0])
-    name_j = str(energy_min_input.shape[1])
-    energy_min_current = energy_min_last.rename(columns={name_i: name_j})
-    output = pd.concat([energy_min_input, energy_min_current], axis=1, sort=False)
-    output.to_csv('./energies/' + str(output_no_path) + '-energy-min.csv')
     print('FINISH')
-

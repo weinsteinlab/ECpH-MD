@@ -1,6 +1,6 @@
-import sys
+import os,sys
 from imports import *
-sys.path.append("/gpfs/u/home/SMMS/SMMSktsk/scratch/pH-Replica-Exchange/py_scripts/")
+sys.path.append(os.path.join(sys.path[0],'py_scripts'))
 
 # Input structure and coordinates #
 psf_file = './inputFiles/BB-pH6-wb-i.psf'

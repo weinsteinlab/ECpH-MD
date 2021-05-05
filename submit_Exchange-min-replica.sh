@@ -3,9 +3,12 @@ set -e
 
 source ~/.bashrc
 
+# Edit the following to setup environment as needed
 module load gcc/8.1.0/1
 module load cuda/10.1
 conda activate openmm_7.4.0
+##############################
+
 
 number_of_replicas=$1
 exchange=$2
@@ -57,7 +60,7 @@ if [ $exchange == 0 ]; then
     done
 else
     echo "Performing exchange..."
-    srun -N1 -K1 --gres=gpu:32g:6 --mem=50G python3 -u ./py_scripts/run_exchange.py $subjob_number $replicas_per_pH $number_of_replicas &  
+    srun -N1 -K1 --gres=gpu:32g:2 --mem=50G python3 -u ./py_scripts/run_exchange.py $subjob_number $replicas_per_pH $number_of_replicas &  
 fi 
 
 FAIL=0

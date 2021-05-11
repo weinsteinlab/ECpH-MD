@@ -1,3 +1,10 @@
+import sys,os
+sys.path.append('../')
+
+CWD = os.getcwd()
+sys.path.append(CWD)
+
+
 from imports import *
 from input_file import *
 ONE_4PI_EPS0 = 138.935456

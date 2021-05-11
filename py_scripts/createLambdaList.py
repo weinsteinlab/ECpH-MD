@@ -1,3 +1,9 @@
+import sys, os
+sys.path.append('../')
+
+CWD = os.getcwd()
+sys.path.append(CWD)
+
 from imports import *
 #from fep_functions import *
 from assign_prot_prob import  pH_list, l_Glu, l_His, l_Lys, l_Cys, l_Asp, list_alchem_residues, l_special

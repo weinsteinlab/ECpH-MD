@@ -1,3 +1,9 @@
+import sys, os
+sys.path.append('../')
+
+CWD = os.getcwd()
+sys.path.append(CWD)
+
 from imports import *
 from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, calc_system_charge, create_force_particle, create_force_bond)
 from assign_prot_prob import psf, list_alchem_residues, alchem_protons, segment_list

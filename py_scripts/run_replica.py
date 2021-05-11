@@ -1,3 +1,8 @@
+import sys, os
+
+CWD = os.getcwd()
+sys.path.append(CWD)
+
 from imports import *
 from input_file import *
 from setup_pH_system import *

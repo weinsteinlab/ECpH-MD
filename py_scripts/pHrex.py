@@ -1,3 +1,10 @@
+import sys, os
+sys.path.append('../')
+
+CWD = os.getcwd()
+sys.path.append(CWD)
+
+
 from imports import *
 import subprocess, time
 #from input_file import pdb_state_files

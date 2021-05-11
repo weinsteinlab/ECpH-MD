@@ -1,3 +1,9 @@
+import os,sys
+sys.path.append('../')
+
+CWD = os.getcwd()
+sys.path.append(CWD)
+
 from imports import *
 #from simtk.openmm.app import CharmmPsfFile
 from input_file import *

@@ -3,8 +3,8 @@ from imports import *
 sys.path.append(os.path.join(sys.path[0],'py_scripts'))
 
 # Input structure and coordinates #
-psf_file = './inputFiles/BB-pH6-wb-i.psf'
-pdb_file = './inputFiles/BB-pH6-wb-i.pdb'
+psf_file = './inputFiles/bbl.psf'
+pdb_file = './inputFiles/bbl.pdb'
 
 # !!! Occurance of disulphide bonds #
 disu = [66, 106, 119, 160]                       	# PDB residue numbers

@@ -55,6 +55,14 @@ def manage_waters(pH_system_temp):
 
 
 def pick_charges(res_list, residue, lambda_list):
+    charge_list = None
+    print(res_list)
+    print("\n")
+    print(residue)
+    print("\n")
+    print(lambda_list)
+
+
     for resname in res_list:
         if str(resname) in residue:
             charge_list = res_list[resname]

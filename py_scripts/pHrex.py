@@ -66,7 +66,7 @@ def pick_charges(res_list, residue, lambda_list):
     for resname in res_list:
         if str(resname) in residue:
             charge_list = res_list[resname]
-        elif 'HSP' in residue:
+        elif 'HSP' in residue or 'HIS' in residue:
             if float(lambda_list.at[(residue + '_sw', str(lambda_list.shape[1] - 1))]) == 1.0:
                 charge_list = res_list['HSE']
             else:
@@ -103,7 +103,7 @@ def create_cpH_system(pH_system_temp, lambda_list):
                 residue = segment_list[segment] + ': ' + str(psf.atom_list[proton].residue.resname) + str(psf.atom_list[proton].residue.idx)
                 [lambda_sterics, sigma, epsilon] = force.getParticleParameters(proton)
                 atom_name = str(psf.atom_list[proton].name)
-                if 'HSP' in residue:
+                if 'HSP' in residue or 'HIS' in residue:
                     if float(lambda_list.at[(residue + '_sw', str(lambda_list.shape[1] - 1))]) == 0.0:
                         if 'HE2' in atom_name:
                             lambda_sterics = lambda_list.at[(residue, str(lambda_list.shape[1] - 1))]
@@ -152,7 +152,7 @@ def create_cpH_system(pH_system_temp, lambda_list):
             
             residue = add + str(psf.atom_list[proton].residue.resname) + str(psf.atom_list[proton].residue.idx)
             atom_name = str(psf.atom_list[proton].name)
-            if 'HSP' in residue:
+            if 'HSP' in residue or 'HIS' in residue:
                 if float(lambda_list.at[(residue + '_sw', str(lambda_list.shape[1] - 1))]) == 0.0:
                     if 'HE2' in atom_name:
                         lambda_electrostatics = lambda_list.at[(residue, str(lambda_list.shape[1] - 1))]
@@ -250,7 +250,7 @@ def create_cpH_exchange_system(pH_system, i, j, liex, lambda_list_i, ljex, lambd
  
                     [lambda_value, parameter1, parameter2] = force.getParticleParameters(proton)
  
-                    if 'HSP' in residue:
+                    if 'HSP' in residue or 'HIS' in residue:
                         atom_name = str(psf.atom_list[proton].name)
                         if float(lambda_list.at[(residue + '_sw', new_name)]) == 0.0:
                             if 'HE2' in atom_name:
@@ -330,7 +330,7 @@ def create_cpH_exchange_system(pH_system, i, j, liex, lambda_list_i, ljex, lambd
                         lambda_list = ljex
                         extended_lambda_list = lambda_list_j
                         new_name = new_name_j
-                if 'HSP' in residue:
+                if 'HSP' in residue or 'HIS' in residue:
                     if float(lambda_list.at[(residue + '_sw', new_name)]) == 0.0:
                         if 'HE2' in atom_name:
                             lambda_electrostatics = lambda_list.at[(residue, new_name)]

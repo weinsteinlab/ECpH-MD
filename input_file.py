@@ -3,15 +3,15 @@ from imports import *
 sys.path.append(os.path.join(sys.path[0],'py_scripts'))
 
 # Input structure and coordinates #
-psf_file = './inputFiles/bbl.psf'
-pdb_file = './inputFiles/bbl.pdb'
+psf_file = './inputFiles/BB-pH6-wb-i.psf'
+pdb_file = './inputFiles/BB-pH6-wb-i.pdb'
 
 # !!! Occurance of disulphide bonds #
 disu = [66, 106, 119, 160]                       	# PDB residue numbers
 
 # Output name #
-output_name = 'BBL-ecph'
-dcdout_freq = 1000                               	# Number of steps between writing a dcd file
+output_name = 'test'
+dcdout_freq = 5000                               	# Number of steps between writing a dcd file
 
 # Force field parameters #
 top_file  ='./inputFiles/all_top.rtf'
@@ -60,9 +60,9 @@ z_PBC_vector_length = 7.39
 
 # pH range #
 pH_low = 5
-pH_high = 9 # exclusive--i.e. make this one larger than the last pH desired
+pH_high = 6 # exclusive--i.e. make this one larger than the last pH desired
 pH_step = 1
-replicas_per_pH = 2
+replicas_per_pH = 8
 
 # Special pKa values #
 special_pKa_names = []
@@ -74,7 +74,7 @@ restart = 'OFF' 					# ON/OFF
 
 # cpH setup #
 minimize = True
-n_min_steps = 1000
+n_min_steps = 5000
 
 md_steps = 4000
 

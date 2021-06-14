@@ -27,7 +27,7 @@ for pH in pH_list:
         except KeyError:
             if 'LYS' in residue:
                 lambda_list[residue] = llys
-            elif 'HSP' in residue:
+            elif 'HSP' in residue or 'HIS' in residue:
                 lambda_list[residue] = lhis
                 if pH < HpKa_switch:
                     lambda_list[residue+'_sw'] = 1

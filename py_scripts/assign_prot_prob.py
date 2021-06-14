@@ -110,7 +110,7 @@ for segment in range(len(segment_list)):
         residue = segment_list[segment] + ': ' + str(psf.atom_list[(alchem_residues[segment][index] - 1)].residue.resname) + str(psf.atom_list[(alchem_residues[segment][index] - 1)].residue.idx)
         list_alchem_residues.append(residue)
         list_exchange_residues.append(residue)
-        if 'HSP' in residue:
+        if 'HSP' in residue or 'HIS' in residue:
             list_exchange_residues.append(residue + str('_sw'))
 
 

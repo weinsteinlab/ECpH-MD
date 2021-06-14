@@ -63,6 +63,8 @@ if subjob_number == 0:
 
     print('Minimizing...')
     simulation.minimizeEnergy(maxIterations=n_min_steps)
+    positions = simulation.context.getState(getPositions=True).getPositions()
+    PDBFile.writeFile(simulation.topology, positions, open(full_output_name+'-min.pdb', 'w'))
     simulation.reporters.append(dcdReporter)
     simulation.reporters.append(dataReporter)
 

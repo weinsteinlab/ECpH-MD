@@ -55,14 +55,6 @@ def manage_waters(pH_system_temp):
 
 
 def pick_charges(res_list, residue, lambda_list):
-    charge_list = None
-    print(res_list)
-    print("\n")
-    print(residue)
-    print("\n")
-    print(lambda_list)
-
-
     for resname in res_list:
         if str(resname) in residue:
             charge_list = res_list[resname]
@@ -232,7 +224,6 @@ def create_cpH_exchange_system(pH_system, i, j, liex, lambda_list_i, ljex, lambd
                 for proton in alchem_protons[segment]:
                     proton = int(proton)
                     residue = segment_list[segment] + ': ' + str(psf.atom_list[proton].residue.resname) + str(psf.atom_list[proton].residue.idx)
-                    print('Lambda swap will be attempted for ', str(residue), ' protonation state')
                     if replica == i:
                         if residue in proton_change:
                             lambda_list = ljex

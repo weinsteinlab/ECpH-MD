@@ -3,8 +3,8 @@ from imports import *
 sys.path.append(os.path.join(sys.path[0],'py_scripts'))
 
 # Input structure and coordinates #
-psf_file = './inputFiles/BB-pH6-wb-i.psf'
-pdb_file = './inputFiles/BB-pH6-wb-i.pdb'
+psf_file = './inputFiles/bbl8.psf'
+pdb_file = './inputFiles/bbl8.pdb'
 
 # !!! Occurance of disulphide bonds #
 disu = [66, 106, 119, 160]                       	# PDB residue numbers
@@ -59,14 +59,14 @@ y_PBC_vector_length = 7.87
 z_PBC_vector_length = 7.39
 
 # pH range #
-pH_low = 5
-pH_high = 6 # exclusive--i.e. make this one larger than the last pH desired
+pH_low = 8
+pH_high = 10 # exclusive--i.e. make this one larger than the last pH desired
 pH_step = 1
 replicas_per_pH = 8
 
 # Special pKa values #
-special_pKa_names = []
-special_pKa_values = [] 				# the same order and size as the names in special_pKa_names
+special_pKa_names = ['GLU89']
+special_pKa_values = [7.3] 				# the same order and size as the names in special_pKa_names
 
 # Restart option #
 restart = 'OFF' 					# ON/OFF
@@ -76,6 +76,6 @@ restart = 'OFF' 					# ON/OFF
 minimize = True
 n_min_steps = 5000
 
-md_steps = 4000
+md_steps = 10000
 
 HREMD = True						# Steps within 1 MD cycle

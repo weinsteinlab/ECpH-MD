@@ -3,8 +3,13 @@ from imports import *
 sys.path.append(os.path.join(sys.path[0],'py_scripts'))
 
 # Input structure and coordinates #
+<<<<<<< HEAD
 psf_file = './inputFiles/BB-pH8-i05-wb-i.psf'
 pdb_file = './inputFiles/BB-pH8-i05-wb-i.pdb'
+=======
+psf_file = './inputFiles/BB-pH6-wb-i.psf'
+pdb_file = './inputFiles/BB-pH6-wb-i.pdb'
+>>>>>>> fc26a63126651a05951fb41a2bfc6aa8de9db25d
 
 # !!! Occurance of disulphide bonds #
 disu = [66, 106, 119, 160]                       	# PDB residue numbers
@@ -59,8 +64,13 @@ y_PBC_vector_length = 7.87
 z_PBC_vector_length = 7.39
 
 # pH range #
+<<<<<<< HEAD
 pH_low = 8
 pH_high = 9 # exclusive--i.e. make this one larger than the last pH desired
+=======
+pH_low = 5
+pH_high = 6 # exclusive--i.e. make this one larger than the last pH desired
+>>>>>>> fc26a63126651a05951fb41a2bfc6aa8de9db25d
 pH_step = 1
 replicas_per_pH = 8
 

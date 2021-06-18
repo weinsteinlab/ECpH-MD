@@ -37,45 +37,40 @@ So long as all dependencies are installed, installing this code is as simple as 
 -----
 # Prepare Input Structure
 
-1. Create a pair of pdb/psf files with all the titrateble residues protonated.
+1. Create a pair of pdb/psf files with all the titrateble residues protonated (considered here: Glu, Asp, His, Cys, Lys).
 
    For CHARMM FF:
    - Use GLUP and ASPP patches for GLU and ASP
-   - Set HSP name for all HIS.
+   - Use HSP topology for all HIS.
    - CYS involved in disulphide bonds the procedure will be omitted.
 
-   **IMPORTANT**: The PDB structure data should start from the SECOND line.
+   **IMPORTANT**: The PDB structure data should start from the SECOND line. Similar to conventional MD OpenMM simulations, FIRST line should specify unit cell information.
 
    **IMPORTANT**: Make sure that the ionic strength of the resulting system is sufficient (e.g., ≥0.1 M). The method is heavily dependent on the overall concentration of ions in the system due to the PME calculation procedure (like any other constant-pH method).
 
 2. Equilbrate structure as preferred.
 ----
 # Edit input_file.py
-To set up the constant pH replica/lambda-exchnage calculation change the input_file.py file:
+To set up the constant pH (replica-exchnage) calculation change the input_file.py file:
 1. Specify a full path to your pdb/psf files (DO NOT forget the quotation marks).
     - If you want to set different geometries for different replicas put the paths to correspondong pdb files to pdb_state_files
 
-2.  Put the PDB numbers of CYS residues involved in disulphide bond (Temporary)
+2.  Put the PDB **residue numbers** of CYS involved in disulphide bond
 
 3. Fill in the OpenMM parameters for conventional MD runs
 
-4. Set the soft-core potential parameters for alchemical scaling of nonbonded forces for titratable  protons
+4. Select a pH range and a pH-step between the replicas
 
-5. Select a pH range and a pH-step between the replicas
-
-6. Specify the names and values for residues with user-defined pKas (experimentally obtained or else)
+5. Specify the names and values for residues with user-defined pKas (experimentally obtained or else)
        Make sure that the order of the names and values list is the same
-7. If restart option is set to 'ON', lambda-list files should exist
+6. If restart option is set to 'ON', lambda-list and state files for each replica should exist
 
-8. Edit constant pH replica/lambda exchange settings:
-    - Specify the number of preliminary minimization steps.
+7. Edit constant pH (replica-exchange) settings:
+    - Specify the number of preliminary minimization steps
 
-    - Set the percent amount of randomly titratable chosen residues for lambda-exchnage attempt (default is 0.1 - 10%)
-
-    - Set the number of iterations of MD - replica exchnage - MD lambda exchnage cycle
-
-    - Set the number of MD steps before replica exchange attempt -(MD_nsteps_replicas) and lambda-exchnage attempt (MD_nsteps_lambdas)
-
+    - Set the number of iterations of MD - replica exchnage
+    - 
+    - Set the number of MD cycles before replica exchange attempt -(MD_nsteps_replicas) 
     - If needed, run preliminary MD-replica exchange cycles (prep_replicas = True). Useful when pH-dependent conformational shifts are expected but structure files are not available for all the states observed preliminary MD-lambda exchnage cycles (prep_lambdas = True). Useful when all pH states are determined but pKa values are far from default values
 ----
 # Job Submission 

@@ -12,7 +12,7 @@ from input_file import *
 from definitions import *
 
 
-pH_list = np.arange(pH_low, pH_high, pH_step)
+pH_list = np.arange(pH_low, pH_high + 1, pH_step)
 #psf_file = '../inputFiles/sars-wt-term-i.psf'
 psf = CharmmPsfFile(psf_file)
 psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)

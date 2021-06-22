@@ -58,13 +58,11 @@ if [ $exchange == 0 ]; then
         replica_number_padded=`printf %04d $replica`
         mkdir -p ./simulations/pH_${pH_seq[replica_counter]}_replica_number_${replica_number_padded}
         echo "pH:${pH_seq[replica_counter]} subjob_number:${subjob_number} replica_number:${replica_number_padded}"
-        #srun -N1 -K1 --gres=gpu:32g:1 --mem=50G python3 -u ./py_scripts/run_replica.py ${pH_seq[replica_counter]} ${subjob_number} ${replica} >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[replica_counter]}_replica_${replica_number_padded}_subjob${subjob_number_padded}.log & 
-        srun -N1 -K1 --gres=gpu:1 --mem=20G python3 -u ./py_scripts/run_replica.py ${pH_seq[replica_counter]} ${subjob_number} ${replica} >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[replica_counter]}_replica_${replica_number_padded}_subjob${subjob_number_padded}.log & 
+        srun -N1 -K1 --gres=gpu:1 --mem=10G python3 -u ./py_scripts/run_replica.py ${pH_seq[replica_counter]} ${subjob_number} ${replica} >> ${CWD}/propagate_runs/propagate_runs_pH_${pH_seq[replica_counter]}_replica_${replica_number_padded}_subjob${subjob_number_padded}.log & 
     done
 else
     echo "Performing exchange..."
-    #srun -N1 -K1 --gres=gpu:32g:2 --mem=50G python3 -u ./py_scripts/run_exchange.py $subjob_number $replicas_per_pH $number_of_replicas &  
-    srun -N1 -K1 --gres=gpu:2 --mem=20G python3 -u ./py_scripts/run_exchange.py $subjob_number $replicas_per_pH $number_of_replicas &  
+    srun -N1 -K1 --gres=gpu:2 --mem=10G python3 -u ./py_scripts/run_exchange.py $subjob_number $replicas_per_pH $number_of_replicas &  
 fi 
 
 FAIL=0

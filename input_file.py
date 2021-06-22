@@ -58,9 +58,9 @@ x_PBC_vector_length = 7.47
 y_PBC_vector_length = 7.87
 z_PBC_vector_length = 7.39
 
-# pH range #
+# pH range (range is inclusive for both low and high values)
 pH_low = 8
-pH_high = 9 # exclusive--i.e. make this one larger than the last pH desired
+pH_high = 9
 pH_step = 1
 replicas_per_pH = 8
 

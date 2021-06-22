@@ -62,7 +62,7 @@ if [ $exchange == 0 ]; then
     done
 else
     echo "Performing exchange..."
-    srun -N1 -K1 --gres=gpu:2 --mem=10G python3 -u ./py_scripts/run_exchange.py $subjob_number $replicas_per_pH $number_of_replicas &  
+    srun -N1 -K1 --gres=gpu:2 --mem=20G python3 -u ./py_scripts/run_exchange.py $subjob_number $replicas_per_pH $number_of_replicas &  
 fi 
 
 FAIL=0

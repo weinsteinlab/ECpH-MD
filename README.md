@@ -61,14 +61,13 @@ To set up the constant pH (replica-exchnage) calculation change the input_file.p
 
 5. Specify the names and values for residues with user-defined pKas (experimentally obtained or else)
        Make sure that the order of the names and values list is the same
-6. If restart option is set to 'ON', lambda-list and state files for each replica should exist
+6. If restart option is set to 'ON', lambda-list and state files for each replica should exist. If prior runs exists AND restart option is 'ON', then the prior job files will automatically be detected and used (they should exist). 
 
 7. Edit constant pH (replica-exchange) settings:
     - Specify the number of preliminary minimization steps
-
-    - Set the number of iterations of MD - replica exchnage
-    - Set the number of MD cycles before replica exchange attempt -(MD_nsteps_replicas) 
-    - If needed, run preliminary MD-replica exchange cycles (prep_replicas = True). Useful when pH-dependent conformational shifts are expected but structure files are not available for all the states observed preliminary MD-lambda exchnage cycles (prep_lambdas = True). Useful when all pH states are determined but pKa values are far from default values
+    - Set the number steps for each MD subjob
+    - Specify if the algorithm should apply H-REMD 
+    
 ----
 # Edit submit_Exchange-min_replica.sh
 Specifically, just change the line `conda activate openmm_7_5_0` so that it activates the conda environment that contains openMM and other requisite software (described above). Also add another other commands here (such as `module load cuda`) if needed to setup environment.
@@ -92,12 +91,8 @@ To submit job (on Slurm submission node) execute `./submit_job.sh`. Note: do NOT
 
 • definitions.py
 
-  Input file that defines the differencies between the partial charges of the titratables
+  Input file that defines the force field differencies between the partial charges of the titratables
   residues in protonated and non-protonated states and input pKa values.
-
-• Exchange-min-replica.py
-
-  Run script
 
 • fep_functions.py
 
@@ -113,7 +108,7 @@ To submit job (on Slurm submission node) execute `./submit_job.sh`. Note: do NOT
 
 • pHrex.py
 
-  The functional file that defines CpH systems
+  The functional file that defines ECpH systems/objects
 
 • setup_pH_system.py
 

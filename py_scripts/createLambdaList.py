@@ -5,10 +5,8 @@ CWD = os.getcwd()
 sys.path.append(CWD)
 
 from imports import *
-#from fep_functions import *
 from assign_prot_prob import  pH_list, l_Glu, l_His, l_Lys, l_Cys, l_Asp, list_alchem_residues, l_special
 from definitions import HpKa_switch
-#from setup_pH_system import *
 
 for pH in pH_list:
     lambda_list = {}

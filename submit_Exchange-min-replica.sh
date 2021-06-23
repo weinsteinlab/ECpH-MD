@@ -4,9 +4,6 @@ set -e
 source ~/.bashrc
 
 # Edit the following to setup environment as needed
-#module load gcc/8.1.0/1
-#module load cuda/10.1
-#conda activate openmm_7.4.0
 conda activate openmm_7_5_0
 
 ##############################

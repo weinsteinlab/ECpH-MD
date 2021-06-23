@@ -5,15 +5,12 @@ CWD = os.getcwd()
 sys.path.append(CWD)
 
 from imports import *
-#from simtk.openmm.app import CharmmPsfFile
 from input_file import *
-#from input_file import psf_file, pH_low, pH_high, pH_step, x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length, pdb_file
-#from setup_pH_system import *
 from definitions import *
 
 
-pH_list = np.arange(pH_low, pH_high + 1, pH_step)
-#psf_file = '../inputFiles/sars-wt-term-i.psf'
+#pH_list = np.arange(pH_low, int(pH_high + 1), pH_step)
+pH_list = np.arange(pH_low, pH_high, pH_step)
 psf = CharmmPsfFile(psf_file)
 psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
 

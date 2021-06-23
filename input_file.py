@@ -60,7 +60,7 @@ z_PBC_vector_length = 7.39
 
 # pH range (range is inclusive for both low and high values)
 pH_low = 8
-pH_high = 9
+pH_high = 10
 pH_step = 1
 replicas_per_pH = 8
 

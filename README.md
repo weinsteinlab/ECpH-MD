@@ -72,7 +72,6 @@ To set up the constant pH (replica-exchnage) calculation change the input_file.p
     - Specify the number of preliminary minimization steps
 
     - Set the number of iterations of MD - replica exchnage
-    - 
     - Set the number of MD cycles before replica exchange attempt -(MD_nsteps_replicas) 
     - If needed, run preliminary MD-replica exchange cycles (prep_replicas = True). Useful when pH-dependent conformational shifts are expected but structure files are not available for all the states observed preliminary MD-lambda exchnage cycles (prep_lambdas = True). Useful when all pH states are determined but pKa values are far from default values
 ----

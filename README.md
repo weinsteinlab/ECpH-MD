@@ -81,7 +81,7 @@ Specifically, just change the line `conda activate openmm_7_5_0` so that it acti
 
 ----
 # Job Submission 
-To submit job (on Slurm submission node) execute `./submit_job.sh`. Note: do NOT `sbatch submit_job`. Specifically, this is just a simple bash script (not a Slurm job script) that submits all jobs to Slurm. It's quite light-weight and should run/finish instantly.
+To submit job (on Slurm submission node) execute `./submit_job.sh`. Note: do NOT `sbatch submit_job`. Specifically, this is just a simple bash script (not a Slurm job script) that submits all jobs to Slurm. It's quite lightweight and should run/finish instantly.
 
 -----
 # File Descriptions

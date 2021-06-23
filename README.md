@@ -53,20 +53,17 @@ So long as all dependencies are installed, installing this code is as simple as 
 To set up the constant pH (replica-exchnage) calculation change the input_file.py file:
 1. Edit job and Slurm settings (comments in file provide specific details).
 
-2. Specify a full path to your pdb/psf files (DO NOT forget the quotation marks).
-    - If you want to set different geometries for different replicas put the paths to correspondong pdb files to pdb_state_files
+2.  Put the PDB **residue numbers** of CYS involved in disulphide bond
 
-3.  Put the PDB **residue numbers** of CYS involved in disulphide bond
+3. Fill in the OpenMM parameters for conventional MD runs
 
-4. Fill in the OpenMM parameters for conventional MD runs
+4. Select a pH range and a pH-step between the replicas
 
-5. Select a pH range and a pH-step between the replicas
-
-6. Specify the names and values for residues with user-defined pKas (experimentally obtained or else)
+5. Specify the names and values for residues with user-defined pKas (experimentally obtained or else)
        Make sure that the order of the names and values list is the same
-7. If restart option is set to 'ON', lambda-list and state files for each replica should exist
+6. If restart option is set to 'ON', lambda-list and state files for each replica should exist
 
-8. Edit constant pH (replica-exchange) settings:
+7. Edit constant pH (replica-exchange) settings:
     - Specify the number of preliminary minimization steps
 
     - Set the number of iterations of MD - replica exchnage

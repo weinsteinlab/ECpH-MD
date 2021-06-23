@@ -55,7 +55,7 @@ To set up the constant pH (replica-exchnage) calculation change the input_file.p
 
 2.  Put the PDB **residue numbers** of CYS involved in disulphide bond
 
-3. Fill in the OpenMM parameters for conventional MD runs
+3. Fill in the OpenMM parameters as for conventional MD runs
 
 4. Select a pH range and a pH-step between the replicas
 

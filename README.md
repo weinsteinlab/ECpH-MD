@@ -43,7 +43,7 @@ So long as all dependencies are installed, installing this code is as simple as 
    For CHARMM FF:
    - Use GLUP and ASPP patches for GLU and ASP
    - Use HSP topology for all HIS.
-   - CYS involved in disulphide bonds the procedure will be omitted.
+   - CYS involved in disulphide bonds should be listed in the `input_file.py` and they will not be included in the ECpH protocol.
 
    **IMPORTANT**: The PDB structure data should start from the SECOND line. Similar to conventional MD OpenMM simulations, FIRST line should specify unit cell information.
 

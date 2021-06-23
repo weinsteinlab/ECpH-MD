@@ -6,7 +6,7 @@
   * [Other Required Python Packages](#other-required-python-packages)
 - [Prepare Input Structure](#prepare-input-structure)
 - [Edit input_file.py](#edit-input_filepy)
-- # [Edit submit_Exchange-min_replica.sh](#edit-submit_Exchange-min_replicash)
+- [Edit submit_Exchange-min_replica.sh](#edit-submit_Exchange-min_replicash)
 - [Job Submission](#job-submission)
 - [File Descriptions](#file-descriptions)
 <!-- toc -->

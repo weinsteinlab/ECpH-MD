@@ -16,7 +16,8 @@ CWD=`pwd`
 
 pH_low=$(grep 'pH_low' input_file.py); eval "${pH_low// /}"
 pH_step=$(grep 'pH_step' input_file.py); eval "${pH_step// /}"
-pH_high=$(grep 'pH_high' input_file.py); eval "${pH_high// /}"; pH_high=$(echo $pH_high - $pH_step | bc)
+#pH_high=$(grep 'pH_high' input_file.py); eval "${pH_high// /}"; pH_high=$(echo $pH_high - $pH_step | bc)
+pH_high=$(grep 'pH_high' input_file.py); eval "${pH_high// /}"
 pH_seq=($(seq $pH_low $pH_step $pH_high))
 replicas_per_pH=$(grep 'replicas_per_pH' input_file.py); eval "${replicas_per_pH// /}"
 

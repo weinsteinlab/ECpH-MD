@@ -6,7 +6,7 @@ number_of_replicas=$(grep 'number_of_replicas' input_file.py); number_of_replica
 number_of_subjobs=$(grep 'number_of_subjobs' input_file.py); number_of_subjobs=${number_of_subjobs##*number_of_subjobs=}; number_of_subjobs=${number_of_subjobs%% \#*}
 subjobs_before_exchange=$(grep 'subjobs_before_exchange' input_file.py); subjobs_before_exchange=${subjobs_before_exchange##*subjobs_before_exchange=}; subjobs_before_exchange=${subjobs_before_exchange%% \#*}
 jobName=$(grep 'jobName' input_file.py); jobName=${jobName##*jobName=}; jobName=${jobName%% \#*}
-partitionName=$(grep 'partitionName' input_file.py); partitionName=${partitionName##*partitionName=}; partitionName=${partitionName%% \#*}
+partitionName=$(grep 'partitionName' input_file.py); partitionName=${partitionName##*partitionName=}; partitionName=${partitionName%% \#*}; partitionName=$( echo $partitionName | tr -d '"')
 number_of_GPUs_per_node=$(grep 'number_of_GPUs_per_node' input_file.py); number_of_GPUs_per_node=${number_of_GPUs_per_node##*number_of_GPUs_per_node=}; number_of_GPUs_per_node=${number_of_GPUs_per_node%% \#*}
 
 first_subjob=0

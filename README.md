@@ -15,16 +15,16 @@
 In order to use this code to run ensembles of constant pH MD simulations, you'll first need to make sure all needed dependencies are installed. This is easily accomplished with Conda. [Click here](https://www.anaconda.com/products/individual) for Conda download and installation information.
 
 ## Python
-The code presented here was built and tested with Python v3.7.3. Other later versions will likely also work, but this has not been tested.
+The code presented here was built and tested with Python v3.9.1. Other later versions will likely also work, but this has not been tested.
 
 ## OpenMM
 This code uses the molecular dynamics (MD) engine openMM to run simulations. [Click here](http://docs.openmm.org/latest/userguide/application.html#installing-openmm) for openMM installation information.
 
-**Note:** this code has been built and tested against openMM 7.4.XX (where XX represents subreleases of v7.4). While we haven't yet tested the code against openMM 7.5, we don't anticipate that this will introduce any problems.   
+**Note:** this code has been built and tested against openMM 7.5.0. Other later versions will likely also work, but this has not been tested.
 
 ## Other Required Python Packages:
 There are many packages that are used that are part of the standard Python library, and are thus not described here. This code makes specific use of the following:
-- pandas: 0.25.1
+- pandas: 1.2.4
 
 - **Note:** this code has been built and tested against the version described above, but as with other packages we don't anticipate using newer versions of pandas will be problematic.
 
@@ -52,6 +52,8 @@ So long as all dependencies are installed, installing this code is as simple as 
 ----
 # Edit input_file.py
 To set up the constant pH (replica-exchnage) calculation change the input_file.py file:
+0. Edit job and Slurm settings (comments in file provide specific details).
+
 1. Specify a full path to your pdb/psf files (DO NOT forget the quotation marks).
     - If you want to set different geometries for different replicas put the paths to correspondong pdb files to pdb_state_files
 
@@ -73,8 +75,12 @@ To set up the constant pH (replica-exchnage) calculation change the input_file.p
     - Set the number of MD cycles before replica exchange attempt -(MD_nsteps_replicas) 
     - If needed, run preliminary MD-replica exchange cycles (prep_replicas = True). Useful when pH-dependent conformational shifts are expected but structure files are not available for all the states observed preliminary MD-lambda exchnage cycles (prep_lambdas = True). Useful when all pH states are determined but pKa values are far from default values
 ----
+# Edit submit_Exchange-min_replica.sh
+Specifically, just change the line `conda activate openmm_7_5_0` so that it activates the conda environment that contains openMM and other requisite software (described above). Also add another other commands here (such as `module load cuda`) if needed to setup environment.
+
+----
 # Job Submission 
-4. To set slurm job run "sbatch submit_job.sh"
+To submit job (on Slurm submission node) execute `./submit_job.sh`. Note: do NOT `sbatch submit_job`. Specifically, this is just a simple bash script (not a Slurm job script) that submits all jobs to Slurm. It's quite light-weight and should run/finish instantly.
 
 -----
 # File Descriptions

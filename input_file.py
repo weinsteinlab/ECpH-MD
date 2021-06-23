@@ -7,7 +7,7 @@ number_of_replicas=16      # Must be a multiple of # of GPUs per node
 number_of_subjobs=4
 subjobs_before_exchange=2 # Set to 0 if no exchanges desired; if not 0, then must be >= 2
 jobName="example"         # No spaces
-partitionName=edison      # Slurm partition to run job on
+partitionName="edison"      # Slurm partition to run job on
 number_of_GPUs_per_node=8 # Must be >=2 if running exchanges
 
 

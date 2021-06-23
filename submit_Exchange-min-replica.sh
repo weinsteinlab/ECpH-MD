@@ -7,7 +7,8 @@ source ~/.bashrc
 conda activate openmm_7_5_0
 
 ##############################
-
+# Don't edit below this line #
+##############################
 
 number_of_replicas=$1
 exchange=$2
@@ -16,10 +17,9 @@ CWD=`pwd`
 
 pH_low=$(grep 'pH_low' input_file.py); eval "${pH_low// /}"
 pH_step=$(grep 'pH_step' input_file.py); eval "${pH_step// /}"
-#pH_high=$(grep 'pH_high' input_file.py); eval "${pH_high// /}"; pH_high=$(echo $pH_high - $pH_step | bc)
 pH_high=$(grep 'pH_high' input_file.py); eval "${pH_high// /}"
 pH_seq=($(seq $pH_low $pH_step $pH_high))
-replicas_per_pH=$(grep 'replicas_per_pH' input_file.py); eval "${replicas_per_pH// /}"
+replicas_per_pH=$(grep 'replicas_per_pH' input_file.py); replicas_per_pH=${replicas_per_pH##*replicas_per_pH=}; replicas_per_pH=${replicas_per_pH%% \#*}
 
 unformatted_output_name=$(grep 'output_name' input_file.py)
 eval "${unformatted_output_name// /}" # sets the variable output_name in this scope

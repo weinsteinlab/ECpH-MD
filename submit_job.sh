@@ -1,15 +1,13 @@
 #!/bin/bash -l
 
-number_of_replicas=16      # Must be a multiple of # of GPUs per node
-number_of_subjobs=4 
-subjobs_before_exchange=2 # Set to 0 if no exchanges desired; if not 0, then must be >= 2
-jobName="example"         # No spaces
-partitionName=edison      # Slurm partition to run job on
-number_of_GPUs_per_node=8 # Must be >=2 if running exchanges
-
-
 # do not edit below this line
 
+number_of_replicas=$(grep 'number_of_replicas' input_file.py); number_of_replicas=${number_of_replicas##*number_of_replicas=}; number_of_replicas=${number_of_replicas%% \#*}
+number_of_subjobs=$(grep 'number_of_subjobs' input_file.py); number_of_subjobs=${number_of_subjobs##*number_of_subjobs=}; number_of_subjobs=${number_of_subjobs%% \#*}
+subjobs_before_exchange=$(grep 'subjobs_before_exchange' input_file.py); subjobs_before_exchange=${subjobs_before_exchange##*subjobs_before_exchange=}; subjobs_before_exchange=${subjobs_before_exchange%% \#*}
+jobName=$(grep 'jobName' input_file.py); jobName=${jobName##*jobName=}; jobName=${jobName%% \#*}
+partitionName=$(grep 'partitionName' input_file.py); partitionName=${partitionName##*partitionName=}; partitionName=${partitionName%% \#*}
+number_of_GPUs_per_node=$(grep 'number_of_GPUs_per_node' input_file.py); number_of_GPUs_per_node=${number_of_GPUs_per_node##*number_of_GPUs_per_node=}; number_of_GPUs_per_node=${number_of_GPUs_per_node%% \#*}
 
 first_subjob=0
 numberOfNodes=`expr $number_of_replicas / $number_of_GPUs_per_node`

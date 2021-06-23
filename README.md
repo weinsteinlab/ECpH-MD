@@ -47,8 +47,6 @@ So long as all dependencies are installed, installing this code is as simple as 
 
    **IMPORTANT**: The PDB structure data should start from the SECOND line. Similar to conventional MD OpenMM simulations, FIRST line should specify unit cell information.
 
-   **IMPORTANT**: Make sure that the ionic strength of the resulting system is sufficient (e.g., ≥0.1 M). The method is heavily dependent on the overall concentration of ions in the system due to the PME calculation procedure (like any other constant-pH method).
-
 2. Equilbrate structure as preferred.
 ----
 # Edit input_file.py

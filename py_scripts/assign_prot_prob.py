@@ -8,7 +8,7 @@ from imports import *
 from input_file import *
 from definitions import *
 
-pH_high += 1 # this is make the pH range inclusive on both low/high
+pH_high += pH_step # this is make the pH range inclusive on both low/high
 
 pH_list = np.arange(pH_low, pH_high, pH_step)
 psf = CharmmPsfFile(psf_file)

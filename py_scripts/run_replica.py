@@ -73,8 +73,8 @@ if subjob_number == 0:
     print('Simulation completed\nSaving current state...')
     simulation.saveState(full_output_name + '-state.xml')
 
-    state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True, getParameters=False, getParameterDerivatives=False)
-    energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
+    state = simulation.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
+    energy = state.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature)
     energy = pd.DataFrame(np.array([energy]))
     energy.to_csv('./energies/' + str(output_no_path) + '-energy.csv')
     print('FINISH')
@@ -95,8 +95,8 @@ else:
     print('Simulation completed\nSaving current state...')
     simulation.saveState(full_output_name + '-state.xml')
 
-    state = simulation.context.getState(getPositions=False, getVelocities=False, getForces=False, getEnergy=True, getParameters=False, getParameterDerivatives=False)
-    energy = state.getKineticEnergy()._value + state.getPotentialEnergy()._value
+    state = simulation.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
+    energy = state.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature)
     energy_input = pd.read_csv(('./energies/' + str(output_name) + '-ph' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) +     '-subjob' + str(subjob_number - 1).zfill(4) + '-energy.csv'), index_col=0)
     energy_last = pd.DataFrame(np.array([energy]))
     name_i = str(energy_last.columns.tolist()[0])

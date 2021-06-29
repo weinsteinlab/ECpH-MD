@@ -4,7 +4,7 @@ sys.path.append(os.path.join(sys.path[0],'py_scripts'))
 
 # Job and Slurm settings
 number_of_replicas=16     # Must be a multiple of # of GPUs per node
-number_of_subjobs=4
+number_of_subjobs=32
 subjobs_before_exchange=2 # Set to 0 if no exchanges desired; if not 0, then must be > 1
 jobName="example"         # No spaces
 partitionName="edison"    # Slurm partition to run job on
@@ -68,9 +68,9 @@ y_PBC_vector_length = 7.87
 z_PBC_vector_length = 7.39
 
 # pH range (range is inclusive for both low and high values)
-pH_low = 8
+pH_low = 4
 pH_high = 9
-pH_step = 1
+pH_step = 5
 replicas_per_pH = 8
 
 # Special pKa values #
@@ -78,12 +78,12 @@ special_pKa_names = ['GLU89']
 special_pKa_values = [7.3] 				# the same order and size as the names in special_pKa_names
 
 # Restart option #
-restart = 'OFF' 					# ON/OFF
+restart = 'OFF' 					# OFF/OFF
 
 
 # cpH setup #
 minimize = True
-n_min_steps = 5000
+n_min_steps = 1000
 
 md_steps = 10000
 

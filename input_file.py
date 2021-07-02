@@ -3,13 +3,16 @@ from imports import *
 sys.path.append(os.path.join(sys.path[0],'py_scripts'))
 
 # Job and Slurm settings
-number_of_replicas=16     # Must be a multiple of # of GPUs per node
-number_of_subjobs=32
-subjobs_before_exchange=2 # Set to 0 if no exchanges desired; if not 0, then must be > 1
+number_of_replicas=40     # Must be a multiple of # of GPUs per node
+number_of_subjobs=2
 jobName="example"         # No spaces
 partitionName="edison"    # Slurm partition to run job on
 number_of_GPUs_per_node=8 # Must be >1 if running exchanges
 
+
+## HREMD procedure is in alpha testing!!!
+subjobs_before_exchange=0 # Set to 0 if no exchanges desired; if not 0, then must be > 1
+##
 
 # Input structure and coordinates #
 psf_file = './inputFiles/bbl8.psf'
@@ -68,9 +71,9 @@ y_PBC_vector_length = 7.87
 z_PBC_vector_length = 7.39
 
 # pH range (range is inclusive for both low and high values)
-pH_low = 4
-pH_high = 9
-pH_step = 5
+pH_low = 4.0
+pH_high = 5.0
+pH_step =0.25
 replicas_per_pH = 8
 
 # Special pKa values #
@@ -85,6 +88,5 @@ restart = 'OFF' 					# OFF/OFF
 minimize = True
 n_min_steps = 1000
 
-md_steps = 10000
+md_steps = 1000000
 
-HREMD = True						# Steps within 1 MD cycle

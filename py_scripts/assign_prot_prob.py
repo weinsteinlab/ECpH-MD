@@ -8,9 +8,20 @@ from imports import *
 from input_file import *
 from definitions import *
 
+
+
+# Set the precision of pH 
+pH_accuracy_l = str(pH_low)[::-1].find('.')
+pH_accuracy_h = str(pH_high)[::-1].find('.')  
+pH_accuracy_s = str(pH_step)[::-1].find('.')    
+print(pH_accuracy_h, ' ', pH_accuracy_l, ' ', pH_accuracy_s)
+accuracy = max(pH_accuracy_l, pH_accuracy_h, pH_accuracy_s)
+
+pH_low, pH_high, pH_step = (round(x, accuracy) for x in [pH_low, pH_high, pH_step])
 pH_high += pH_step # this is make the pH range inclusive on both low/high
 
 pH_list = np.arange(pH_low, pH_high, pH_step)
+
 psf = CharmmPsfFile(psf_file)
 psf.setBox(x_PBC_vector_length, y_PBC_vector_length, z_PBC_vector_length)
 
@@ -119,7 +130,7 @@ print('all side atoms indices: \n ', side_atoms)
 print('List of residues with modified protonation state: \n ', list_exchange_residues)
 
 # Create protnation probabilities for each titratable site at each pH
-for i in np.arange(pH_low, pH_high, pH_step ):
+for i in np.round(np.arange(pH_low, pH_high, pH_step), accuracy):
     p = 1 - 1 / (1 + 10 ** (EpKa - i))
     l_Glu[i] = '%.4f' % p
     p = 1 - 1 / (1 + 10 ** (HpKa - i))
@@ -137,7 +148,7 @@ try:
             l_special[special_pKa_names[n]] = {}
             print(special_pKa_names[n])
 
-            for pH in np.arange(pH_low, pH_high, pH_step):
+            for pH in np.round(np.arange(pH_low, pH_high, pH_step), accuracy):
                 p = 1 - 1 / (1 + 10 ** (special_pKa_values[n] - pH))
                 print(p)
                 l_special[special_pKa_names[n]][pH] = '%.4f' % p

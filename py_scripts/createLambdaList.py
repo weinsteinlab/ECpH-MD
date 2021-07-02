@@ -5,10 +5,9 @@ CWD = os.getcwd()
 sys.path.append(CWD)
 
 from imports import *
-from assign_prot_prob import  pH_list, l_Glu, l_His, l_Lys, l_Cys, l_Asp, list_alchem_residues, l_special
+from assign_prot_prob import  pH_list, l_Glu, l_His, l_Lys, l_Cys, l_Asp, list_alchem_residues, l_special, accuracy
 from definitions import HpKa_switch
-
-for pH in pH_list:
+for pH in np.round(pH_list, accuracy):
     lambda_list = {}
     lglu = float(l_Glu[pH])
     lhis = float(l_His[pH])

@@ -12,3 +12,4 @@ import math
 from math import pi
 import simtk.openmm.app.dcdfile, pandas as pd, numpy as np, random
 from random import randint
+from decimal import *

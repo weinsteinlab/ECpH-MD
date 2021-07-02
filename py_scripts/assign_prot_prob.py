@@ -14,9 +14,10 @@ from definitions import *
 pH_accuracy_l = str(pH_low)[::-1].find('.')
 pH_accuracy_h = str(pH_high)[::-1].find('.')  
 pH_accuracy_s = str(pH_step)[::-1].find('.')    
-print(pH_accuracy_h, ' ', pH_accuracy_l, ' ', pH_accuracy_s)
-accuracy = max(pH_accuracy_l, pH_accuracy_h, pH_accuracy_s)
 
+accuracy = max(pH_accuracy_l, pH_accuracy_h, pH_accuracy_s)
+if accuracy < 0:
+    accuracy = 0
 pH_low, pH_high, pH_step = (round(x, accuracy) for x in [pH_low, pH_high, pH_step])
 pH_high += pH_step # this is make the pH range inclusive on both low/high
 

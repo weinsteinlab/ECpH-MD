@@ -19,7 +19,7 @@ accuracy = max(pH_accuracy_l, pH_accuracy_h, pH_accuracy_s)
 if accuracy < 0:
     accuracy = 0
 pH_low, pH_high, pH_step = (round(x, accuracy) for x in [pH_low, pH_high, pH_step])
-pH_high += pH_step # this is make the pH range inclusive on both low/high
+pH_high += pH_step # this is to make the pH range inclusive on both low/high
 
 pH_list = np.arange(pH_low, pH_high, pH_step)
 

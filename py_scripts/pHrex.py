@@ -464,8 +464,9 @@ class pHrex:
 
             state_ji = simulation_j.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
             state_ij = simulation_i.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
-            energy_ji = state_ji.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature)
-            energy_ij = state_ij.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature)
+    ### In current version of the code with OpenMM 7.5.0 the units of potential energy (kJ/mol) and Boltzmann constant (J/mol do not match
+            energy_ji = state_ji.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature*1000)
+            energy_ij = state_ij.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature*1000)
             energy_ii_file = pd.read_csv('./energies/' + str(output_name) + '-ph' + str(self._pH_list[i]) + '_replica_number_' + str(i_replica_directory).zfill(4) + '-subjob' + str(subjob_number).zfill(4) + '-energy.csv')
             energy_ii = float(energy_ii_file.iloc[:, -1])
             #energy_jj_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy.csv')

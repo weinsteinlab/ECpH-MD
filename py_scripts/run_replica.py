@@ -74,7 +74,8 @@ if subjob_number == 0:
     simulation.saveState(full_output_name + '-state.xml')
 
     state = simulation.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
-    energy = state.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature)
+    ### In current version of the code with OpenMM 7.5.0 the units of potential energy (kJ/mol) and Boltzmann constant (J/mol do not match
+    energy = state.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature*1000)
     energy = pd.DataFrame(np.array([energy]))
     energy.to_csv('./energies/' + str(output_no_path) + '-energy.csv')
     print('FINISH')
@@ -96,7 +97,8 @@ else:
     simulation.saveState(full_output_name + '-state.xml')
 
     state = simulation.context.getState(getPositions=True, getVelocities=True, getForces=True, getEnergy=True, getParameters=True, getParameterDerivatives=True)
-    energy = state.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature)
+    ### In current version of the code with OpenMM 7.5.0 the units of potential energy (kJ/mol) and Boltzmann constant (J/mol do not match
+    energy = state.getPotentialEnergy()/(AVOGADRO_CONSTANT_NA*BOLTZMANN_CONSTANT_kB*temperature*1000) 
     energy_input = pd.read_csv(('./energies/' + str(output_name) + '-ph' + str(pH) + '_replica_number_' + str(replica_number).zfill(4) +     '-subjob' + str(subjob_number - 1).zfill(4) + '-energy.csv'), index_col=0)
     energy_last = pd.DataFrame(np.array([energy]))
     name_i = str(energy_last.columns.tolist()[0])

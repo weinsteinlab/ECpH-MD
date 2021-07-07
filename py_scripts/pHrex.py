@@ -472,7 +472,7 @@ class pHrex:
             #energy_jj_file = pd.read_csv(str(output_name) + '-' + str(self._pH_list[j]) + '-energy.csv')
             energy_jj_file = pd.read_csv('./energies/' + str(output_name) + '-ph' + str(self._pH_list[j]) + '_replica_number_' + str(j_replica_directory).zfill(4) + '-subjob' + str(subjob_number).zfill(4) + '-energy.csv')
             energy_jj = float(energy_jj_file.iloc[:, -1])
-            print('\nTotal energy of replica ', i_replica_directory, ': ', energy_ii, '\nTotal energy of replica ', j_replica_directory, ': ', energy_jj, '\nTotal energy of replica ', i_replica_directory, ' after replica exchange ', energy_ij, '\nTotal energy of replica ', j_replica_directory, ' after replica exchange ', energy_ji, '\n')
+            print('\nPotential energy (E/kT) of replica ', i_replica_directory, ': ', energy_ii, '\nPotential energy (E/kT) of replica ', j_replica_directory, ': ', energy_jj, '\nPotential energy (E/kT) of replica ', i_replica_directory, ' after replica exchange ', energy_ij, '\nPotential energy (E/kT) of replica ', j_replica_directory, ' after replica exchange ', energy_ji, '\n')
             log_p_accept = -(energy_ij + energy_ji) + energy_ii + energy_jj
             if log_p_accept >= 0.0 or random.random() < math.exp(log_p_accept):
                 print('Replica exchange accepted')

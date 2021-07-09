@@ -8,7 +8,9 @@ number_of_subjobs=40
 jobName="example"         # No spaces
 partitionName="edison"    # Slurm partition to run job on
 number_of_GPUs_per_node=8 # Must be >1 if running exchanges
-subjobs_before_exchange=2 # Set to 0 if no exchanges desired; if not 0, then must be > 1
+
+### The exchange function is currently disabled
+subjobs_before_exchange=0 # Set to 0 if no exchanges desired; if not 0, then must be > 1
 ##
 
 # Input structure and coordinates #

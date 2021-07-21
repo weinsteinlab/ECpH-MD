@@ -8,7 +8,8 @@ sys.path.append(CWD)
 from imports import *
 import subprocess, time
 #from input_file import pdb_state_files
-from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, calc_system_charge, create_force_particle, create_force_bond)
+#from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, calc_system_charge, create_force_particle, create_force_bond)
+from fep_functions import calc_system_charge
 from assign_prot_prob import *
 from setup_pH_system import NBi, CNB, CB
 def manage_waters(pH_system_temp):
@@ -88,6 +89,7 @@ def create_cpH_system(pH_system_temp, lambda_list):
     print('CNB ', CNB)
     for f in CNB:
         force = pH_system_temp.getForces()[f]
+
         print('\nScaling custom electrostatics and sterics nonbonded forces for alchemical protons\n') 
         for segment in range(len(segment_list)):
             for proton in alchem_protons[segment]:
@@ -110,7 +112,7 @@ def create_cpH_system(pH_system_temp, lambda_list):
                     lambda_sterics = lambda_list.at[(residue, str(lambda_list.shape[1] - 1))]
                
                 force.setParticleParameters(proton, [lambda_sterics, sigma, epsilon])
-                print('NB forces: residue ', residue, ' proton name ', atom_name, ' lambda value ', lambda_sterics)
+                print('NB forces for alchemical protons after: residue ', residue, ' proton name ', atom_name, ' lambda value ', lambda_sterics)
 
         if force.getPerParticleParameterName(1) == 'charge':
             for segment in range(len(segment_list)):

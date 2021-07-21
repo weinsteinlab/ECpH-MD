@@ -23,6 +23,7 @@ def _get_electrostatics_energy_expressions(reference_force):
     electrostatics_prefix = 'U_electrostatics;U_electrostatics=lambda_electrostatics*ONE_4PI_EPS0*chargeprod'
     electrostatics_suffix = 'reff_electrostatics = r;ONE_4PI_EPS0 = {};'.format(ONE_4PI_EPS0)
     electrostatics_mixing_rules = 'chargeprod = charge1*charge2;sigma = 0.5*(sigma1 + sigma2);'
+    aa_electrostatics_mixing_rules = 'chargeprod = charge1*charge2;sigma = 0.5*(sigma1 + sigma2); lambda_electrostatics = lambda_electrostatics1*lambda_electrostatics2'
     coulomb_expression = '/reff_electrostatics;'
     nonbonded_method = reference_force.getNonbondedMethod()
     if nonbonded_method in [openmm.NonbondedForce.NoCutoff]:
@@ -37,8 +38,9 @@ def _get_electrostatics_energy_expressions(reference_force):
     exceptions_electrostatics_energy_expression += coulomb_expression
     exceptions_electrostatics_energy_expression += electrostatics_suffix
     electrostatics_energy_expression = electrostatics_prefix + electrostatics_method_expression + electrostatics_suffix + electrostatics_mixing_rules
+    aa_electrostatics_energy_expression = electrostatics_prefix + electrostatics_method_expression + electrostatics_suffix + aa_electrostatics_mixing_rules
     return (
-     electrostatics_energy_expression, exceptions_electrostatics_energy_expression)
+     electrostatics_energy_expression, aa_electrostatics_energy_expression, exceptions_electrostatics_energy_expression)
 
 
 
@@ -55,8 +57,8 @@ def calc_system_charge(force):
 def create_force_particle(force_cls, energy_expression, lambda_variable_name, is_lambda_controlled):
     """Shortcut to create a lambda-controlled custom forces."""
     if is_lambda_controlled:
-        energy_expression_add = energy_expression + lambda_variable_name + '=1.0;'
-        force = force_cls(energy_expression_add)
+        force = force_cls(energy_expression)
+        force.addGlobalParameter(lambda_variable_name, 1.0)
     else:
         energy_expression_add = energy_expression + lambda_variable_name + '=1.0;'
         force = force_cls(energy_expression_add)
@@ -66,8 +68,8 @@ def create_force_particle(force_cls, energy_expression, lambda_variable_name, is
 def create_force_bond(force_cls, energy_expression, lambda_variable_name, is_lambda_controlled):
     """Shortcut to create a lambda-controlled custom forces."""
     if is_lambda_controlled:
-        energy_expression_add = energy_expression + lambda_variable_name + '=1.0;'
-        force = force_cls(energy_expression_add)
+        force = force_cls(energy_expression)
+        force.addGlobalParameter(lambda_variable_name, 1.0)
     else:
         energy_expression_add = energy_expression + lambda_variable_name + '=1.0;'
         force = force_cls(energy_expression_add)

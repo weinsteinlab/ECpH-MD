@@ -9,8 +9,6 @@ from fep_functions import (_get_pme_direct_space_unique_expression, _get_electro
 from assign_prot_prob import psf, list_alchem_residues, alchem_protons, segment_list
 from input_file import *
 
-########## intra_alchem_scaling = True is yet to be tested and added to the input_file. So far alchem-alchen non-bonded interactions are decoupled
-intra_alchem_scaling = False
 params = CharmmParameterSet(top_file, par_file)
 
 CNB, CB = (np.array([], dtype=(np.int16)) for i in range(2))
@@ -53,7 +51,6 @@ if len(list_alchem_residues) !=0:
 
     # Define energy expression for sterics.
     sterics_energy_expression = exceptions_sterics_energy_expression + sterics_mixing_rules
-    aa_sterics_energy_expression = exceptions_sterics_energy_expression + aa_sterics_mixing_rules
 
     # Define energy expression for electrostatics based on nonbonded method.
     nonbonded_method = NB.getNonbondedMethod()
@@ -64,8 +61,8 @@ if len(list_alchem_residues) !=0:
     is_periodic_method = is_ewald_method or nonbonded_method == openmm.NonbondedForce.CutoffPeriodic
 
     energy_expressions = _get_electrostatics_energy_expressions(NB)
-    (electrostatics_energy_expression, aa_electrostatics_energy_expression,
-     exceptions_electrostatics_energy_expression) = energy_expressions  # Unpack tuple.
+    (electrostatics_energy_expression,
+     exceptions_electrostatics_energy_expression, electrostatics_mixing_rules, aa_electrostatics_mixing_rules) = energy_expressions  # Unpack tuple.
 
     # Create a copy of the NonbondedForce to handle particle interactions and
     # 1,4 exceptions between non-alchemical/non-alchemical atoms (nn).
@@ -103,13 +100,13 @@ if len(list_alchem_residues) !=0:
     # Create CustomNonbondedForces to handle electrostatics particle interactions between
     # non-alchemical/alchemical atoms (na) and alchemical/alchemical atoms (aa). Fix lambda
     # to 1.0 for decoupled interactions in alchemical/alchemical force.
-    na_electrostatics_custom_nonbonded_force = create_force_particle(openmm.CustomNonbondedForce, electrostatics_energy_expression,
+    na_electrostatics_custom_nonbonded_force = create_force_particle(openmm.CustomNonbondedForce, electrostatics_energy_expression+electrostatics_mixing_rules,
                                                             'lambda_electrostatics', is_lambda_controlled=True)
     if intra_alchem_scaling == True:
-        aa_electrostatics_custom_nonbonded_force = create_force_particle(openmm.CustomNonbondedForce, aa_electrostatics_energy_expression,
+        aa_electrostatics_custom_nonbonded_force = create_force_particle(openmm.CustomNonbondedForce, electrostatics_energy_expression+aa_elestrostatics_mixing_rules,
                                                                 'lambda_electrostatics', is_lambda_controlled=True)
     else:
-        aa_electrostatics_custom_nonbonded_force = create_force_particle(openmm.CustomNonbondedForce, electrostatics_energy_expression,
+        aa_electrostatics_custom_nonbonded_force = create_force_particle(openmm.CustomNonbondedForce, electrostatics_energy_expression+elestrostatics_mixing_rules,
                                                                 'lambda_electrostatics', is_lambda_controlled=False)
 
     all_electrostatics_custom_nonbonded_forces = [na_electrostatics_custom_nonbonded_force,

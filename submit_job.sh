@@ -21,10 +21,10 @@ for (( subjob=0; subjob<$number_of_subjobs; subjob++ )); do
     jobSchedulerOutput=0
 
     if [ $first_subjob -eq 0 ]; then
-        jobSchedulerOutput="$(sbatch -J ${jobName} -N ${numberOfNodes} -p $partitionName --mem=80G --gres=gpu:${number_of_GPUs_per_node} -t 0-02:00:00 ./submit-replicas.sh ${number_of_replicas} 0)"
+        jobSchedulerOutput="$(sbatch -o ./submission_logs/${jobName}.%a.out -J ${jobName} -N ${numberOfNodes} -p $partitionName --mem=80G --gres=gpu:${number_of_GPUs_per_node} -t 0-02:00:00 ./submit-replicas.sh ${number_of_replicas} 0)"
 
     else
-        jobSchedulerOutput="$(sbatch --depend=afterok:${job_scheduler_number} -J ${jobName} -N ${numberOfNodes} -p $partitionName --mem=80G --gres=gpu:${number_of_GPUs_per_node} -t 0-02:00:00 ./submit-replicas.sh ${number_of_replicas})"
+        jobSchedulerOutput="$(sbatch --depend=afterok:${job_scheduler_number} -o ./submission_logs/${jobName}.%a.out  -J ${jobName} -N ${numberOfNodes} -p $partitionName --mem=80G --gres=gpu:${number_of_GPUs_per_node} -t 0-02:00:00 ./submit-replicas.sh ${number_of_replicas})"
     fi
 
     job_scheduler_number=${jobSchedulerOutput//[!0-9]}

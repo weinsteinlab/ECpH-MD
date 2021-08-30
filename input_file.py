@@ -4,7 +4,7 @@ sys.path.append(os.path.join(sys.path[0],'py_scripts'))
 
 # Job and Slurm settings
 number_of_replicas=16     # Must be a multiple of # of GPUs per node
-number_of_subjobs=40
+number_of_subjobs=4
 jobName="example"         # No spaces
 partitionName="edison"    # Slurm partition to run job on
 number_of_GPUs_per_node=8 

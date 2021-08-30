@@ -7,11 +7,7 @@ number_of_replicas=16     # Must be a multiple of # of GPUs per node
 number_of_subjobs=40
 jobName="example"         # No spaces
 partitionName="edison"    # Slurm partition to run job on
-number_of_GPUs_per_node=8 # Must be >1 if running exchanges
-
-### The exchange function is currently disabled
-subjobs_before_exchange=0 # Set to 0 if no exchanges desired; if not 0, then must be > 1
-##
+number_of_GPUs_per_node=8 
 
 # Input structure and coordinates #
 psf_file = './inputFiles/bbl8.psf'
@@ -78,10 +74,6 @@ replicas_per_pH = 8
 # Special pKa values #
 special_pKa_names = ['GLU89']
 special_pKa_values = [7.3] 				# the same order and size as the names in special_pKa_names
-
-# Restart option #
-restart = 'OFF' 					# OFF/OFF
-
 
 # cpH setup #
 minimize = True

@@ -7,8 +7,6 @@ sys.path.append(CWD)
 
 from imports import *
 import subprocess, time
-#from input_file import pdb_state_files
-#from fep_functions import (_get_pme_direct_space_unique_expression, _get_electrostatics_energy_expressions, calc_system_charge, create_force_particle, create_force_bond)
 from fep_functions import calc_system_charge
 from assign_prot_prob import *
 from setup_pH_system import NBi, CNB, CB

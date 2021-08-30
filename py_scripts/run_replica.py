@@ -7,7 +7,6 @@ from imports import *
 from input_file import *
 from setup_pH_system import *
 from pHrex import *
-#from definitions import *
 
 pH = sys.argv[1]
 subjob_number = int(sys.argv[2])

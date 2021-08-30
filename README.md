@@ -6,7 +6,7 @@
   * [Other Required Python Packages](#other-required-python-packages)
 - [Prepare Input Structure](#prepare-input-structure)
 - [Edit input_file.py](#edit-input_filepy)
-- [Edit submit_Exchange-min_replica.sh](#edit-submit_Exchange-min_replicash)
+- [Edit submit-replicas.sh](#edit-submit-replicassh)
 - [Job Submission](#job-submission)
 - [File Descriptions](#file-descriptions)
 <!-- toc -->
@@ -50,7 +50,7 @@ So long as all dependencies are installed, installing this code is as simple as 
 2. Equilbrate structure as preferred.
 ----
 # Edit input_file.py
-To set up the constant pH (replica-exchnage) calculation change the input_file.py file:
+To set up the constant pH calculation change the input_file.py file:
 1. Edit job and Slurm settings (comments in file provide specific details).
 
 2.  Put the PDB **residue numbers** of CYS involved in disulphide bond
@@ -61,15 +61,13 @@ To set up the constant pH (replica-exchnage) calculation change the input_file.p
 
 5. Specify the names and values for residues with user-defined pKas (experimentally obtained or else)
        Make sure that the order of the names and values list is the same
-6. If restart option is set to 'ON', lambda-list and state files for each replica should exist. If prior runs exists AND restart option is 'ON', then the prior job files will automatically be detected and used (they should exist). 
 
-7. Edit constant pH (replica-exchange) settings:
+6. Edit constant pH settings:
     - Specify the number of preliminary minimization steps
     - Set the number steps for each MD subjob
-    - Specify if the algorithm should apply H-REMD 
-    
+
 ----
-# Edit submit_Exchange-min_replica.sh
+# Edit submit-replicas.sh
 Specifically, just change the line `conda activate openmm_7_5_0` so that it activates the conda environment that contains openMM and other requisite software (described above). Also add another other commands here (such as `module load cuda`) if needed to setup environment.
 
 ----
